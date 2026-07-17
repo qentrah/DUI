@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tag-chip",
+  "title": "TagChip",
+  "description": "Colored tag with optional remove action.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/tag-chip.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst tagChipVariants = cva(\n  \"inline-flex items-center gap-1 rounded-md border font-semibold whitespace-nowrap\",\n  {\n    variants: {\n      tone: {\n        gray: \"border-zinc-500/20 bg-zinc-500/15 text-zinc-400\",\n        blue: \"border-sky-500/20 bg-sky-500/15 text-sky-400\",\n        green: \"border-emerald-500/20 bg-emerald-500/15 text-emerald-400\",\n        amber: \"border-amber-500/20 bg-amber-500/15 text-amber-400\",\n        red: \"border-rose-500/20 bg-rose-500/15 text-rose-400\",\n        purple: \"border-purple-500/20 bg-purple-500/15 text-purple-400\",\n        pink: \"border-pink-500/20 bg-pink-500/15 text-pink-400\",\n        cyan: \"border-cyan-500/20 bg-cyan-500/15 text-cyan-400\",\n        custom: \"border-transparent\"\n      },\n      size: {\n        sm: \"px-1.5 py-0.5 text-[9px]\",\n        md: \"px-2 py-0.5 text-[10px]\"\n      },\n      outline: {\n        true: \"bg-transparent\",\n        false: \"\"\n      }\n    },\n    defaultVariants: { tone: \"gray\", size: \"md\", outline: false }\n  }\n)\n\nexport interface TagChipProps\n  extends Omit<React.HTMLAttributes<HTMLSpanElement>, \"children\" | \"color\">,\n    VariantProps<typeof tagChipVariants> {\n  label: React.ReactNode\n  customBg?: string\n  customColor?: string\n  removable?: boolean\n  onRemove?: () => void\n  icon?: React.ReactNode\n}\n\nconst TagChip = React.forwardRef<HTMLSpanElement, TagChipProps>(\n  (\n    {\n      tone = \"gray\",\n      label,\n      size = \"md\",\n      outline = false,\n      customBg,\n      customColor,\n      removable,\n      onRemove,\n      icon,\n      className,\n      ...props\n    },\n    ref\n  ) => {\n    const style: React.CSSProperties =\n      tone === \"custom\" ? { backgroundColor: customBg, color: customColor } : {}\n\n    return (\n      <span\n        ref={ref}\n        className={cn(tagChipVariants({ tone, size, outline: Boolean(outline) }), className)}\n        style={style}\n        {...props}\n      >\n        {icon}\n        {label}\n        {removable ? (\n          <button\n            type=\"button\"\n            onClick={(event) => {\n              event.stopPropagation()\n              onRemove?.()\n            }}\n            aria-label=\"Remove tag\"\n            className=\"ms-0.5 inline-flex h-3 w-3 items-center justify-center rounded-sm hover:bg-white/10\"\n          >\n            <svg viewBox=\"0 0 12 12\" className=\"h-2 w-2\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"2\" aria-hidden>\n              <path d=\"M3 3 L9 9 M9 3 L3 9\" />\n            </svg>\n          </button>\n        ) : null}\n      </span>\n    )\n  }\n)\nTagChip.displayName = \"TagChip\"\n\nexport { TagChip, tagChipVariants }\n",
+      "type": "registry:ui",
+      "target": "@ui/tag-chip.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

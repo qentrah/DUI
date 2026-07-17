@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "color-swatch",
+  "title": "ColorSwatch",
+  "description": "Selectable color radio control for pickers.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/color-swatch.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst colorSwatchVariants = cva(\"rounded-full border-2 transition-all\", {\n  variants: {\n    size: {\n      xs: \"h-4 w-4\",\n      sm: \"h-5 w-5\",\n      md: \"h-6 w-6\",\n      lg: \"h-8 w-8\"\n    },\n    selected: {\n      true: \"scale-110 border-zinc-950\",\n      false: \"border-transparent hover:scale-105\"\n    }\n  },\n  defaultVariants: { size: \"md\", selected: false }\n})\n\nexport interface ColorSwatchProps\n  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, \"children\" | \"color\">,\n    VariantProps<typeof colorSwatchVariants> {\n  color: string\n  ariaLabel?: string\n}\n\nconst ColorSwatch = React.forwardRef<HTMLButtonElement, ColorSwatchProps>(\n  ({ color, selected = false, size = \"md\", ariaLabel, className, ...props }, ref) => {\n    return (\n      <button\n        ref={ref}\n        type=\"button\"\n        role=\"radio\"\n        aria-checked={Boolean(selected)}\n        aria-label={ariaLabel ?? `Color ${color}`}\n        className={cn(colorSwatchVariants({ size, selected: Boolean(selected) }), className)}\n        style={{ backgroundColor: color }}\n        {...props}\n      />\n    )\n  }\n)\nColorSwatch.displayName = \"ColorSwatch\"\n\nexport { ColorSwatch, colorSwatchVariants }\n",
+      "type": "registry:ui",
+      "target": "@ui/color-swatch.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

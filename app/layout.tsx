@@ -1,13 +1,17 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Noto_Kufi_Arabic } from 'next/font/google';
 import './../styles/globals.css';
+import { LocaleProvider } from '@/components/site/locale-provider';
+import { SiteHeader } from '@/components/site/site-header';
+import { SiteFooter } from '@/components/site/site-footer';
  
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const arabic = Noto_Kufi_Arabic({ subsets: ['arabic'], variable: '--font-arabic' });
 
 export const metadata: Metadata = {
-  title: 'DaisyUI Library - Modern UI Components',
-  description: 'A clean, scalable, and developer-friendly UI library built with Next.js and DaisyUI',
+  title: 'DUI — qentrah Design System',
+  description: 'A bilingual React component library distributed through the shadcn CLI.',
 };
 
 export default function RootLayout({
@@ -16,13 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="light">
-      <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
-           <main className="flex-1">
-            {children}
-          </main>
-         </div>
+    <html lang="en" dir="ltr">
+      <body className={`${inter.variable} ${arabic.variable}`}>
+        <LocaleProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </LocaleProvider>
       </body>
     </html>
   );

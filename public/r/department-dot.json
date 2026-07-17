@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "department-dot",
+  "title": "DepartmentDot",
+  "description": "Department color indicator built on ColorDot.",
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/color-dot"
+  ],
+  "files": [
+    {
+      "path": "components/ui/department-dot.tsx",
+      "content": "import * as React from \"react\"\n\nimport { ColorDot } from \"@/components/ui/color-dot\"\n\nexport type Department =\n  | \"finance\"\n  | \"hr\"\n  | \"marketing\"\n  | \"sales\"\n  | \"engineering\"\n  | \"operations\"\n  | \"legal\"\n  | \"support\"\n\nexport interface DepartmentDotProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, \"children\"> {\n  department: Department | string\n  showLabel?: boolean\n}\n\nexport const departmentColors: Record<string, string> = {\n  finance: \"#16a34a\",\n  hr: \"#f97316\",\n  marketing: \"#a855f7\",\n  sales: \"#3b82f6\",\n  engineering: \"#6b7280\",\n  operations: \"#0891b2\",\n  legal: \"#6366f1\",\n  support: \"#ec4899\"\n}\n\nconst DepartmentDot = React.forwardRef<HTMLSpanElement, DepartmentDotProps>(\n  ({ department, showLabel = false, className, ...props }, ref) => {\n    const color = departmentColors[department.toLowerCase()] || \"#6b7280\"\n    return (\n      <ColorDot\n        ref={ref}\n        color={color}\n        size=\"sm\"\n        label={showLabel ? department : undefined}\n        className={className}\n        {...props}\n      />\n    )\n  }\n)\nDepartmentDot.displayName = \"DepartmentDot\"\n\nexport { DepartmentDot }\n",
+      "type": "registry:ui",
+      "target": "@ui/department-dot.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

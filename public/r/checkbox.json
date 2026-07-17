@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "Accessible native checkbox with custom styling.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/checkbox.tsx",
+      "content": "import * as React from \"react\"\nimport { Check } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction Checkbox({ className, checked, ...props }: Omit<React.InputHTMLAttributes<HTMLInputElement>, \"type\">) {\n  return (\n    <label className=\"relative inline-flex size-4 items-center justify-center\">\n      <input type=\"checkbox\" checked={checked} className=\"peer sr-only\" {...props} />\n      <span className={cn(\"absolute inset-0 rounded border border-zinc-800 bg-zinc-900 peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-zinc-700 peer-disabled:opacity-50\", className)} />\n      <Check className=\"pointer-events-none relative size-3 text-primary-foreground opacity-0 peer-checked:opacity-100\" />\n    </label>\n  )\n}\n\nexport { Checkbox }\n",
+      "type": "registry:ui",
+      "target": "@ui/checkbox.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

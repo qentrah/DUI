@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src="./public/DUI_logo.png" alt="DUI logo" width="160" />
+</p>
 
-## Getting Started
+<h1 align="center">DUI</h1>
 
-First, run the development server:
+<p align="center">
+  An open-source React component library and shadcn registry.
+</p>
+
+DUI is the design system and [shadcn](https://ui.shadcn.com/) registry maintained by [qentrah](https://github.com/qentrah). Components are copied into your application as source code, so your team owns every line and can adapt the system without adding a runtime UI-library dependency.
+
+## Why DUI?
+
+- Distributed through the shadcn CLI
+- Zinc-first design tokens with accessible dark surfaces
+- TypeScript and Tailwind CSS
+- Supports LTR and RTL layouts
+- Components remain inside your application and under your control
+- Open source under the MIT License
+
+## Install
+
+Initialize shadcn in an existing React project:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx shadcn@latest init
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Add a DUI component directly from the GitHub registry:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npx shadcn@latest add qentrah/DUI/button
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can install multiple items:
 
-## Learn More
+```bash
+npx shadcn@latest add qentrah/DUI/button qentrah/DUI/input qentrah/DUI/card
+```
 
-To learn more about Next.js, take a look at the following resources:
+Preview an installation without writing files:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx shadcn@latest add qentrah/DUI/button --dry-run
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pin a release or commit for reproducible installations:
 
-## Deploy on Vercel
+```bash
+npx shadcn@latest add qentrah/DUI/button#v0.1.0
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Components
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Foundations
+
+- `button`
+- `input`
+- `textarea`
+- `checkbox`
+- `switch`
+- `badge`
+- `card`
+- `alert`
+- `avatar`
+- `progress`
+- `separator`
+- `skeleton`
+- `spinner`
+
+### Product primitives
+
+- `filter-chip`
+- `status-pill`
+- `empty-state`
+- `color-dot`
+- `tag-chip`
+- `legend-item`
+- `list-row`
+- `list-item`
+- `color-swatch`
+- `status-badge`
+- `department-dot`
+
+### Blocks
+
+- `blocks-dashboard-panel`
+- `blocks-filter-toolbar`
+- `blocks-member-list`
+
+The source of truth is [`registry.json`](./registry.json). Built registry payloads are generated in [`public/r`](./public/r).
+
+## Direction support
+
+DUI components use logical layout utilities wherever direction matters. Set the document direction at the application boundary:
+
+```tsx
+<html dir="rtl">
+  <body>{children}</body>
+</html>
+```
+
+For left-to-right layouts:
+
+```tsx
+<html dir="ltr">
+  <body>{children}</body>
+</html>
+```
+
+## Local development
+
+Requirements:
+
+- Node.js 20 or newer
+- npm 10 or newer
+
+```bash
+git clone https://github.com/qentrah/DUI.git
+cd DUI
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+Before submitting a change:
+
+```bash
+npm run lint
+npm run build
+npm run registry:build
+npm run registry:validate
+```
+
+## Registry structure
+
+```text
+app/                 Documentation website
+components/ui/       Installable component source
+components/library/  Documentation previews
+lib/                 Shared utilities and catalogs
+public/r/            Generated registry payloads
+registry.json        Registry source of truth
+components.json      Local shadcn configuration
+```
+
+When adding an installable component:
+
+1. Add its source to `components/ui`.
+2. Declare the item and dependencies in `registry.json`.
+3. Add its documentation metadata to `lib/catalog.ts`.
+4. Add a preview and example source.
+5. Build and validate the registry.
+
+## Contributing
+
+Contributions are welcome. Read [`CONTRIBUTING.md`](./CONTRIBUTING.md) before opening a pull request. By participating, you agree to follow the [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
+
+For security issues, follow the private reporting process in [`SECURITY.md`](./SECURITY.md).
+
+## License
+
+DUI is available under the [MIT License](./LICENSE).

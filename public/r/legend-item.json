@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "legend-item",
+  "title": "LegendItem",
+  "description": "Chart or summary legend entry with color and value.",
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/legend-item.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport interface LegendItemProps extends React.HTMLAttributes<HTMLDivElement> {\n  color: string\n  label: React.ReactNode\n  value?: React.ReactNode\n  icon?: React.ReactNode\n  size?: \"sm\" | \"md\"\n}\n\nconst LegendItem = React.forwardRef<HTMLDivElement, LegendItemProps>(\n  ({ color, label, value, icon, size = \"sm\", className, ...props }, ref) => {\n    return (\n      <div\n        ref={ref}\n        className={cn(\"inline-flex items-center gap-1.5\", size === \"sm\" ? \"text-[10px]\" : \"text-xs\", className)}\n        {...props}\n      >\n        {icon ?? (\n          <span aria-hidden className=\"h-2 w-2 shrink-0 rounded-full\" style={{ backgroundColor: color }} />\n        )}\n        <span className=\"font-semibold text-zinc-500\">{label}</span>\n        {value !== undefined ? <span className=\"font-bold text-zinc-950\">{value}</span> : null}\n      </div>\n    )\n  }\n)\nLegendItem.displayName = \"LegendItem\"\n\nexport { LegendItem }\n",
+      "type": "registry:ui",
+      "target": "@ui/legend-item.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

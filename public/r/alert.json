@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert",
+  "title": "Alert",
+  "description": "Semantic alert with success, warning and destructive variants.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/alert.tsx",
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst alertVariants = cva(\"relative w-full rounded-lg border p-4\", {\n  variants: {\n    variant: {\n      default: \"border-border bg-card text-foreground\",\n      success: \"border-emerald-500/20 bg-emerald-500/10 text-emerald-400\",\n      warning: \"border-yellow-500/20 bg-yellow-500/10 text-yellow-400\",\n      destructive: \"border-destructive/20 bg-destructive/10 text-destructive\"\n    }\n  },\n  defaultVariants: { variant: \"default\" }\n})\n\nfunction Alert({ className, variant, ...props }: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>) {\n  return <div role=\"alert\" className={cn(alertVariants({ variant }), className)} {...props} />\n}\n\nfunction AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {\n  return <h5 className={cn(\"mb-1 font-medium leading-none tracking-tight\", className)} {...props} />\n}\n\nfunction AlertDescription({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"text-sm [&_p]:leading-relaxed\", className)} {...props} />\n}\n\nexport { Alert, AlertTitle, AlertDescription }\n",
+      "type": "registry:ui",
+      "target": "@ui/alert.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

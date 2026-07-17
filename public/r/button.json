@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "title": "Button",
+  "description": "Accessible button variants with loading and size states.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/button.tsx",
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground shadow-sm hover:bg-primary/90\",\n        secondary: \"bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80\",\n        destructive: \"bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90\",\n        outline: \"border border-border bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground\",\n        ghost: \"text-muted-foreground hover:bg-accent hover:text-accent-foreground\",\n        link: \"text-primary underline-offset-4 hover:underline\"\n      },\n      size: {\n        xs: \"h-7 px-2 text-xs\",\n        sm: \"h-8 px-3 text-sm\",\n        default: \"h-10 px-4 text-sm\",\n        lg: \"h-12 px-6 text-base\",\n        xl: \"h-14 px-8 text-lg\",\n        icon: \"size-10\"\n      }\n    },\n    defaultVariants: { variant: \"default\", size: \"default\" }\n  }\n)\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  loading?: boolean\n}\n\nfunction Button({ className, variant, size, loading, children, disabled, ...props }: ButtonProps) {\n  return (\n    <button\n      className={cn(buttonVariants({ variant, size }), className)}\n      disabled={disabled || loading}\n      {...props}\n    >\n      {loading && <span aria-hidden className=\"mr-2 animate-spin\">⟳</span>}\n      {children}\n    </button>\n  )\n}\n\nexport { Button, buttonVariants }\n",
+      "type": "registry:ui",
+      "target": "@ui/button.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

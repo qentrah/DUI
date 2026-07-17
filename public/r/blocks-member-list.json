@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-member-list",
+  "title": "Member List",
+  "description": "Installable member directory block.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/list-item",
+    "qentrah/DUI/status-badge",
+    "qentrah/DUI/department-dot",
+    "qentrah/DUI/button"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/member-list.tsx",
+      "content": "import { MoreHorizontal } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport {\n  List,\n  ListItem,\n  ListItemActions,\n  ListItemAvatar,\n  ListItemContent,\n  ListItemMeta,\n  ListItemTag\n} from \"@/components/ui/list-item\"\nimport { StatusBadge } from \"@/components/ui/status-badge\"\nimport { DepartmentDot } from \"@/components/ui/department-dot\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface MemberListProps {\n  className?: string\n  members?: Array<{\n    id: string\n    name: string\n    role: string\n    department: string\n    status: \"active\" | \"pending\" | \"inactive\"\n    initials: string\n  }>\n  onMemberClick?: (id: string) => void\n}\n\nconst defaultMembers: NonNullable<MemberListProps[\"members\"]> = [\n  { id: \"1\", name: \"Sara Ahmed\", role: \"Product designer\", department: \"marketing\", status: \"active\", initials: \"SA\" },\n  { id: \"2\", name: \"Omar Nabil\", role: \"Frontend engineer\", department: \"engineering\", status: \"pending\", initials: \"ON\" },\n  { id: \"3\", name: \"Lina Farid\", role: \"Account lead\", department: \"sales\", status: \"active\", initials: \"LF\" }\n]\n\n/**\n * Block: member directory list composed from ListItem family, StatusBadge, DepartmentDot.\n */\nexport function MemberList({ className, members = defaultMembers, onMemberClick }: MemberListProps) {\n  return (\n    <List className={cn(className)}>\n      {members.map((member) => (\n        <ListItem key={member.id} onClick={() => onMemberClick?.(member.id)}>\n          <ListItemAvatar initials={member.initials} color=\"#3b82f6\" />\n          <ListItemContent\n            primary={member.name}\n            secondary={member.role}\n            description={\n              <span className=\"inline-flex items-center gap-1.5\">\n                <DepartmentDot department={member.department} showLabel />\n              </span>\n            }\n          />\n          <ListItemMeta>\n            <ListItemTag>{member.role.split(\" \")[0]}</ListItemTag>\n            <StatusBadge variant={member.status}>{member.status}</StatusBadge>\n            <ListItemActions>\n              <Button size=\"icon\" variant=\"ghost\" aria-label=\"More actions\">\n                <MoreHorizontal className=\"size-4\" />\n              </Button>\n            </ListItemActions>\n          </ListItemMeta>\n        </ListItem>\n      ))}\n    </List>\n  )\n}\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/member-list.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

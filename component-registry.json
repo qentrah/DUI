@@ -1,0 +1,286 @@
+{
+  "components": [
+    {
+      "name": "Button",
+      "path": "components/ui/button.tsx",
+      "kind": "primitive",
+      "summary": "Accessible button with visual variants, sizes and loading state.",
+      "usedIn": ["shadcn registry"],
+      "props": ["variant", "size", "loading"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/button."
+    },
+    {
+      "name": "Input",
+      "path": "components/ui/input.tsx",
+      "kind": "primitive",
+      "summary": "Accessible text input with label, helper text and error state.",
+      "usedIn": ["shadcn registry"],
+      "props": ["label", "error", "helperText"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/input."
+    },
+    {
+      "name": "Badge",
+      "path": "components/ui/badge.tsx",
+      "kind": "primitive",
+      "summary": "Compact label for statuses and categories.",
+      "usedIn": ["shadcn registry"],
+      "props": ["variant"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/badge."
+    },
+    {
+      "name": "Card",
+      "path": "components/ui/card.tsx",
+      "kind": "primitive",
+      "summary": "Composable card layout primitives.",
+      "usedIn": ["shadcn registry"],
+      "props": ["className"],
+      "createdAt": "2026-07-17",
+      "notes": "Exports Card, CardHeader, CardTitle, CardDescription, CardContent and CardFooter."
+    },
+    {
+      "name": "Alert",
+      "path": "components/ui/alert.tsx",
+      "kind": "primitive",
+      "summary": "Semantic feedback message with contextual variants.",
+      "usedIn": ["shadcn registry"],
+      "props": ["variant"],
+      "createdAt": "2026-07-17",
+      "notes": "Exports Alert, AlertTitle and AlertDescription."
+    },
+    {
+      "name": "Avatar",
+      "path": "components/ui/avatar.tsx",
+      "kind": "primitive",
+      "summary": "Identity image with fallback content.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["className"],
+      "createdAt": "2026-07-17",
+      "notes": "Exports Avatar, AvatarImage and AvatarFallback."
+    },
+    {
+      "name": "Checkbox",
+      "path": "components/ui/checkbox.tsx",
+      "kind": "primitive",
+      "summary": "Accessible native checkbox with Zinc styling.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["checked", "defaultChecked", "disabled"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/checkbox."
+    },
+    {
+      "name": "Progress",
+      "path": "components/ui/progress.tsx",
+      "kind": "primitive",
+      "summary": "Task completion progress indicator.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["value", "max"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/progress."
+    },
+    {
+      "name": "Separator",
+      "path": "components/ui/separator.tsx",
+      "kind": "primitive",
+      "summary": "Horizontal or vertical content divider.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["orientation"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/separator."
+    },
+    {
+      "name": "Skeleton",
+      "path": "components/ui/skeleton.tsx",
+      "kind": "primitive",
+      "summary": "Animated loading placeholder.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["className"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/skeleton."
+    },
+    {
+      "name": "Spinner",
+      "path": "components/ui/spinner.tsx",
+      "kind": "primitive",
+      "summary": "Indefinite loading indicator.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["className"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/spinner."
+    },
+    {
+      "name": "Switch",
+      "path": "components/ui/switch.tsx",
+      "kind": "primitive",
+      "summary": "Controlled or uncontrolled setting toggle.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["checked", "defaultChecked", "onCheckedChange", "disabled"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/switch."
+    },
+    {
+      "name": "Textarea",
+      "path": "components/ui/textarea.tsx",
+      "kind": "primitive",
+      "summary": "Multiline text input.",
+      "usedIn": ["shadcn registry", "component documentation"],
+      "props": ["placeholder", "disabled"],
+      "createdAt": "2026-07-17",
+      "notes": "Install with qentrah/DUI/textarea."
+    },
+    {
+      "name": "ComponentWorkbench",
+      "path": "components/library/component-workbench.tsx",
+      "kind": "domain-shared",
+      "summary": "Stacked component examples with collapsible GitHub-style source panels.",
+      "usedIn": ["component documentation"],
+      "props": ["slug"],
+      "createdAt": "2026-07-17",
+      "notes": "Each variant owns an independent preview, scrollable source view and copy action."
+    },
+    {
+      "name": "FilterChip",
+      "path": "components/ui/filter-chip.tsx",
+      "kind": "primitive",
+      "summary": "Toggleable filter control with counts and FilterChipBar.",
+      "usedIn": ["shadcn registry", "Blocks filter toolbar"],
+      "props": ["active", "size", "count", "onClick"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "StatusPill",
+      "path": "components/ui/status-pill.tsx",
+      "kind": "primitive",
+      "summary": "Status label with tone and surface variants.",
+      "usedIn": ["shadcn registry", "Blocks dashboard panel"],
+      "props": ["tone", "variant", "size", "label", "icon"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "EmptyState",
+      "path": "components/ui/empty-state.tsx",
+      "kind": "primitive",
+      "summary": "Empty collection placeholder with action slot.",
+      "usedIn": ["shadcn registry", "Blocks dashboard panel"],
+      "props": ["icon", "title", "description", "size", "action"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "ColorDot",
+      "path": "components/ui/color-dot.tsx",
+      "kind": "primitive",
+      "summary": "Small color indicator with optional label.",
+      "usedIn": ["shadcn registry", "DepartmentDot"],
+      "props": ["color", "size", "ring", "label"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "TagChip",
+      "path": "components/ui/tag-chip.tsx",
+      "kind": "primitive",
+      "summary": "Colored tag with optional remove callback.",
+      "usedIn": ["shadcn registry", "Blocks filter toolbar"],
+      "props": ["tone", "label", "removable", "onRemove"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "LegendItem",
+      "path": "components/ui/legend-item.tsx",
+      "kind": "primitive",
+      "summary": "Legend entry with color, label, and value.",
+      "usedIn": ["shadcn registry", "Blocks dashboard panel"],
+      "props": ["color", "label", "value", "icon", "size"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "ListRow",
+      "path": "components/ui/list-row.tsx",
+      "kind": "primitive",
+      "summary": "List row with leading/title/meta/trailing slots.",
+      "usedIn": ["shadcn registry", "Blocks dashboard panel"],
+      "props": ["leading", "title", "subtitle", "trailing", "meta", "selected", "variant", "onActivate"],
+      "createdAt": "2026-07-18",
+      "notes": "href routing removed; use onActivate callback."
+    },
+    {
+      "name": "ListItem",
+      "path": "components/ui/list-item.tsx",
+      "kind": "primitive",
+      "summary": "Composable list item family for directories.",
+      "usedIn": ["shadcn registry", "Blocks member list"],
+      "props": ["selected", "disabled", "onClick", "href"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui with zinc tokens."
+    },
+    {
+      "name": "ColorSwatch",
+      "path": "components/ui/color-swatch.tsx",
+      "kind": "primitive",
+      "summary": "Selectable color radio control.",
+      "usedIn": ["shadcn registry"],
+      "props": ["color", "selected", "size", "ariaLabel"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "StatusBadge",
+      "path": "components/ui/status-badge.tsx",
+      "kind": "primitive",
+      "summary": "Table status badge with icons.",
+      "usedIn": ["shadcn registry", "Blocks member list"],
+      "props": ["variant", "showIcon", "children"],
+      "createdAt": "2026-07-18",
+      "notes": "Renamed from TableStatusBadge for library clarity."
+    },
+    {
+      "name": "DepartmentDot",
+      "path": "components/ui/department-dot.tsx",
+      "kind": "primitive",
+      "summary": "Department color indicator on ColorDot.",
+      "usedIn": ["shadcn registry", "Blocks member list"],
+      "props": ["department", "showLabel"],
+      "createdAt": "2026-07-18",
+      "notes": "Extracted from Qentrah packages/ui."
+    },
+    {
+      "name": "DashboardPanel",
+      "path": "components/blocks/dashboard-panel.tsx",
+      "kind": "block",
+      "summary": "Multi-component dashboard overview block.",
+      "usedIn": ["Blocks docs"],
+      "props": ["title", "description", "progress", "empty", "className"],
+      "createdAt": "2026-07-18",
+      "notes": "Install with qentrah/DUI/blocks-dashboard-panel."
+    },
+    {
+      "name": "FilterToolbar",
+      "path": "components/blocks/filter-toolbar.tsx",
+      "kind": "block",
+      "summary": "Search + filter chips + tags block.",
+      "usedIn": ["Blocks docs"],
+      "props": ["defaultQuery", "defaultActiveKey", "onQueryChange", "onFilterChange"],
+      "createdAt": "2026-07-18",
+      "notes": "Install with qentrah/DUI/blocks-filter-toolbar."
+    },
+    {
+      "name": "MemberList",
+      "path": "components/blocks/member-list.tsx",
+      "kind": "block",
+      "summary": "Member directory composition block.",
+      "usedIn": ["Blocks docs"],
+      "props": ["members", "onMemberClick", "className"],
+      "createdAt": "2026-07-18",
+      "notes": "Install with qentrah/DUI/blocks-member-list."
+    }
+  ]
+}
+  ]
+}

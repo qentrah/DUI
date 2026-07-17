@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "separator",
+  "title": "Separator",
+  "description": "Horizontal and vertical content separator.",
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/separator.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction Separator({ orientation = \"horizontal\", className, ...props }: React.HTMLAttributes<HTMLDivElement> & { orientation?: \"horizontal\" | \"vertical\" }) {\n  return <div role=\"separator\" aria-orientation={orientation} className={cn(\"shrink-0 bg-zinc-200\", orientation === \"horizontal\" ? \"h-px w-full\" : \"h-full w-px\", className)} {...props} />\n}\n\nexport { Separator }\n",
+      "type": "registry:ui",
+      "target": "@ui/separator.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

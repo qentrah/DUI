@@ -1,0 +1,303 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "dui",
+  "homepage": "https://github.com/qentrah/DUI",
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "DUI Utilities",
+      "description": "Class name composition utilities used by DUI components.",
+      "dependencies": ["clsx", "tailwind-merge"],
+      "files": [
+        {
+          "path": "lib/utils.ts",
+          "type": "registry:lib",
+          "target": "@lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Accessible button variants with loading and size states.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Text input with labels, helper text and accessible error state.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "@ui/input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Compact status and category label variants.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "@ui/badge.tsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Composable card, header, content and footer primitives.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Semantic alert with success, warning and destructive variants.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "registry:ui",
+          "target": "@ui/alert.tsx"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "User identity image and fallback primitives.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/avatar.tsx", "type": "registry:ui", "target": "@ui/avatar.tsx"}]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Accessible native checkbox with custom styling.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/checkbox.tsx", "type": "registry:ui", "target": "@ui/checkbox.tsx"}]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Progress indicator for tasks and processes.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/progress.tsx", "type": "registry:ui", "target": "@ui/progress.tsx"}]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Horizontal and vertical content separator.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/separator.tsx", "type": "registry:ui", "target": "@ui/separator.tsx"}]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Animated loading placeholder.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/skeleton.tsx", "type": "registry:ui", "target": "@ui/skeleton.tsx"}]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Indefinite loading indicator.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/spinner.tsx", "type": "registry:ui", "target": "@ui/spinner.tsx"}]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Accessible controlled or uncontrolled toggle.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/switch.tsx", "type": "registry:ui", "target": "@ui/switch.tsx"}]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multiline text input.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/textarea.tsx", "type": "registry:ui", "target": "@ui/textarea.tsx"}]
+    },
+    {
+      "name": "filter-chip",
+      "type": "registry:ui",
+      "title": "FilterChip",
+      "description": "Toggleable filter control with optional counts and FilterChipBar.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/filter-chip.tsx", "type": "registry:ui", "target": "@ui/filter-chip.tsx"}]
+    },
+    {
+      "name": "status-pill",
+      "type": "registry:ui",
+      "title": "StatusPill",
+      "description": "Compact status label with tone, surface, and size variants.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/status-pill.tsx", "type": "registry:ui", "target": "@ui/status-pill.tsx"}]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "EmptyState",
+      "description": "Empty collection placeholder with icon, title, description, and action slot.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/empty-state.tsx", "type": "registry:ui", "target": "@ui/empty-state.tsx"}]
+    },
+    {
+      "name": "color-dot",
+      "type": "registry:ui",
+      "title": "ColorDot",
+      "description": "Small color indicator with optional label and ring.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/color-dot.tsx", "type": "registry:ui", "target": "@ui/color-dot.tsx"}]
+    },
+    {
+      "name": "tag-chip",
+      "type": "registry:ui",
+      "title": "TagChip",
+      "description": "Colored tag with optional remove action.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/tag-chip.tsx", "type": "registry:ui", "target": "@ui/tag-chip.tsx"}]
+    },
+    {
+      "name": "legend-item",
+      "type": "registry:ui",
+      "title": "LegendItem",
+      "description": "Chart or summary legend entry with color and value.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/legend-item.tsx", "type": "registry:ui", "target": "@ui/legend-item.tsx"}]
+    },
+    {
+      "name": "list-row",
+      "type": "registry:ui",
+      "title": "ListRow",
+      "description": "Single-line list row with leading, title, meta, and trailing slots.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/list-row.tsx", "type": "registry:ui", "target": "@ui/list-row.tsx"}]
+    },
+    {
+      "name": "list-item",
+      "type": "registry:ui",
+      "title": "ListItem",
+      "description": "Composable list item primitives for directories and feeds.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/list-item.tsx", "type": "registry:ui", "target": "@ui/list-item.tsx"}]
+    },
+    {
+      "name": "color-swatch",
+      "type": "registry:ui",
+      "title": "ColorSwatch",
+      "description": "Selectable color radio control for pickers.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/color-swatch.tsx", "type": "registry:ui", "target": "@ui/color-swatch.tsx"}]
+    },
+    {
+      "name": "status-badge",
+      "type": "registry:ui",
+      "title": "StatusBadge",
+      "description": "Table-friendly status badge with icons.",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/status-badge.tsx", "type": "registry:ui", "target": "@ui/status-badge.tsx"}]
+    },
+    {
+      "name": "department-dot",
+      "type": "registry:ui",
+      "title": "DepartmentDot",
+      "description": "Department color indicator built on ColorDot.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/color-dot"],
+      "files": [{"path": "components/ui/department-dot.tsx", "type": "registry:ui", "target": "@ui/department-dot.tsx"}]
+    },
+    {
+      "name": "blocks-dashboard-panel",
+      "type": "registry:block",
+      "title": "Dashboard Panel",
+      "description": "Installable multi-component dashboard overview block.",
+      "registryDependencies": [
+        "qentrah/DUI/utils",
+        "qentrah/DUI/card",
+        "qentrah/DUI/progress",
+        "qentrah/DUI/status-pill",
+        "qentrah/DUI/list-row",
+        "qentrah/DUI/legend-item",
+        "qentrah/DUI/empty-state",
+        "qentrah/DUI/badge",
+        "qentrah/DUI/button"
+      ],
+      "files": [{"path": "components/blocks/dashboard-panel.tsx", "type": "registry:block", "target": "@ui/blocks/dashboard-panel.tsx"}]
+    },
+    {
+      "name": "blocks-filter-toolbar",
+      "type": "registry:block",
+      "title": "Filter Toolbar",
+      "description": "Installable search and filter toolbar block.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "qentrah/DUI/utils",
+        "qentrah/DUI/input",
+        "qentrah/DUI/filter-chip",
+        "qentrah/DUI/tag-chip"
+      ],
+      "files": [{"path": "components/blocks/filter-toolbar.tsx", "type": "registry:block", "target": "@ui/blocks/filter-toolbar.tsx"}]
+    },
+    {
+      "name": "blocks-member-list",
+      "type": "registry:block",
+      "title": "Member List",
+      "description": "Installable member directory block.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "qentrah/DUI/utils",
+        "qentrah/DUI/list-item",
+        "qentrah/DUI/status-badge",
+        "qentrah/DUI/department-dot",
+        "qentrah/DUI/button"
+      ],
+      "files": [{"path": "components/blocks/member-list.tsx", "type": "registry:block", "target": "@ui/blocks/member-list.tsx"}]
+    }
+  ]
+}

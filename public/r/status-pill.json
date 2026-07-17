@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-pill",
+  "title": "StatusPill",
+  "description": "Compact status label with tone, surface, and size variants.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/status-pill.tsx",
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst statusPillVariants = cva(\n  \"inline-flex items-center gap-1 rounded-full border font-semibold uppercase tracking-wider whitespace-nowrap\",\n  {\n    variants: {\n      tone: {\n        success: \"\",\n        warning: \"\",\n        danger: \"\",\n        info: \"\",\n        neutral: \"\"\n      },\n      variant: {\n        soft: \"\",\n        solid: \"\",\n        outline: \"\"\n      },\n      size: {\n        sm: \"px-2 py-0.5 text-[10px]\",\n        md: \"px-2.5 py-0.5 text-[11px]\"\n      }\n    },\n    compoundVariants: [\n      { tone: \"success\", variant: \"soft\", class: \"bg-emerald-500/10 text-emerald-700 border-emerald-500/20\" },\n      { tone: \"warning\", variant: \"soft\", class: \"bg-amber-500/10 text-amber-700 border-amber-500/20\" },\n      { tone: \"danger\", variant: \"soft\", class: \"bg-rose-500/10 text-rose-700 border-rose-500/20\" },\n      { tone: \"info\", variant: \"soft\", class: \"bg-sky-500/10 text-sky-700 border-sky-500/20\" },\n      { tone: \"neutral\", variant: \"soft\", class: \"bg-zinc-500/10 text-zinc-700 border-zinc-500/20\" },\n      { tone: \"success\", variant: \"solid\", class: \"bg-emerald-500 text-white border-emerald-500\" },\n      { tone: \"warning\", variant: \"solid\", class: \"bg-amber-500 text-white border-amber-500\" },\n      { tone: \"danger\", variant: \"solid\", class: \"bg-rose-500 text-white border-rose-500\" },\n      { tone: \"info\", variant: \"solid\", class: \"bg-sky-500 text-white border-sky-500\" },\n      { tone: \"neutral\", variant: \"solid\", class: \"bg-zinc-500 text-white border-zinc-500\" },\n      { tone: \"success\", variant: \"outline\", class: \"bg-transparent border-emerald-500 text-emerald-700\" },\n      { tone: \"warning\", variant: \"outline\", class: \"bg-transparent border-amber-500 text-amber-700\" },\n      { tone: \"danger\", variant: \"outline\", class: \"bg-transparent border-rose-500 text-rose-700\" },\n      { tone: \"info\", variant: \"outline\", class: \"bg-transparent border-sky-500 text-sky-700\" },\n      { tone: \"neutral\", variant: \"outline\", class: \"bg-transparent border-zinc-500 text-zinc-700\" }\n    ],\n    defaultVariants: { tone: \"neutral\", variant: \"soft\", size: \"md\" }\n  }\n)\n\nexport interface StatusPillProps\n  extends Omit<React.HTMLAttributes<HTMLSpanElement>, \"children\">,\n    VariantProps<typeof statusPillVariants> {\n  label: React.ReactNode\n  icon?: React.ReactNode\n}\n\nconst StatusPill = React.forwardRef<HTMLSpanElement, StatusPillProps>(\n  ({ tone = \"neutral\", label, icon, size = \"md\", variant = \"soft\", className, ...props }, ref) => {\n    return (\n      <span ref={ref} className={cn(statusPillVariants({ tone, variant, size }), className)} {...props}>\n        {icon}\n        {label}\n      </span>\n    )\n  }\n)\nStatusPill.displayName = \"StatusPill\"\n\nexport { StatusPill, statusPillVariants }\n",
+      "type": "registry:ui",
+      "target": "@ui/status-pill.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

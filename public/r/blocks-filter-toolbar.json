@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-filter-toolbar",
+  "title": "Filter Toolbar",
+  "description": "Installable search and filter toolbar block.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/input",
+    "qentrah/DUI/filter-chip",
+    "qentrah/DUI/tag-chip"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/filter-toolbar.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Search } from \"lucide-react\"\n\nimport { FilterChipBar } from \"@/components/ui/filter-chip\"\nimport { Input } from \"@/components/ui/input\"\nimport { TagChip } from \"@/components/ui/tag-chip\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface FilterToolbarProps {\n  className?: string\n  defaultQuery?: string\n  defaultActiveKey?: string\n  onQueryChange?: (value: string) => void\n  onFilterChange?: (key: string) => void\n}\n\n/**\n * Block: searchable filter toolbar composed from Input, FilterChipBar, and TagChip.\n */\nexport function FilterToolbar({\n  className,\n  defaultQuery = \"\",\n  defaultActiveKey = \"all\",\n  onQueryChange,\n  onFilterChange\n}: FilterToolbarProps) {\n  const [query, setQuery] = React.useState(defaultQuery)\n  const [activeKey, setActiveKey] = React.useState(defaultActiveKey)\n\n  return (\n    <div className={cn(\"space-y-4 rounded-2xl border border-border bg-card p-4 shadow-sm\", className)}>\n      <div className=\"relative\">\n        <Search className=\"pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400\" />\n        <Input\n          className=\"ps-9\"\n          placeholder=\"Search projects, clients, tasks…\"\n          value={query}\n          onChange={(event) => {\n            setQuery(event.target.value)\n            onQueryChange?.(event.target.value)\n          }}\n        />\n      </div>\n      <FilterChipBar\n        activeKey={activeKey}\n        onChange={(key) => {\n          setActiveKey(key)\n          onFilterChange?.(key)\n        }}\n        chips={[\n          { key: \"all\", label: \"All\", count: 48 },\n          { key: \"mine\", label: \"Mine\", count: 12 },\n          { key: \"blocked\", label: \"Blocked\", count: 3 },\n          { key: \"done\", label: \"Done\", count: 19 }\n        ]}\n      />\n      <div className=\"flex flex-wrap gap-2\">\n        <TagChip tone=\"blue\" label=\"Design\" />\n        <TagChip tone=\"green\" label=\"Delivery\" />\n        <TagChip tone=\"amber\" label=\"Billing\" removable onRemove={() => undefined} />\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/filter-toolbar.tsx"
+    }
+  ],
+  "type": "registry:block"
+}
