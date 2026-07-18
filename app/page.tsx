@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, BookOpen, Boxes, FolderTree, Github } from "lucide-react"
+import { ArrowRight, BookOpen, Boxes, Layout, Sparkles, Github } from "lucide-react"
 
 import { CopyCommand } from "@/components/site/copy-command"
 
@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils"
 const features = [
   { icon: BookOpen, href: "/docs", en: "Documentation", ar: "التوثيق", detail: "Installation, theming and usage." },
   { icon: Boxes, href: "/components", en: "Components", ar: "المكوّنات", detail: "Browse and preview every primitive." },
-  { icon: FolderTree, href: "/folder", en: "Folder", ar: "المجلدات", detail: "Understand the source structure." },
-  { icon: Github, href: "https://github.com/qentrah/DUI", en: "GitHub", ar: "GitHub", detail: "Review source and contribute." }
+  { icon: Layout, href: "/blocks", en: "Blocks", ar: "بلوكس", detail: "Explore responsive pre-built layout blocks." },
+  { icon: Sparkles, href: "/skills", en: "Skills", ar: "المهارات", detail: "Install reusable agent workflow templates." }
 ]
 
 export default function HomePage() {

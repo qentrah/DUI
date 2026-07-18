@@ -1,16 +1,20 @@
 import Link from "next/link"
 
-import { DocsShell } from "@/components/docs/docs-shell"
-import { componentCatalog } from "@/lib/catalog"
+import { SectionShell } from "@/components/site/section-shell"
+import { componentCatalog, getDocsNavGroups } from "@/lib/catalog"
 
 export default function ComponentsPage() {
   const newItems = componentCatalog.slice(-8)
 
   return (
-    <DocsShell active="components" onThisPage={[
-      { label: "New Components", href: "#new-components" },
-      { label: "All Components", href: "#all-components" }
-    ]}>
+    <SectionShell
+      active="components"
+      navGroups={getDocsNavGroups()}
+      onThisPage={[
+        { label: "New Components", href: "#new-components" },
+        { label: "All Components", href: "#all-components" }
+      ]}
+    >
       <div className="mx-auto max-w-4xl">
         <h1 className="text-4xl font-semibold tracking-[-0.04em]">Components</h1>
         <p className="mt-4 max-w-xl leading-7 text-zinc-400">
@@ -39,6 +43,6 @@ export default function ComponentsPage() {
           </div>
         </section>
       </div>
-    </DocsShell>
+    </SectionShell>
   )
 }

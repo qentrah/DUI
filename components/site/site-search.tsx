@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { BookOpen, Boxes, FileText, Search } from "lucide-react"
+import { BookOpen, Boxes, FileText, Search, Sparkles } from "lucide-react"
 
 import { componentCatalog } from "@/lib/catalog"
 
@@ -12,7 +12,7 @@ const pages = [
   { label: "Theming", description: "Zinc tokens and customization", href: "/docs#theming", icon: FileText },
   { label: "RTL and Arabic", description: "Direction and bilingual interfaces", href: "/docs#rtl", icon: FileText },
   { label: "Component directory", description: "Browse every DUI component", href: "/components", icon: Boxes },
-  { label: "Folder structure", description: "Repository architecture", href: "/folder", icon: FileText }
+  { label: "Skills", description: "Install reusable agent workflows", href: "/skills", icon: Sparkles }
 ]
 
 const searchableItems = [
@@ -38,13 +38,25 @@ export function SiteSearch() {
     return () => document.removeEventListener("mousedown", close)
   }, [])
 
+  React.useEffect(() => {
+    function handleShortcut(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault()
+        setOpen(true)
+        requestAnimationFrame(() => rootRef.current?.querySelector<HTMLInputElement>("input")?.focus())
+      }
+    }
+    window.addEventListener("keydown", handleShortcut)
+    return () => window.removeEventListener("keydown", handleShortcut)
+  }, [])
+
   const normalized = query.trim().toLowerCase()
   const results = searchableItems
     .filter((item) => !normalized || `${item.label} ${item.description}`.toLowerCase().includes(normalized))
     .slice(0, 8)
 
   return (
-    <div ref={rootRef} className="relative hidden w-full max-w-xs lg:block">
+    <div ref={rootRef} className="relative w-full max-w-xs">
       <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-zinc-500" />
       <input
         value={query}
@@ -56,10 +68,11 @@ export function SiteSearch() {
         onKeyDown={(event) => {
           if (event.key === "Escape") setOpen(false)
         }}
-        placeholder="Search documentation..."
+        placeholder="Search DUI..."
         aria-label="Search documentation"
-        className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-900 ps-9 pe-3 text-sm text-zinc-200 outline-none placeholder:text-zinc-500 focus:border-zinc-700 focus:ring-1 focus:ring-zinc-700"
+        className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-900 ps-9 pe-12 text-sm text-zinc-200 outline-none placeholder:text-zinc-500 focus:border-zinc-700 focus:ring-1 focus:ring-zinc-700"
       />
+      <kbd className="pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 rounded border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400">⌘K</kbd>
       {open && (
         <div className="absolute end-0 top-11 z-50 w-[360px] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 p-2 shadow-2xl">
           <p className="px-2 pb-2 pt-1 text-xs font-medium text-zinc-500">{normalized ? "Search results" : "Quick links"}</p>

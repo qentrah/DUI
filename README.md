@@ -24,10 +24,16 @@ DUI is the design system and [shadcn](https://ui.shadcn.com/) registry maintaine
 Initialize shadcn in an existing React project:
 
 ```bash
-npx shadcn@latest init
+npx @qentrah/dui init
 ```
 
-Add a DUI component directly from the GitHub registry:
+Add a DUI component using the npm shortcut:
+
+```bash
+npx @qentrah/dui add button
+```
+
+You can also use the shadcn CLI directly:
 
 ```bash
 npx shadcn@latest add qentrah/DUI/button
@@ -36,13 +42,13 @@ npx shadcn@latest add qentrah/DUI/button
 You can install multiple items:
 
 ```bash
-npx shadcn@latest add qentrah/DUI/button qentrah/DUI/input qentrah/DUI/card
+npx @qentrah/dui add button input card
 ```
 
 Preview an installation without writing files:
 
 ```bash
-npx shadcn@latest add qentrah/DUI/button --dry-run
+npx @qentrah/dui add button --dry-run
 ```
 
 Pin a release or commit for reproducible installations:

@@ -8,8 +8,7 @@ import {
   Smartphone, 
   Lock,
   Calendar,
-  CreditCard,
-  Sparkles
+  CreditCard
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"

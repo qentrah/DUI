@@ -1,101 +1,82 @@
 "use client"
 
+import * as React from "react"
 import Link from "next/link"
 import { X } from "lucide-react"
 
-import { componentCatalog, blockCatalog } from "@/lib/catalog"
 import { useLocale } from "@/components/site/locale-provider"
 import { cn } from "@/lib/utils"
 
-const gettingStarted = [
-  { label: "Introduction", href: "/docs" },
-  { label: "Installation", href: "/docs#installation" },
-  { label: "Theming", href: "/docs#theming" },
-  { label: "CLI", href: "/docs#cli" },
-  { label: "RTL and Arabic", href: "/docs#rtl" },
-  { label: "Registry", href: "/docs#registry" }
-]
+interface LinkItem {
+  label: string
+  href: string
+}
+
+interface NavGroup {
+  title: string
+  links: readonly LinkItem[] | LinkItem[]
+}
+
+interface SectionShellProps {
+  children: React.ReactNode
+  active?: string
+  onThisPage?: Array<{ label: string; href: string }>
+  navGroups: NavGroup[]
+}
 
 function SidebarContent({
   active,
+  navGroups,
   onNavigate
 }: {
   active?: string
+  navGroups: NavGroup[]
   onNavigate?: () => void
 }) {
   const linkClass = (isActive: boolean) =>
     cn(
       "block rounded-md px-2 py-1.5 text-sm transition-colors",
       isActive
-        ? "font-medium text-foreground"
+        ? "font-medium text-foreground bg-accent/40"
         : "text-muted-foreground hover:text-foreground"
     )
 
   return (
     <div className="space-y-6">
-      {/* Getting started */}
-      <div>
-        <p className="mb-2 px-2 text-sm font-semibold text-foreground">Getting Started</p>
-        <nav className="space-y-0.5">
-          {gettingStarted.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={onNavigate}
-              className={linkClass(active === link.label.toLowerCase())}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
+      {navGroups.map((group) => (
+        <div key={group.title}>
+          <p className="mb-2 px-2 text-sm font-semibold text-foreground">{group.title}</p>
+          <nav className="space-y-0.5">
+            {group.links.map((link) => {
+              const isUrlActive =
+                active === link.label.toLowerCase() ||
+                active === link.href.split("/").pop() ||
+                (link.href.includes("#") && active === link.href.split("#")[1])
 
-      {/* Components */}
-      <div>
-        <p className="mb-2 px-2 text-sm font-semibold text-foreground">Components</p>
-        <nav className="space-y-0.5">
-          {componentCatalog.map((item) => (
-            <Link
-              key={item.slug}
-              href={`/components/${item.slug}`}
-              onClick={onNavigate}
-              className={linkClass(active === item.slug)}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      {/* Blocks */}
-      <div>
-        <p className="mb-2 px-2 text-sm font-semibold text-foreground">Blocks</p>
-        <nav className="space-y-0.5 pb-8">
-          {blockCatalog.map((item) => (
-            <Link
-              key={item.slug}
-              href={`/blocks/${item.slug}`}
-              onClick={onNavigate}
-              className={linkClass(active === item.slug)}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </div>
+              return (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={onNavigate}
+                  className={linkClass(isUrlActive)}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+      ))}
     </div>
   )
 }
 
-export function DocsShell({
+export function SectionShell({
   children,
   active,
-  onThisPage = []
-}: {
-  children: React.ReactNode
-  active?: string
-  onThisPage?: Array<{ label: string; href: string }>
-}) {
+  onThisPage = [],
+  navGroups
+}: SectionShellProps) {
   const { sidebarOpen, setSidebarOpen } = useLocale()
 
   return (
@@ -112,7 +93,7 @@ export function DocsShell({
             
             {/* Scrollable area */}
             <div className="h-full overflow-y-auto py-6 pe-4 ps-2">
-              <SidebarContent active={active} />
+              <SidebarContent active={active} navGroups={navGroups} />
             </div>
             
             {/* Bottom gradient fade */}
@@ -127,20 +108,22 @@ export function DocsShell({
 
         {/* Right sidebar — On This Page */}
         <aside className="hidden px-4 py-10 xl:block">
-          <div className="sticky top-20">
-            <p className="mb-3 text-sm font-semibold text-foreground">On This Page</p>
-            <nav className="space-y-2">
-              {onThisPage.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-          </div>
+          {onThisPage.length > 0 && (
+            <div className="sticky top-20">
+              <p className="mb-3 text-sm font-semibold text-foreground">On This Page</p>
+              <nav className="space-y-2">
+                {onThisPage.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
         </aside>
       </div>
 
@@ -179,7 +162,11 @@ export function DocsShell({
 
             {/* Scrollable area */}
             <div className="h-full overflow-y-auto py-2">
-              <SidebarContent active={active} onNavigate={() => setSidebarOpen(false)} />
+              <SidebarContent
+                active={active}
+                navGroups={navGroups}
+                onNavigate={() => setSidebarOpen(false)}
+              />
             </div>
 
             {/* Bottom gradient fade */}

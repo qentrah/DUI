@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { BookOpen, ChevronDown, FolderTree, Github, Languages, Menu } from "lucide-react"
+import { BookOpen, ChevronDown, Github, Languages, Menu, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { useLocale } from "@/components/site/locale-provider"
@@ -11,7 +11,7 @@ import { componentCatalog } from "@/lib/catalog"
 
 const navigation = [
   { href: "/docs", en: "Documentation", ar: "التوثيق", icon: BookOpen },
-  { href: "/folder", en: "Folder", ar: "المجلدات", icon: FolderTree }
+  { href: "/skills", en: "Skills", ar: "المهارات", icon: Sparkles }
 ]
 
 export function SiteHeader() {

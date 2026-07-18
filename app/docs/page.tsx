@@ -1,18 +1,23 @@
 import Link from "next/link"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 
-import { DocsShell } from "@/components/docs/docs-shell"
+import { SectionShell } from "@/components/site/section-shell"
 import { CopyCommand } from "@/components/site/copy-command"
+import { getDocsNavGroups } from "@/lib/catalog"
 
 export default function DocsPage() {
   return (
-    <DocsShell active="introduction" onThisPage={[
-      { label: "Installation", href: "#installation" },
-      { label: "Project setup", href: "#setup" },
-      { label: "Theming", href: "#theming" },
-      { label: "RTL and Arabic", href: "#rtl" },
-      { label: "Registry", href: "#registry" }
-    ]}>
+    <SectionShell
+      active="introduction"
+      navGroups={getDocsNavGroups()}
+      onThisPage={[
+        { label: "Installation", href: "#installation" },
+        { label: "Project setup", href: "#setup" },
+        { label: "Theming", href: "#theming" },
+        { label: "RTL and Arabic", href: "#rtl" },
+        { label: "Registry", href: "#registry" }
+      ]}
+    >
       <p className="text-sm font-medium text-zinc-500">Getting started</p>
       <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">Documentation</h1>
       <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-400">
@@ -67,6 +72,6 @@ export default function DocsPage() {
           Browse components <ArrowRight className="size-4" />
         </Link>
       </section>
-    </DocsShell>
+    </SectionShell>
   )
 }

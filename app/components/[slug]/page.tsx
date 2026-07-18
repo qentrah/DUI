@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation"
 
 import { ComponentWorkbench } from "@/components/library/component-workbench"
-import { DocsShell } from "@/components/docs/docs-shell"
-import { componentCatalog, getComponent } from "@/lib/catalog"
+import { SectionShell } from "@/components/site/section-shell"
+import { componentCatalog, getComponent, getDocsNavGroups } from "@/lib/catalog"
 
 export function generateStaticParams() {
   return componentCatalog.map((item) => ({ slug: item.slug }))
@@ -14,11 +14,15 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   if (!item) notFound()
 
   return (
-    <DocsShell active={item.slug} onThisPage={[
-      { label: "Preview", href: "#preview" },
-      { label: "Installation", href: "#installation" },
-      { label: "Usage", href: "#usage" }
-    ]}>
+    <SectionShell
+      active={item.slug}
+      navGroups={getDocsNavGroups()}
+      onThisPage={[
+        { label: "Preview", href: "#preview" },
+        { label: "Installation", href: "#installation" },
+        { label: "Usage", href: "#usage" }
+      ]}
+    >
       <div className="mx-auto max-w-4xl">
         <p className="text-sm font-medium text-muted-foreground">Components / {item.category}</p>
         <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em]">{item.name}</h1>
@@ -32,6 +36,6 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </p>
         </section>
       </div>
-    </DocsShell>
+    </SectionShell>
   )
 }

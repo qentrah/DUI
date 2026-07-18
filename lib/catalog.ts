@@ -46,8 +46,134 @@ export const blockCatalog = [
   }
 ] as const
 
+export const skillCatalog = [
+  {
+    slug: "design-critique",
+    name: "Design Critique",
+    category: "Product & design",
+    description: "Evaluate a screen against product goals, accessibility, and system consistency.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-design-critique",
+    content: `# Design Critique
+Evaluate the user interface and user experience of a given screen or mockup.
+1. Check compliance with the design system primitives and guidelines.
+2. Ensure color contrast satisfies WCAG AA requirements.
+3. Review logical ordering of interactive elements.
+4. Suggest concrete improvement actions.`
+  },
+  {
+    slug: "ui-implementation",
+    name: "UI Implementation",
+    category: "Product & design",
+    description: "Turn a reviewed interface into a responsive React implementation.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-ui-implementation",
+    content: `# UI Implementation
+Take a design review or mockup and output a React component.
+1. Use only existing DUI primitives (Button, Input, Card, etc.).
+2. Do not define custom ad-hoc CSS classes or write separate stylesheet blocks.
+3. Ensure logical properties are used for RTL compatibility (e.g. \`ms-*\` and \`pe-*\`).
+4. Make the layout responsive for mobile, tablet, and desktop views.`
+  },
+  {
+    slug: "content-design",
+    name: "Content Design",
+    category: "Product & design",
+    description: "Write concise, product-ready interface copy and empty states.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-content-design",
+    content: `# Content Design
+Audit and write product interface copy.
+1. Ensure empty states are welcoming, clear, and action-oriented.
+2. Keep labels, helpers, and descriptive text concise and scannable.
+3. Provide translation-friendly copy layouts.
+4. Check tone consistency across headers, buttons, and status states.`
+  },
+  {
+    slug: "code-review",
+    name: "Code Review",
+    category: "Engineering",
+    description: "Review changes for correctness, maintainability, and production risk.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-code-review",
+    content: `# Code Review
+Review proposed code diffs.
+1. Check for proper TypeScript typings and interfaces.
+2. Ensure imported packages are approved and declared in package dependencies.
+3. Identify possible runtime error paths and edge cases.
+4. Enforce consistent code style and alignment guidelines.`
+  },
+  {
+    slug: "release-readiness",
+    name: "Release Readiness",
+    category: "Engineering",
+    description: "Verify metadata, routing, performance, and deployment settings.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-release-readiness",
+    content: `# Release Readiness
+Validate release prerequisites before publishing to production.
+1. Audit page titles, metadata tags, and open graph configs.
+2. Verify routing files conform to App Router conventions.
+3. Check public assets structure and optimization flags.`
+  },
+  {
+    slug: "repository-guide",
+    name: "Repository Guide",
+    category: "Engineering",
+    description: "Teach agents where source, registry items, and documentation belong.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-repository-guide",
+    content: `# Repository Guide
+Provide architectural context for contributors and automated agents.
+1. Component source lives in \`components/ui/\`.
+2. Block layouts live in \`components/blocks/\`.
+3. Installable registry definitions are compiled into \`public/r/\` from \`registry.json\`.
+4. Standard documentation resides under \`app/docs/\`.`
+  },
+  {
+    slug: "architecture-guardian",
+    name: "Architecture Guardian",
+    category: "Architecture",
+    description: "Protect Qentrah data models, domain interfaces, indexes, and backend ownership before broad implementation.",
+    ownership: "qentrah",
+    creator: { name: "Ahmed Mansour", github: "https://github.com/Up-to-code" },
+    repository: "https://github.com/qentrah/skill-architecture-guardian",
+    content: `# Qentrah Architecture Guardian
+Use this skill before designing, reviewing, refactoring, or implementing Qentrah schema, backend modules, domain folders, saved views, configurable workflows, or reusable architecture.
+
+1. Read the repository context and architecture rules before making broad changes.
+2. Keep business data organization-rooted and ensure high-traffic query paths have tenant-first indexes.
+3. Keep Convex domain modules responsible for data, policy, reads, writes, presentation, and lifecycle; Hono routes remain adapters.
+4. Produce a migration-aware architecture plan before changes that affect schema, authorization, workflow configuration, or multiple domains.`
+  }
+] as const
+
+export const referencedSkillCatalog = [
+  {
+    name: "Improve Codebase Architecture",
+    category: "Architecture",
+    description: "Find deepening opportunities in a codebase using domain language and architectural decision records.",
+    creator: "Matt Pocock",
+    repository: "https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture"
+  },
+  {
+    name: "Uncodixify",
+    category: "Product & design",
+    description: "Avoid generic AI-generated UI patterns and produce more deliberate, human-designed interfaces.",
+    creator: "cyxzdev",
+    repository: "https://github.com/cyxzdev/uncodixfy"
+  }
+] as const
+
 export type ComponentSlug = (typeof componentCatalog)[number]["slug"]
 export type BlockSlug = (typeof blockCatalog)[number]["slug"]
+export type SkillSlug = (typeof skillCatalog)[number]["slug"]
 
 export function getComponent(slug: string) {
   return componentCatalog.find((item) => item.slug === slug)
@@ -55,4 +181,68 @@ export function getComponent(slug: string) {
 
 export function getBlock(slug: string) {
   return blockCatalog.find((item) => item.slug === slug)
+}
+
+export function getSkill(slug: string) {
+  return skillCatalog.find((item) => item.slug === slug)
+}
+
+// Navigation builders for the split layout
+export function getDocsNavGroups() {
+  return [
+    {
+      title: "Getting Started",
+      links: [
+        { label: "Introduction", href: "/docs" },
+        { label: "Installation", href: "/docs#installation" },
+        { label: "Theming", href: "/docs#theming" },
+        { label: "CLI", href: "/docs#cli" },
+        { label: "RTL and Arabic", href: "/docs#rtl" },
+        { label: "Registry", href: "/docs#registry" }
+      ]
+    },
+    {
+      title: "Components",
+      links: componentCatalog.map((item) => ({
+        label: item.name,
+        href: `/components/${item.slug}`
+      }))
+    }
+  ]
+}
+
+export function getBlocksNavGroups() {
+  return [
+    {
+      title: "Overview",
+      links: [
+        { label: "Introduction", href: "/blocks" }
+      ]
+    },
+    {
+      title: "Layout Blocks",
+      links: blockCatalog.map((item) => ({
+        label: item.name,
+        href: `/blocks/${item.slug}`
+      }))
+    }
+  ]
+}
+
+export function getSkillsNavGroups() {
+  return [
+    {
+      title: "Overview",
+      links: [
+        { label: "Introduction", href: "/skills" }
+      ]
+    },
+    {
+      title: "Skills Catalog",
+      links: skillCatalog.map((item) => ({
+        label: item.name,
+        href: `/skills/${item.slug}`
+      }))
+    }
+  ]
 }
