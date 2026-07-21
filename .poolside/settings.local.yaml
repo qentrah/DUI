@@ -1,0 +1,19 @@
+tools:
+    shell:
+        allow:
+            - find *
+            - head *
+            - ls *
+            - grep *
+            - cd *
+            - npx tsc *
+            - npm run *
+            - tail *
+            - sleep 3
+            - echo *
+            - rm *
+            - mv *
+            - xargs *
+paths:
+    allow:
+        - path: /var/folders/8b/5h9d2q1j1fd32dnjq1b5kjbh0000gn/T/**

@@ -6,37 +6,48 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const filterChipVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-lg border font-bold tracking-wide transition-all",
+  "filter-chip inline-flex items-center gap-1.5 rounded-xl border font-medium tracking-wide transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20",
   {
     variants: {
       size: {
         sm: "px-2.5 py-1 text-[10px]",
         md: "px-3.5 py-1.5 text-[11px]",
-        lg: "px-5 py-2 text-[11px]"
+        lg: "px-5 py-2 text-[11px]",
       },
-      active: {
-        true: "border-primary bg-primary text-primary-foreground shadow-sm",
-        false: "border-zinc-800 bg-zinc-900 text-muted-foreground hover:border-zinc-700 hover:bg-zinc-800 hover:text-foreground"
-      }
+      isSelected: {
+        true: "border-primary bg-primary text-primary-foreground shadow-md",
+        false: "border-border bg-surface text-muted-foreground hover:border-border-hover hover:bg-surface-secondary hover:text-foreground",
+      },
     },
-    defaultVariants: { size: "md", active: false }
+    defaultVariants: { size: "md", isSelected: false },
   }
 )
 
 export interface FilterChipProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color">,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color" | "onClick">,
     VariantProps<typeof filterChipVariants> {
+  /** Whether the chip is selected */
+  isSelected?: boolean
+  /** Whether the chip is disabled */
+  isDisabled?: boolean
+  /** Count to display in the chip */
   count?: number
+  /** Handler called when the chip is pressed */
+  onPress?: () => void
 }
 
 const FilterChip = React.forwardRef<HTMLButtonElement, FilterChipProps>(
-  ({ active = false, size = "md", count, className, children, ...props }, ref) => {
+  ({ isSelected = false, size = "md", count, className, children, onPress, isDisabled, ...props }, ref) => {
     return (
       <button
         ref={ref}
         type="button"
-        aria-pressed={Boolean(active)}
-        className={cn(filterChipVariants({ size, active: Boolean(active) }), className)}
+        role="checkbox"
+        aria-checked={isSelected}
+        aria-disabled={isDisabled}
+        disabled={isDisabled}
+        onClick={onPress}
+        className={cn(filterChipVariants({ size, isSelected: Boolean(isSelected) }), className)}
         {...props}
       >
         {children}
@@ -44,7 +55,9 @@ const FilterChip = React.forwardRef<HTMLButtonElement, FilterChipProps>(
           <span
             className={cn(
               "rounded-full px-1.5 text-[9px] font-bold",
-              active ? "bg-primary-foreground/20 text-primary-foreground" : "bg-zinc-800 text-muted-foreground"
+              isSelected
+                ? "bg-primary-foreground/20 text-primary-foreground"
+                : "bg-surface-secondary text-muted-foreground"
             )}
           >
             {count}
@@ -58,20 +71,20 @@ FilterChip.displayName = "FilterChip"
 
 export interface FilterChipBarProps {
   chips: Array<{ key: string; label: string; count?: number }>
-  activeKey: string
+  selectedKey: string
   onChange: (key: string) => void
   size?: "sm" | "md" | "lg"
   className?: string
 }
 
-function FilterChipBar({ chips, activeKey, onChange, size = "md", className }: FilterChipBarProps) {
+function FilterChipBar({ chips, selectedKey, onChange, size = "md", className }: FilterChipBarProps) {
   return (
     <div className={cn("flex flex-wrap gap-2", className)} role="group">
       {chips.map((chip) => (
         <FilterChip
           key={chip.key}
-          active={activeKey === chip.key}
-          onClick={() => onChange(chip.key)}
+          isSelected={selectedKey === chip.key}
+          onPress={() => onChange(chip.key)}
           size={size}
           count={chip.count}
         >
@@ -81,5 +94,6 @@ function FilterChipBar({ chips, activeKey, onChange, size = "md", className }: F
     </div>
   )
 }
+FilterChipBar.displayName = "FilterChipBar"
 
 export { FilterChip, FilterChipBar, filterChipVariants }

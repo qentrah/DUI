@@ -22,27 +22,40 @@ export const componentCatalog = [
   { slug: "list-item", name: "ListItem", category: "Layout", description: "Composable list item primitives for directories." },
   { slug: "color-swatch", name: "ColorSwatch", category: "Forms", description: "Selectable color radio control." },
   { slug: "status-badge", name: "StatusBadge", category: "Data display", description: "Table-friendly status badge with icons." },
-  { slug: "department-dot", name: "DepartmentDot", category: "Data display", description: "Department color indicator built on ColorDot." }
+  { slug: "department-dot", name: "DepartmentDot", category: "Data display", description: "Department color indicator built on ColorDot." },
+  { slug: "five-icon", name: "FiveIcon", category: "Data display", description: "Icon container with themeable color variants." }
 ] as const
 
 export const blockCatalog = [
   {
-    slug: "dashboard-panel",
-    name: "Dashboard Panel",
-    description: "Overview card block with progress, legend, list rows, and actions.",
-    components: ["card", "progress", "status-pill", "list-row", "legend-item", "empty-state", "badge", "button"]
+    slug: "sign-in",
+    name: "Sign In Form",
+    description: "Authentication form with OAuth providers and email/password fields.",
+    components: ["card", "input", "button", "separator", "badge"]
   },
   {
-    slug: "filter-toolbar",
-    name: "Filter Toolbar",
-    description: "Search, filter chips, and tags for resource indexes.",
-    components: ["input", "filter-chip", "tag-chip"]
+    slug: "session",
+    name: "Session Block",
+    description: "User session display with status indicator and sign out action.",
+    components: ["card", "avatar", "badge", "button", "status-pill"]
   },
   {
-    slug: "member-list",
-    name: "Member List",
-    description: "Directory list using list items, status badges, and department dots.",
-    components: ["list-item", "status-badge", "department-dot", "button"]
+    slug: "hero-simple",
+    name: "Hero Simple",
+    description: "Simple hero section with title, description, and primary action.",
+    components: ["card", "badge", "button"]
+  },
+  {
+    slug: "hero-centered",
+    name: "Hero Centered",
+    description: "Centered hero section with badges and dual actions.",
+    components: ["card", "badge", "button"]
+  },
+  {
+    slug: "color-filter",
+    name: "Color Filter",
+    description: "Theme color picker with component preview.",
+    components: ["card", "badge", "tag-chip", "color-swatch"]
   }
 ] as const
 

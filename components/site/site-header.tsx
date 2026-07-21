@@ -11,7 +11,7 @@ import { componentCatalog } from "@/lib/catalog"
 
 const navigation = [
   { href: "/docs", en: "Documentation", ar: "التوثيق", icon: BookOpen },
-  { href: "/skills", en: "Skills", ar: "المهارات", icon: Sparkles }
+  { href: "/skills", en: "Skills", ar: "المهارات", icon: Sparkles },
 ]
 
 export function SiteHeader() {
@@ -23,7 +23,7 @@ export function SiteHeader() {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => setSidebarOpen((prev) => !prev)}
+          onPress={() => setSidebarOpen((prev) => !prev)}
           className="inline-flex size-9 items-center justify-center p-0 lg:hidden border border-border bg-card hover:bg-accent text-foreground"
           aria-label="Toggle navigation menu"
         >
@@ -43,24 +43,31 @@ export function SiteHeader() {
             {isArabic ? "التوثيق" : "Documentation"}
           </Link>
           <div className="group/menu relative">
-            <Link href="/components" className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-muted-foreground transition hover:bg-accent hover:text-accent-foreground">
+            <Link
+              href="/components"
+              className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm text-muted-foreground transition hover:bg-accent hover:text-accent-foreground"
+            >
               {isArabic ? "المكوّنات" : "Components"}
               <ChevronDown className="size-3.5 transition group-hover/menu:rotate-180" />
             </Link>
             <div className="pointer-events-none invisible absolute start-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2 opacity-0 transition duration-150 group-hover/menu:pointer-events-auto group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:pointer-events-auto group-focus-within/menu:visible group-focus-within/menu:opacity-100">
-             <div className="rounded-xl border border-border bg-popover p-2 shadow-2xl">
-              <Link href="/components" className="mb-1 block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent">
-                {isArabic ? "عرض جميع المكوّنات" : "Browse all components"}
-              </Link>
-              <div className="h-px bg-border" />
-              <div className="grid grid-cols-2 gap-1 pt-1">
-                {componentCatalog.map((item) => (
-                  <Link key={item.slug} href={`/components/${item.slug}`} className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground">
-                    {item.name}
-                  </Link>
-                ))}
+              <div className="rounded-xl border border-border bg-popover p-2 shadow-2xl">
+                <Link href="/components" className="mb-1 block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent">
+                  {isArabic ? "عرض جميع المكوّنات" : "Browse all components"}
+                </Link>
+                <div className="h-px bg-border" />
+                <div className="grid grid-cols-2 gap-1 pt-1">
+                  {componentCatalog.map((item) => (
+                    <Link
+                      key={item.slug}
+                      href={`/components/${item.slug}`}
+                      className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
-             </div>
             </div>
           </div>
           <Link
@@ -85,12 +92,14 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="ms-auto"><SiteSearch /></div>
+        <div className="ms-auto">
+          <SiteSearch />
+        </div>
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setLocale(locale === "en" ? "ar" : "en")}
+            onPress={() => setLocale(locale === "en" ? "ar" : "en")}
             aria-label={isArabic ? "Switch to English" : "التبديل إلى العربية"}
             className="border border-border bg-card text-card-foreground hover:bg-accent"
           >

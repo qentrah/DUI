@@ -27,7 +27,7 @@ const managers: { key: PackageManager; label: string }[] = [
   { key: "npm", label: "npm" },
   { key: "bun", label: "bun" },
   { key: "pnpm", label: "pnpm" },
-  { key: "yarn", label: "yarn" }
+  { key: "yarn", label: "yarn" },
 ]
 
 export function SkillWorkspace({ skill }: SkillWorkspaceProps) {
@@ -76,7 +76,7 @@ ${skill.content}`
 
   return (
     <div className="space-y-12">
-      <section className="rounded-xl border border-border bg-card p-5">
+      <section className="rounded-xl border border-border bg-card p-5 shadow-md">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ownership</p>
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
           <span className="font-medium text-foreground">Built by Qentrah</span>
@@ -101,15 +101,25 @@ ${skill.content}`
       </section>
 
       {/* Workspace Container */}
-      <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden mt-6">
+      <div className="rounded-xl border border-border bg-card shadow-md overflow-hidden mt-6">
         {/* Toolbar */}
-        <div className="flex items-center justify-between gap-4 border-b border-border bg-zinc-900/20 px-4 py-3">
-          <div className="flex items-center gap-2.5 bg-background border border-border px-3 py-1 rounded-lg">
-            <span className={cn("text-xs font-semibold transition-colors select-none", !showRaw ? "text-foreground" : "text-muted-foreground")}>
+        <div className="flex items-center justify-between gap-4 border-b border-border bg-surface-secondary px-4 py-3">
+          <div className="flex items-center gap-2.5 bg-background border border-border px-3 py-1 rounded-xl">
+            <span
+              className={cn(
+                "text-xs font-semibold transition-colors select-none",
+                !showRaw ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
               Instructions
             </span>
-            <Switch checked={showRaw} onCheckedChange={setShowRaw} />
-            <span className={cn("text-xs font-semibold transition-colors select-none", showRaw ? "text-foreground" : "text-muted-foreground")}>
+            <Switch isSelected={showRaw} onChange={setShowRaw} />
+            <span
+              className={cn(
+                "text-xs font-semibold transition-colors select-none",
+                showRaw ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
               SKILL.md Source
             </span>
           </div>
@@ -119,10 +129,10 @@ ${skill.content}`
               <Button
                 variant="outline"
                 size="sm"
-                onClick={copyRaw}
+                onPress={copyRaw}
                 className="h-8 px-2.5 text-xs font-medium gap-1.5 border-border hover:bg-accent"
               >
-                {copied ? <Check className="size-3.5 text-emerald-400" /> : <Clipboard className="size-3.5" />}
+                {copied ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
                 {copied ? "Copied source" : "Copy Source"}
               </Button>
             )}
@@ -132,23 +142,34 @@ ${skill.content}`
         {/* Display Panel */}
         <div className="relative min-h-[300px] bg-background">
           {!showRaw ? (
-            <div className="p-6 sm:p-10 select-text leading-7 text-zinc-300">
+            <div className="p-6 sm:p-10 select-text leading-7 text-foreground">
               <div className="prose prose-invert max-w-none">
                 {/* Simple client-side rendering of Markdown headings and lists */}
                 {skill.content.split("\n").map((line, idx) => {
                   if (line.startsWith("# ")) {
-                    return <h3 key={idx} className="text-xl font-bold text-foreground mt-4 mb-3 border-b border-border/40 pb-2">{line.replace("# ", "")}</h3>
+                    return (
+                      <h3
+                        key={idx}
+                        className="text-xl font-bold text-foreground mt-4 mb-3 border-b border-border/40 pb-2"
+                      >
+                        {line.replace("# ", "")}
+                      </h3>
+                    )
                   }
                   if (line.match(/^\d+\.\s/)) {
                     return (
                       <div key={idx} className="flex gap-2.5 my-2.5 pl-2 text-sm">
-                        <span className="font-semibold text-blue-500">{line.match(/^\d+/)?.[0]}.</span>
+                        <span className="font-semibold text-primary">{line.match(/^\d+/)?.[0]}.</span>
                         <span>{line.replace(/^\d+\.\s/, "")}</span>
                       </div>
                     )
                   }
                   if (line.trim() === "") return <div key={idx} className="h-2" />
-                  return <p key={idx} className="text-sm my-2 text-muted-foreground">{line}</p>
+                  return (
+                    <p key={idx} className="text-sm my-2 text-muted-foreground">
+                      {line}
+                    </p>
+                  )
                 })}
               </div>
             </div>
@@ -164,11 +185,7 @@ ${skill.content}`
                       {tokens.map((line, index) => {
                         const lineProps = getLineProps({ line })
                         return (
-                          <span
-                            {...lineProps}
-                            key={index}
-                            className={cn(lineProps.className, "code-line block pe-6")}
-                          >
+                          <span {...lineProps} key={index} className={cn(lineProps.className, "code-line block pe-6")}>
                             <span className="sticky start-0 inline-block w-10 select-none bg-[#0d1117] pe-3 text-end text-[#6e7681]">
                               {index + 1}
                             </span>
@@ -190,11 +207,12 @@ ${skill.content}`
       {/* Installation Segment */}
       <section id="installation" className="scroll-mt-24 border-t border-border pt-10">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground flex items-center gap-2">
-          <TerminalSquare className="size-5.5 text-zinc-400" />
+          <TerminalSquare className="size-5.5 text-muted-foreground" />
           Installation
         </h2>
         <p className="text-sm text-muted-foreground mt-1.5 leading-6">
-          Toggle your package manager and copy the command to add this skill directly to your workspace configuration.
+          Toggle your package manager and copy the command to add this skill directly to your workspace
+          configuration.
         </p>
 
         {/* Tab triggers */}
@@ -206,7 +224,7 @@ ${skill.content}`
               className={cn(
                 "px-3 py-1.5 text-sm font-medium border-b-2 transition-all relative top-px",
                 activeManager === mgr.key
-                  ? "border-blue-500 text-foreground font-semibold"
+                  ? "border-primary text-foreground font-semibold"
                   : "border-transparent text-muted-foreground hover:text-foreground"
               )}
             >
@@ -216,25 +234,25 @@ ${skill.content}`
         </div>
 
         {/* Command Display */}
-        <div className="mt-4 bg-card border border-border rounded-xl p-5 shadow-sm">
+        <div className="mt-4 bg-card border border-border rounded-xl p-5 shadow-md">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-bold text-foreground">CLI Add Command</h3>
-            <span className="text-[10px] text-zinc-400 font-semibold bg-zinc-800/40 px-2 py-0.5 rounded border border-zinc-700/20">
+            <span className="text-[10px] text-muted-foreground font-semibold bg-surface-secondary px-2 py-0.5 rounded border border-border">
               Installs skill bundle
             </span>
           </div>
 
-          <div className="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-zinc-900">
-            <code className="text-xs text-zinc-300 font-mono flex-1 overflow-x-auto whitespace-nowrap px-3 py-1.5">
+          <div className="flex items-center gap-2 bg-surface-secondary pl-3 pr-1 py-1 rounded-xl border border-border">
+            <code className="text-xs text-foreground font-mono flex-1 overflow-x-auto whitespace-nowrap px-3 py-1.5">
               {getInstallCommand()}
             </code>
             <Button
               size="sm"
-              onClick={() => copyCommand(getInstallCommand())}
-              className="h-8 shrink-0 hover:bg-white/10 text-neutral-300 gap-1"
+              onPress={() => copyCommand(getInstallCommand())}
+              className="h-8 shrink-0 hover:bg-foreground/10 text-muted-foreground gap-1"
               variant="ghost"
             >
-              {copiedCommand ? <Check className="size-3.5 text-emerald-400" /> : <Clipboard className="size-3.5" />}
+              {copiedCommand ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
               <span className="text-xs">{copiedCommand ? "Copied" : "Copy"}</span>
             </Button>
           </div>

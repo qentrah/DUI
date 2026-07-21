@@ -15,10 +15,17 @@ export function CopyCommand({ command }: { command: string }) {
   }
 
   return (
-    <div className="flex min-w-0 items-center rounded-xl bg-neutral-950 p-1.5 ps-4 text-white shadow-sm">
-      <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-xs text-neutral-300">{command}</code>
-      <Button onClick={copy} variant="ghost" size="sm" className="text-neutral-300 hover:bg-white/10 hover:text-white">
-        {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+    <div className="flex min-w-0 items-center rounded-xl bg-surface-secondary p-1.5 ps-4 shadow-md">
+      <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap text-xs text-muted-foreground">
+        {command}
+      </code>
+      <Button
+        onPress={copy}
+        variant="ghost"
+        size="sm"
+        className="text-muted-foreground hover:bg-foreground/10 hover:text-foreground"
+      >
+        {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
         <span className="ms-2">{copied ? "Copied" : "Copy"}</span>
       </Button>
     </div>

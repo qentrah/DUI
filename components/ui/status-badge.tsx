@@ -5,27 +5,27 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const statusBadgeVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-full border border-zinc-200/60 px-2.5 py-0.5 text-[12px] font-medium",
+  "status-badge inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[12px] font-medium transition-colors",
   {
     variants: {
       variant: {
-        active: "bg-emerald-500/10 text-emerald-700",
-        inactive: "bg-zinc-500/10 text-zinc-600",
-        pending: "bg-amber-500/10 text-amber-700",
-        warning: "bg-amber-500/10 text-amber-700",
-        error: "bg-rose-500/10 text-rose-700"
-      }
+        active: "bg-success-bg text-success border-success-border",
+        inactive: "bg-surface-secondary text-muted-foreground border-border",
+        pending: "bg-warning-bg text-warning border-warning-border",
+        warning: "bg-warning-bg text-warning border-warning-border",
+        error: "bg-destructive-bg text-destructive border-destructive-border",
+      },
     },
-    defaultVariants: { variant: "active" }
+    defaultVariants: { variant: "active" },
   }
 )
 
 const iconClass: Record<NonNullable<VariantProps<typeof statusBadgeVariants>["variant"]>, string> = {
-  active: "text-emerald-600",
-  inactive: "text-zinc-500",
-  pending: "text-amber-600",
-  warning: "text-amber-600",
-  error: "text-rose-600"
+  active: "text-success",
+  inactive: "text-muted-foreground",
+  pending: "text-warning",
+  warning: "text-warning",
+  error: "text-destructive",
 }
 
 function StatusIcon({ variant }: { variant: NonNullable<VariantProps<typeof statusBadgeVariants>["variant"]> }) {

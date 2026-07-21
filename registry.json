@@ -253,51 +253,82 @@
       "files": [{"path": "components/ui/department-dot.tsx", "type": "registry:ui", "target": "@ui/department-dot.tsx"}]
     },
     {
-      "name": "blocks-dashboard-panel",
+      "name": "ThemeProvider",
+      "type": "registry:ui",
+      "title": "Theme Provider",
+      "description": "Theme context provider for custom color themes.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/theme-provider.tsx", "type": "registry:ui", "target": "@ui/theme-provider.tsx"}]
+    },
+    {
+      "name": "five-icon",
+      "type": "registry:ui",
+      "title": "FiveIcon",
+      "description": "Icon container with themeable color variants.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/five-icon.tsx", "type": "registry:ui", "target": "@ui/five-icon.tsx"}]
+    },
+    {
+      "name": "blocks-sign-in",
       "type": "registry:block",
-      "title": "Dashboard Panel",
-      "description": "Installable multi-component dashboard overview block.",
+      "title": "Sign In Form",
+      "description": "Installable sign-in form block with OAuth providers.",
+      "dependencies": ["lucide-react"],
       "registryDependencies": [
         "qentrah/DUI/utils",
         "qentrah/DUI/card",
-        "qentrah/DUI/progress",
-        "qentrah/DUI/status-pill",
-        "qentrah/DUI/list-row",
-        "qentrah/DUI/legend-item",
-        "qentrah/DUI/empty-state",
+        "qentrah/DUI/input",
+        "qentrah/DUI/button",
+        "qentrah/DUI/separator",
+        "qentrah/DUI/badge"
+      ],
+      "files": [{"path": "components/blocks/sign-in.tsx", "type": "registry:block", "target": "@ui/blocks/sign-in.tsx"}]
+    },
+    {
+      "name": "blocks-session",
+      "type": "registry:block",
+      "title": "Session Block",
+      "description": "User session display with sign out action.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "qentrah/DUI/utils",
+        "qentrah/DUI/card",
+        "qentrah/DUI/avatar",
+        "qentrah/DUI/badge",
+        "qentrah/DUI/button",
+        "qentrah/DUI/status-pill"
+      ],
+      "files": [{"path": "components/blocks/session-block.tsx", "type": "registry:block", "target": "@ui/blocks/session.tsx"}]
+    },
+    {
+      "name": "blocks-hero-sections",
+      "type": "registry:block",
+      "title": "Hero Sections",
+      "description": "Installable hero section blocks with multiple variants.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "qentrah/DUI/utils",
+        "qentrah/DUI/card",
         "qentrah/DUI/badge",
         "qentrah/DUI/button"
       ],
-      "files": [{"path": "components/blocks/dashboard-panel.tsx", "type": "registry:block", "target": "@ui/blocks/dashboard-panel.tsx"}]
+      "files": [{"path": "components/blocks/hero-sections.tsx", "type": "registry:block", "target": "@ui/blocks/hero-sections.tsx"}]
     },
     {
-      "name": "blocks-filter-toolbar",
+      "name": "blocks-color-filter",
       "type": "registry:block",
-      "title": "Filter Toolbar",
-      "description": "Installable search and filter toolbar block.",
+      "title": "Color Filter",
+      "description": "Theme color picker with component preview.",
       "dependencies": ["lucide-react"],
       "registryDependencies": [
         "qentrah/DUI/utils",
-        "qentrah/DUI/input",
-        "qentrah/DUI/filter-chip",
-        "qentrah/DUI/tag-chip"
+        "qentrah/DUI/card",
+        "qentrah/DUI/badge",
+        "qentrah/DUI/tag-chip",
+        "qentrah/DUI/color-swatch"
       ],
-      "files": [{"path": "components/blocks/filter-toolbar.tsx", "type": "registry:block", "target": "@ui/blocks/filter-toolbar.tsx"}]
-    },
-    {
-      "name": "blocks-member-list",
-      "type": "registry:block",
-      "title": "Member List",
-      "description": "Installable member directory block.",
-      "dependencies": ["lucide-react"],
-      "registryDependencies": [
-        "qentrah/DUI/utils",
-        "qentrah/DUI/list-item",
-        "qentrah/DUI/status-badge",
-        "qentrah/DUI/department-dot",
-        "qentrah/DUI/button"
-      ],
-      "files": [{"path": "components/blocks/member-list.tsx", "type": "registry:block", "target": "@ui/blocks/member-list.tsx"}]
+      "files": [{"path": "components/blocks/color-filter.tsx", "type": "registry:block", "target": "@ui/blocks/color-filter.tsx"}]
     }
   ]
 }

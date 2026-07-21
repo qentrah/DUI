@@ -4,44 +4,44 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const statusPillVariants = cva(
-  "inline-flex items-center gap-1 rounded-full border font-semibold uppercase tracking-wider whitespace-nowrap",
+  "status-pill inline-flex items-center gap-1 rounded-full border font-semibold uppercase tracking-wider whitespace-nowrap transition-colors",
   {
     variants: {
       tone: {
         success: "",
         warning: "",
         danger: "",
-        info: "",
-        neutral: ""
+        primary: "",
+        neutral: "",
       },
       variant: {
         soft: "",
         solid: "",
-        outline: ""
+        outline: "",
       },
       size: {
         sm: "px-2 py-0.5 text-[10px]",
-        md: "px-2.5 py-0.5 text-[11px]"
-      }
+        md: "px-2.5 py-0.5 text-[11px]",
+      },
     },
     compoundVariants: [
-      { tone: "success", variant: "soft", class: "bg-emerald-500/10 text-emerald-700 border-emerald-500/20" },
-      { tone: "warning", variant: "soft", class: "bg-amber-500/10 text-amber-700 border-amber-500/20" },
-      { tone: "danger", variant: "soft", class: "bg-rose-500/10 text-rose-700 border-rose-500/20" },
-      { tone: "info", variant: "soft", class: "bg-sky-500/10 text-sky-700 border-sky-500/20" },
-      { tone: "neutral", variant: "soft", class: "bg-zinc-500/10 text-zinc-700 border-zinc-500/20" },
-      { tone: "success", variant: "solid", class: "bg-emerald-500 text-white border-emerald-500" },
-      { tone: "warning", variant: "solid", class: "bg-amber-500 text-white border-amber-500" },
-      { tone: "danger", variant: "solid", class: "bg-rose-500 text-white border-rose-500" },
-      { tone: "info", variant: "solid", class: "bg-sky-500 text-white border-sky-500" },
-      { tone: "neutral", variant: "solid", class: "bg-zinc-500 text-white border-zinc-500" },
-      { tone: "success", variant: "outline", class: "bg-transparent border-emerald-500 text-emerald-700" },
-      { tone: "warning", variant: "outline", class: "bg-transparent border-amber-500 text-amber-700" },
-      { tone: "danger", variant: "outline", class: "bg-transparent border-rose-500 text-rose-700" },
-      { tone: "info", variant: "outline", class: "bg-transparent border-sky-500 text-sky-700" },
-      { tone: "neutral", variant: "outline", class: "bg-transparent border-zinc-500 text-zinc-700" }
+      { tone: "success", variant: "soft", class: "bg-success/10 text-success border-success/20" },
+      { tone: "warning", variant: "soft", class: "bg-warning/10 text-warning border-warning/20" },
+      { tone: "danger", variant: "soft", class: "bg-destructive/10 text-destructive border-destructive/20" },
+      { tone: "primary", variant: "soft", class: "bg-primary/10 text-primary border-primary/20" },
+      { tone: "neutral", variant: "soft", class: "bg-surface-secondary text-muted-foreground border-border" },
+      { tone: "success", variant: "solid", class: "bg-success text-success-foreground border-success" },
+      { tone: "warning", variant: "solid", class: "bg-warning text-warning-foreground border-warning" },
+      { tone: "danger", variant: "solid", class: "bg-destructive text-destructive-foreground border-destructive" },
+      { tone: "primary", variant: "solid", class: "bg-primary text-primary-foreground border-primary" },
+      { tone: "neutral", variant: "solid", class: "bg-secondary text-secondary-foreground border-secondary" },
+      { tone: "success", variant: "outline", class: "bg-transparent border-success text-success" },
+      { tone: "warning", variant: "outline", class: "bg-transparent border-warning text-warning" },
+      { tone: "danger", variant: "outline", class: "bg-transparent border-destructive text-destructive" },
+      { tone: "primary", variant: "outline", class: "bg-transparent border-primary text-primary" },
+      { tone: "neutral", variant: "outline", class: "bg-transparent border-border text-muted-foreground" },
     ],
-    defaultVariants: { tone: "neutral", variant: "soft", size: "md" }
+    defaultVariants: { tone: "neutral", variant: "soft", size: "md" },
   }
 )
 

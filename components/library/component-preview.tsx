@@ -19,7 +19,7 @@ import {
   ListItemAvatar,
   ListItemContent,
   ListItemMeta,
-  ListItemTag
+  ListItemTag,
 } from "@/components/ui/list-item"
 import { ListRow } from "@/components/ui/list-row"
 import { Progress } from "@/components/ui/progress"
@@ -41,7 +41,13 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   if (slug === "button") {
     return (
       <div className="flex flex-wrap items-center justify-center gap-3">
-        <Button variant={variant === "default" ? "default" : variant as "outline" | "secondary" | "ghost" | "destructive"}>
+        <Button
+          variant={
+            variant === "default"
+              ? "primary"
+              : (variant as "primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft")
+          }
+        >
           {isArabic ? "حفظ التغييرات" : "Save changes"}
         </Button>
       </div>
@@ -53,8 +59,20 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
       <Input
         label={isArabic ? "البريد الإلكتروني" : "Email address"}
         placeholder="name@example.com"
-        helperText={variant === "error" ? undefined : isArabic ? "لن نشارك بريدك الإلكتروني." : "We’ll never share your email."}
-        error={variant === "error" ? (isArabic ? "البريد الإلكتروني غير صالح." : "Enter a valid email address.") : undefined}
+        helperText={
+          variant === "error"
+            ? undefined
+            : isArabic
+              ? "لن نشارك بريدك الإلكتروني."
+              : "We'll never share your email."
+        }
+        error={
+          variant === "error"
+            ? isArabic
+              ? "البريد الإلكتروني غير صالح."
+              : "Enter a valid email address."
+            : undefined
+        }
         disabled={variant === "disabled"}
       />
     )
@@ -63,7 +81,13 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   if (slug === "badge") {
     return (
       <div className="flex flex-wrap justify-center gap-2">
-        <Badge variant={variant === "default" ? "default" : variant as "secondary" | "success" | "warning" | "destructive" | "outline"}>
+        <Badge
+          variant={
+            variant === "default"
+              ? "primary"
+              : (variant as "primary" | "secondary" | "tertiary" | "success" | "warning" | "danger" | "outline")
+          }
+        >
           {isArabic ? "حالة المشروع" : "Project status"}
         </Badge>
       </div>
@@ -72,7 +96,13 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
 
   if (slug === "card") {
     return (
-      <Card className={cn("w-full max-w-sm", variant === "elevated" && "shadow-xl", variant === "flat" && "shadow-none")}>
+      <Card
+        className={cn(
+          "w-full max-w-sm",
+          variant === "elevated" && "shadow-xl",
+          variant === "flat" && "shadow-none"
+        )}
+      >
         <CardHeader>
           <CardTitle>{isArabic ? "ملخص المشروع" : "Project summary"}</CardTitle>
           <CardDescription>{isArabic ? "تم التحديث الآن" : "Updated just now"}</CardDescription>
@@ -80,52 +110,100 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
         <CardContent className="text-sm text-muted-foreground">
           {isArabic ? "اكتملت 18 من 24 مهمة." : "18 of 24 tasks are complete."}
         </CardContent>
-        <CardFooter><Button variant="outline" size="sm">{isArabic ? "فتح" : "Open project"}</Button></CardFooter>
+        <CardFooter>
+          <Button variant="outline" size="sm">
+            {isArabic ? "فتح" : "Open project"}
+          </Button>
+        </CardFooter>
       </Card>
     )
   }
 
   if (slug === "avatar") {
-    return <Avatar className={cn(variant === "large" && "size-16", variant === "small" && "size-8")}><AvatarFallback>DU</AvatarFallback></Avatar>
+    return (
+      <Avatar className={cn(variant === "large" && "size-16", variant === "small" && "size-8")}>
+        <AvatarFallback>DU</AvatarFallback>
+      </Avatar>
+    )
   }
 
   if (slug === "checkbox") {
-    return <label className="flex items-center gap-3 text-sm text-zinc-300"><Checkbox defaultChecked={variant === "checked"} disabled={variant === "disabled"} />Accept terms and conditions</label>
+    return (
+      <label className="flex items-center gap-3 text-sm text-foreground">
+        <Checkbox defaultSelected={variant === "checked"} isDisabled={variant === "disabled"} />
+        Accept terms and conditions
+      </label>
+    )
   }
 
   if (slug === "progress") {
-    return <div className="w-full space-y-2"><Progress value={variant === "complete" ? 100 : variant === "starting" ? 18 : 64} /><p className="text-xs text-muted-foreground">Project progress</p></div>
+    return (
+      <div className="w-full space-y-2">
+        <Progress value={variant === "complete" ? 100 : variant === "starting" ? 18 : 64} />
+        <p className="text-xs text-muted-foreground">Project progress</p>
+      </div>
+    )
   }
 
   if (slug === "separator") {
-    return <div className="w-full space-y-4 text-sm text-zinc-300"><p>Design system</p><Separator className="bg-zinc-700" /><p>Reusable interface primitives</p></div>
+    return (
+      <div className="w-full space-y-4 text-sm text-foreground">
+        <p>Design system</p>
+        <Separator className="bg-border" />
+        <p>Reusable interface primitives</p>
+      </div>
+    )
   }
 
   if (slug === "skeleton") {
-    return <div className="flex w-full items-center gap-4"><Skeleton className="size-12 rounded-full" /><div className="flex-1 space-y-2"><Skeleton className="h-4 w-2/3" /><Skeleton className="h-3 w-full" /></div></div>
+    return (
+      <div className="flex w-full items-center gap-4">
+        <Skeleton className="size-12 rounded-full" />
+        <div className="flex-1 space-y-2">
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="h-3 w-full" />
+        </div>
+      </div>
+    )
   }
 
   if (slug === "spinner") {
-    return <div className="flex items-center gap-3 text-sm text-zinc-300"><Spinner className={cn(variant === "large" && "size-8")} />Loading…</div>
+    return (
+      <div className="flex items-center gap-3 text-sm text-foreground">
+        <Spinner className={cn(variant === "large" && "size-8")} />
+        Loading…
+      </div>
+    )
   }
 
   if (slug === "switch") {
-    return <label className="flex items-center gap-3 text-sm text-muted-foreground"><Switch defaultChecked={variant === "checked"} disabled={variant === "disabled"} />Email notifications</label>
+    return (
+      <label className="flex items-center gap-3 text-sm text-foreground">
+        <Switch defaultSelected={variant === "checked"} isDisabled={variant === "disabled"} />
+        Email notifications
+      </label>
+    )
   }
 
   if (slug === "textarea") {
-    return <Textarea placeholder="Write a message…" disabled={variant === "disabled"} className={cn(variant === "error" && "border-destructive focus:ring-destructive")} />
+    return (
+      <Textarea
+        placeholder="Write a message…"
+        disabled={variant === "disabled"}
+        className={cn(variant === "error" && "border-destructive focus:ring-destructive")}
+      />
+    )
   }
 
   if (slug === "filter-chip") {
     return (
       <FilterChipBar
-        activeKey={variant === "mine" ? "mine" : "all"}
+        selectedKey={variant === "mine" ? "mine" : "all"}
         onChange={() => undefined}
         chips={[
           { key: "all", label: "All", count: 12 },
           { key: "mine", label: "Mine", count: 4 },
-          { key: "done", label: "Done", count: 8 }
+          { key: "done", label: "Done", count: 8 },
         ]}
       />
     )
@@ -134,7 +212,14 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   if (slug === "status-pill") {
     return (
       <div className="flex flex-wrap justify-center gap-2">
-        <StatusPill tone={variant === "default" ? "success" : (variant as "success" | "warning" | "danger" | "info" | "neutral")} label="On track" />
+        <StatusPill
+          tone={
+            variant === "default"
+              ? "success"
+              : (variant as "success" | "warning" | "danger" | "primary" | "neutral")
+          }
+          label="On track"
+        />
       </div>
     )
   }
@@ -162,8 +247,8 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   if (slug === "tag-chip") {
     return (
       <div className="flex flex-wrap justify-center gap-2">
-        <TagChip tone="blue" label="Design" />
-        <TagChip tone="green" label="Delivery" removable={variant === "removable"} onRemove={() => undefined} />
+        <TagChip tone="primary" label="Design" />
+        <TagChip tone="success" label="Delivery" isDismissable={variant === "removable"} onRemove={() => undefined} />
       </div>
     )
   }
@@ -193,7 +278,7 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   if (slug === "list-item") {
     return (
       <List className="w-full max-w-md">
-        <ListItem>
+        <ListItem onPress={() => {}}>
           <ListItemAvatar initials="SA" color="#3b82f6" />
           <ListItemContent primary="Sara Ahmed" secondary="Product designer" />
           <ListItemMeta>
@@ -217,7 +302,13 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   if (slug === "status-badge") {
     return (
       <div className="flex flex-wrap justify-center gap-2">
-        <StatusBadge variant={variant === "default" ? "active" : (variant as "active" | "inactive" | "pending" | "warning" | "error")}>
+        <StatusBadge
+          variant={
+            variant === "default"
+              ? "active"
+              : (variant as "active" | "inactive" | "pending" | "warning" | "error")
+          }
+        >
           {variant === "default" ? "active" : variant}
         </StatusBadge>
       </div>
@@ -235,9 +326,18 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   }
 
   return (
-    <Alert variant={variant === "default" ? "default" : variant as "success" | "warning" | "destructive"} className="max-w-md">
+    <Alert
+      variant={
+        variant === "default"
+          ? "primary"
+          : (variant as "primary" | "secondary" | "success" | "warning" | "danger")
+      }
+      className="max-w-md"
+    >
       <AlertTitle>{isArabic ? "تم نشر التغييرات" : "Changes published"}</AlertTitle>
-      <AlertDescription>{isArabic ? "الإصدار الجديد متاح الآن." : "The new version is now available."}</AlertDescription>
+      <AlertDescription>
+        {isArabic ? "الإصدار الجديد متاح الآن." : "The new version is now available."}
+      </AlertDescription>
     </Alert>
   )
 }

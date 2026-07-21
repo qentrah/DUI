@@ -26,14 +26,14 @@ const managers: { key: PackageManager; label: string }[] = [
   { key: "npm", label: "npm" },
   { key: "bun", label: "bun" },
   { key: "pnpm", label: "pnpm" },
-  { key: "yarn", label: "yarn" }
+  { key: "yarn", label: "yarn" },
 ]
 
 export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
   const [showCode, setShowCode] = React.useState(false)
   const [copied, setCopied] = React.useState(false)
   const [activeManager, setActiveManager] = React.useState<PackageManager>("npm")
-  
+
   // Track copied status for command lines
   const [copiedCommand, setCopiedCommand] = React.useState<string | null>(null)
 
@@ -55,7 +55,7 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
   function getInstallCommand(pkg: string, isBlock: boolean = false) {
     const slugName = isBlock ? `blocks-${block.slug}` : pkg
     const registryPath = `qentrah/DUI/${slugName}`
-    
+
     switch (activeManager) {
       case "bun":
         return `bunx shadcn@latest add ${registryPath}`
@@ -72,16 +72,26 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
   return (
     <div className="space-y-12">
       {/* Workspace Wrapper */}
-      <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden mt-6">
+      <div className="rounded-xl border border-border bg-card shadow-md overflow-hidden mt-6">
         {/* Workspace Header toolbar */}
-        <div className="flex items-center justify-between gap-4 border-b border-border bg-zinc-900/20 px-4 py-3">
+        <div className="flex items-center justify-between gap-4 border-b border-border bg-surface-secondary px-4 py-3">
           {/* Switch preview vs code */}
-          <div className="flex items-center gap-2.5 bg-background border border-border px-3 py-1 rounded-lg">
-            <span className={cn("text-xs font-semibold transition-colors select-none", !showCode ? "text-foreground" : "text-muted-foreground")}>
+          <div className="flex items-center gap-2.5 bg-background border border-border px-3 py-1 rounded-xl">
+            <span
+              className={cn(
+                "text-xs font-semibold transition-colors select-none",
+                !showCode ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
               Preview
             </span>
-            <Switch checked={showCode} onCheckedChange={setShowCode} />
-            <span className={cn("text-xs font-semibold transition-colors select-none", showCode ? "text-foreground" : "text-muted-foreground")}>
+            <Switch isSelected={showCode} onChange={setShowCode} />
+            <span
+              className={cn(
+                "text-xs font-semibold transition-colors select-none",
+                showCode ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
               Code
             </span>
           </div>
@@ -91,10 +101,10 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={copyCode}
+                onPress={copyCode}
                 className="h-8 px-2.5 text-xs font-medium gap-1.5 border-border hover:bg-accent"
               >
-                {copied ? <Check className="size-3.5 text-emerald-400" /> : <Clipboard className="size-3.5" />}
+                {copied ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
                 {copied ? "Copied source" : "Copy Source"}
               </Button>
             )}
@@ -105,7 +115,7 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
         <div className="relative min-h-[350px] bg-background">
           {!showCode ? (
             <div className="flex items-center justify-center p-6 sm:p-10 min-h-[400px]">
-              <div className="w-full max-w-xl bg-card border border-border rounded-xl p-5 sm:p-8 shadow-sm">
+              <div className="w-full max-w-xl bg-card border border-border rounded-xl p-5 sm:p-8 shadow-md">
                 <BlockPreview slug={block.slug} />
               </div>
             </div>
@@ -121,11 +131,7 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
                       {tokens.map((line, index) => {
                         const lineProps = getLineProps({ line })
                         return (
-                          <span
-                            {...lineProps}
-                            key={index}
-                            className={cn(lineProps.className, "code-line block pe-6")}
-                          >
+                          <span {...lineProps} key={index} className={cn(lineProps.className, "code-line block pe-6")}>
                             <span className="sticky start-0 inline-block w-10 select-none bg-[#0d1117] pe-3 text-end text-[#6e7681]">
                               {index + 1}
                             </span>
@@ -147,7 +153,7 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
       {/* Installation Segment */}
       <section id="installation" className="scroll-mt-24 border-t border-border pt-10">
         <h2 className="text-2xl font-semibold tracking-tight text-foreground flex items-center gap-2">
-          <TerminalSquare className="size-5.5 text-zinc-400" />
+          <TerminalSquare className="size-5.5 text-muted-foreground" />
           Installation
         </h2>
         <p className="text-sm text-muted-foreground mt-1.5 leading-6">
@@ -163,7 +169,7 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
               className={cn(
                 "px-3 py-1.5 text-sm font-medium border-b-2 transition-all relative top-px",
                 activeManager === mgr.key
-                  ? "border-blue-500 text-foreground font-semibold"
+                  ? "border-primary text-foreground font-semibold"
                   : "border-transparent text-muted-foreground hover:text-foreground"
               )}
             >
@@ -173,25 +179,25 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
         </div>
 
         {/* Command Display */}
-        <div className="mt-4 bg-card border border-border rounded-xl p-5 shadow-sm">
+        <div className="mt-4 bg-card border border-border rounded-xl p-5 shadow-md">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-bold text-foreground">CLI Install Command</h3>
-            <span className="text-[10px] text-zinc-400 font-semibold bg-zinc-800/40 px-2 py-0.5 rounded border border-zinc-700/20">
+            <span className="text-[10px] text-muted-foreground font-semibold bg-surface-secondary px-2 py-0.5 rounded border border-border">
               Auto-installs dependencies
             </span>
           </div>
 
-          <div className="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-zinc-900">
-            <code className="text-xs text-zinc-300 font-mono flex-1 overflow-x-auto whitespace-nowrap px-3 py-1.5">
+          <div className="flex items-center gap-2 bg-surface-secondary pl-3 pr-1 py-1 rounded-xl border border-border">
+            <code className="text-xs text-muted-foreground font-mono flex-1 overflow-x-auto whitespace-nowrap px-3 py-1.5">
               {getInstallCommand("", true)}
             </code>
             <Button
               size="sm"
-              onClick={() => copyToClipboard(getInstallCommand("", true), "block")}
-              className="h-8 shrink-0 hover:bg-white/10 text-neutral-300 gap-1"
+              onPress={() => copyToClipboard(getInstallCommand("", true), "block")}
+              className="h-8 shrink-0 hover:bg-foreground/10 text-muted-foreground gap-1"
               variant="ghost"
             >
-              {copiedCommand === "block" ? <Check className="size-3.5 text-emerald-400" /> : <Clipboard className="size-3.5" />}
+              {copiedCommand === "block" ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
               <span className="text-xs">{copiedCommand === "block" ? "Copied" : "Copy"}</span>
             </Button>
           </div>
@@ -220,27 +226,26 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-semibold text-foreground">{compName}</span>
-                    <span className="text-[10px] text-muted-foreground bg-zinc-800/30 px-1.5 py-0.5 rounded border border-zinc-700/20">
+                    <span className="text-[10px] text-muted-foreground bg-surface-secondary px-1.5 py-0.5 rounded border border-border">
                       {compSlug}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1 leading-5">
-                    {compDesc}
-                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-5">{compDesc}</p>
                 </div>
 
-                <div className="flex items-center gap-2 bg-neutral-950 pl-3 pr-1 py-1 rounded-lg border border-zinc-900 w-full sm:w-auto">
-                  <code className="text-[11px] text-zinc-400 font-mono flex-1 overflow-x-auto whitespace-nowrap">
+                <div className="flex items-center gap-2 bg-surface-secondary pl-3 pr-1 py-1 rounded-xl border border-border w-full sm:w-auto">
+                  <code className="text-[11px] text-muted-foreground font-mono flex-1 overflow-x-auto whitespace-nowrap">
                     {cmd}
                   </code>
                   <Button
-                    size="icon"
+                    isIconOnly
+                    size="sm"
                     variant="ghost"
-                    onClick={() => copyToClipboard(cmd, compSlug)}
-                    className="size-7 shrink-0 text-zinc-400 hover:text-zinc-100 hover:bg-white/5"
+                    onPress={() => copyToClipboard(cmd, compSlug)}
+                    className="size-7 shrink-0 text-muted-foreground hover:text-foreground hover:bg-accent"
                     aria-label={`Copy command for ${compSlug}`}
                   >
-                    {copiedCommand === compSlug ? <Check className="size-3 text-emerald-400" /> : <Clipboard className="size-3" />}
+                    {copiedCommand === compSlug ? <Check className="size-3 text-success" /> : <Clipboard className="size-3" />}
                   </Button>
                 </div>
               </div>

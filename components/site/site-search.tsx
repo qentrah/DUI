@@ -2,16 +2,17 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { BookOpen, Boxes, FileText, Search, Sparkles } from "lucide-react"
+import { BookOpen, Boxes, FileText, Layout, Search, Sparkles } from "lucide-react"
 
-import { componentCatalog } from "@/lib/catalog"
+import { componentCatalog, blockCatalog } from "@/lib/catalog"
 
 const pages = [
   { label: "Documentation", description: "Introduction and project setup", href: "/docs", icon: BookOpen },
   { label: "Installation", description: "Install with the shadcn CLI", href: "/docs#installation", icon: FileText },
   { label: "Theming", description: "Zinc tokens and customization", href: "/docs#theming", icon: FileText },
   { label: "RTL and Arabic", description: "Direction and bilingual interfaces", href: "/docs#rtl", icon: FileText },
-  { label: "Component directory", description: "Browse every DUI component", href: "/components", icon: Boxes },
+  { label: "Components", description: "Browse every DUI component", href: "/components", icon: Boxes },
+  { label: "Blocks", description: "Explore pre-built layout blocks", href: "/blocks", icon: Layout },
   { label: "Skills", description: "Install reusable agent workflows", href: "/skills", icon: Sparkles }
 ]
 
@@ -22,6 +23,12 @@ const searchableItems = [
     description: item.description,
     href: `/components/${item.slug}`,
     icon: Boxes
+  })),
+  ...blockCatalog.map((item) => ({
+    label: item.name,
+    description: item.description,
+    href: `/blocks/${item.slug}`,
+    icon: Layout
   }))
 ]
 
@@ -57,7 +64,7 @@ export function SiteSearch() {
 
   return (
     <div ref={rootRef} className="relative w-full max-w-xs">
-      <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-zinc-500" />
+      <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
       <input
         value={query}
         onFocus={() => setOpen(true)}
@@ -70,25 +77,25 @@ export function SiteSearch() {
         }}
         placeholder="Search DUI..."
         aria-label="Search documentation"
-        className="h-9 w-full rounded-lg border border-zinc-800 bg-zinc-900 ps-9 pe-12 text-sm text-zinc-200 outline-none placeholder:text-zinc-500 focus:border-zinc-700 focus:ring-1 focus:ring-zinc-700"
+        className="h-9 w-full rounded-xl border border-border bg-card ps-9 pe-12 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
       />
-      <kbd className="pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 rounded border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400">⌘K</kbd>
+      <kbd className="pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 rounded-md border border-border bg-surface-secondary px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">⌘K</kbd>
       {open && (
-        <div className="absolute end-0 top-11 z-50 w-[360px] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 p-2 shadow-2xl">
-          <p className="px-2 pb-2 pt-1 text-xs font-medium text-zinc-500">{normalized ? "Search results" : "Quick links"}</p>
+        <div className="absolute end-0 top-11 z-50 w-[360px] overflow-hidden rounded-xl border border-border bg-card p-2 shadow-lg">
+          <p className="px-2 pb-2 pt-1 text-xs font-medium text-muted-foreground">{normalized ? "Search results" : "Quick links"}</p>
           {results.length ? results.map((item) => {
             const Icon = item.icon
             return (
-              <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="flex items-start gap-3 rounded-lg px-2 py-2.5 hover:bg-zinc-900">
-                <Icon className="mt-0.5 size-4 shrink-0 text-zinc-500" />
+              <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="flex items-start gap-3 rounded-lg px-2 py-2.5 hover:bg-accent">
+                <Icon className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
                 <span>
-                  <span className="block text-sm text-zinc-200">{item.label}</span>
-                  <span className="mt-0.5 block text-xs text-zinc-500">{item.description}</span>
+                  <span className="block text-sm text-foreground">{item.label}</span>
+                  <span className="mt-0.5 block text-xs text-muted-foreground">{item.description}</span>
                 </span>
               </Link>
             )
           }) : (
-            <p className="px-2 py-8 text-center text-sm text-zinc-500">No documentation found.</p>
+            <p className="px-2 py-8 text-center text-sm text-muted-foreground">No documentation found.</p>
           )}
         </div>
       )}

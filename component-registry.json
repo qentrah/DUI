@@ -251,36 +251,64 @@
       "notes": "Extracted from Qentrah packages/ui."
     },
     {
-      "name": "DashboardPanel",
-      "path": "components/blocks/dashboard-panel.tsx",
-      "kind": "block",
-      "summary": "Multi-component dashboard overview block.",
-      "usedIn": ["Blocks docs"],
-      "props": ["title", "description", "progress", "empty", "className"],
-      "createdAt": "2026-07-18",
-      "notes": "Install with qentrah/DUI/blocks-dashboard-panel."
+      "name": "ThemeProvider",
+      "path": "components/ui/theme-provider.tsx",
+      "kind": "utility",
+      "summary": "Theme context provider for custom color themes.",
+      "usedIn": ["Theme system"],
+      "props": ["defaultTheme"],
+      "createdAt": "2026-07-21",
+      "notes": "Provides theme context for themed components."
     },
     {
-      "name": "FilterToolbar",
-      "path": "components/blocks/filter-toolbar.tsx",
+      "name": "SignInForm",
+      "path": "components/blocks/sign-in.tsx",
       "kind": "block",
-      "summary": "Search + filter chips + tags block.",
-      "usedIn": ["Blocks docs"],
-      "props": ["defaultQuery", "defaultActiveKey", "onQueryChange", "onFilterChange"],
-      "createdAt": "2026-07-18",
-      "notes": "Install with qentrah/DUI/blocks-filter-toolbar."
+      "summary": "Sign-in form block with OAuth providers.",
+      "usedIn": ["Authentication pages"],
+      "props": ["title", "description", "providers", "showNameField"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/blocks-sign-in."
     },
     {
-      "name": "MemberList",
-      "path": "components/blocks/member-list.tsx",
+      "name": "SessionBlock",
+      "path": "components/blocks/session-block.tsx",
       "kind": "block",
-      "summary": "Member directory composition block.",
-      "usedIn": ["Blocks docs"],
-      "props": ["members", "onMemberClick", "className"],
-      "createdAt": "2026-07-18",
-      "notes": "Install with qentrah/DUI/blocks-member-list."
+      "summary": "User session display with sign out action.",
+      "usedIn": ["Navigation"],
+      "props": ["name", "email", "avatar", "status", "plan"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/blocks-session."
+    },
+    {
+      "name": "HeroSection",
+      "path": "components/blocks/hero-sections.tsx",
+      "kind": "block",
+      "summary": "Hero section components with multiple variants.",
+      "usedIn": ["Landing pages"],
+      "props": ["title", "description", "primaryAction", "secondaryAction", "badges", "centered", "withImage"],
+      "createdAt": "2026-07-21",
+      "notes": "Includes HeroSection, HeroSectionSimple, and HeroSectionCentered variants."
+    },
+    {
+      "name": "ColorFilterBlock",
+      "path": "components/blocks/color-filter.tsx",
+      "kind": "block",
+      "summary": "Theme color picker with component preview.",
+      "usedIn": ["Theme builder"],
+      "props": ["title", "description", "colors", "selectedColor", "onColorSelect"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/blocks-color-filter."
+    },
+    {
+      "name": "FiveIcon",
+      "path": "components/ui/five-icon.tsx",
+      "kind": "primitive",
+      "summary": "Icon container with themeable color variants.",
+      "usedIn": ["UI primitives"],
+      "props": ["size", "variant", "icon", "label"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/five-icon."
     }
-  ]
-}
   ]
 }

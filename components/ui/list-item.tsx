@@ -6,29 +6,25 @@ import { cn } from "@/lib/utils"
 
 export interface ListItemProps {
   children: React.ReactNode
-  onClick?: () => void
+  onPress?: () => void
   href?: string
-  selected?: boolean
-  disabled?: boolean
+  isSelected?: boolean
+  isDisabled?: boolean
   className?: string
-  onMouseEnter?: () => void
-  onMouseLeave?: () => void
 }
 
-function ListItem({ children, onClick, href, selected, disabled, className, onMouseEnter, onMouseLeave }: ListItemProps) {
+function ListItem({ children, onPress, href, isSelected, isDisabled, className }: ListItemProps) {
   const Component = href ? "a" : "div"
 
   return (
     <Component
       href={href}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onClick={onPress}
       className={cn(
-        "group flex items-center gap-3 border-b border-border px-4 py-3 transition-colors hover:bg-zinc-900/50",
-        selected && "bg-accent/40",
-        disabled && "pointer-events-none opacity-40",
-        onClick && "cursor-pointer",
+        "group flex items-center gap-3 border-b border-border px-4 py-3 transition-all first:rounded-t-2xl last:rounded-b-2xl last:border-0 hover:bg-accent/50",
+        isSelected && "bg-accent/40",
+        isDisabled && "pointer-events-none opacity-40",
+        onPress && "cursor-pointer",
         className
       )}
     >
@@ -36,6 +32,8 @@ function ListItem({ children, onClick, href, selected, disabled, className, onMo
     </Component>
   )
 }
+
+ListItem.displayName = "ListItem"
 
 export interface ListItemAvatarProps {
   src?: string
@@ -50,7 +48,7 @@ export interface ListItemAvatarProps {
 const avatarSizes = {
   sm: "h-8 w-8 text-[10px]",
   md: "h-10 w-10 text-[11px]",
-  lg: "h-12 w-12 text-[12px]"
+  lg: "h-12 w-12 text-[12px]",
 }
 
 function ListItemAvatar({ src, alt, initials, icon, color, size = "md", className }: ListItemAvatarProps) {
@@ -59,7 +57,7 @@ function ListItemAvatar({ src, alt, initials, icon, color, size = "md", classNam
       className={cn(
         "relative flex shrink-0 items-center justify-center overflow-hidden rounded-full",
         avatarSizes[size],
-        color ? "" : "bg-zinc-800 text-zinc-400",
+        color ? "" : "bg-surface-secondary text-muted-foreground",
         className
       )}
       style={color ? { backgroundColor: `${color}15`, color } : undefined}
@@ -75,6 +73,8 @@ function ListItemAvatar({ src, alt, initials, icon, color, size = "md", classNam
     </div>
   )
 }
+
+ListItemAvatar.displayName = "ListItemAvatar"
 
 export interface ListItemContentProps {
   primary: React.ReactNode
@@ -95,6 +95,8 @@ function ListItemContent({ primary, secondary, description, className }: ListIte
   )
 }
 
+ListItemContent.displayName = "ListItemContent"
+
 export interface ListItemMetaProps {
   children: React.ReactNode
   className?: string
@@ -103,6 +105,8 @@ export interface ListItemMetaProps {
 function ListItemMeta({ children, className }: ListItemMetaProps) {
   return <div className={cn("flex shrink-0 items-center gap-2", className)}>{children}</div>
 }
+
+ListItemMeta.displayName = "ListItemMeta"
 
 export interface ListItemActionsProps {
   children: React.ReactNode
@@ -124,6 +128,8 @@ function ListItemActions({ children, alwaysVisible = false, className }: ListIte
   )
 }
 
+ListItemActions.displayName = "ListItemActions"
+
 export interface ListItemTagProps {
   children: React.ReactNode
   className?: string
@@ -133,7 +139,7 @@ function ListItemTag({ children, className }: ListItemTagProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md bg-zinc-800 border border-zinc-700 px-1.5 py-0.5 text-[10px] font-medium text-zinc-400",
+        "inline-flex items-center rounded-lg bg-surface-secondary border border-border px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground",
         className
       )}
     >
@@ -142,9 +148,13 @@ function ListItemTag({ children, className }: ListItemTagProps) {
   )
 }
 
+ListItemTag.displayName = "ListItemTag"
+
 function ListItemDivider({ className }: { className?: string }) {
   return <div className={cn("h-px bg-border", className)} />
 }
+
+ListItemDivider.displayName = "ListItemDivider"
 
 export interface ListItemEmptyProps {
   icon?: React.ReactNode
@@ -157,13 +167,15 @@ export interface ListItemEmptyProps {
 function ListItemEmpty({ icon, title, description, action, className }: ListItemEmptyProps) {
   return (
     <div className={cn("flex flex-col items-center justify-center py-12 text-center", className)}>
-      {icon ? <div className="mb-3 text-zinc-600">{icon}</div> : null}
-      {title ? <p className="text-[13px] font-medium text-foreground">{title}</p> : null}
-      {description ? <p className="mt-1 text-[12px] text-muted-foreground">{description}</p> : null}
+      {icon ? <div className="mb-3 text-muted-foreground">{icon}</div> : null}
+      {title ? <p className="text-sm font-medium text-foreground">{title}</p> : null}
+      {description ? <p className="mt-1 text-xs text-muted-foreground">{description}</p> : null}
       {action ? <div className="mt-4">{action}</div> : null}
     </div>
   )
 }
+
+ListItemEmpty.displayName = "ListItemEmpty"
 
 export interface ListProps {
   children: React.ReactNode
@@ -172,11 +184,13 @@ export interface ListProps {
 
 function List({ children, className }: ListProps) {
   return (
-    <div className={cn("overflow-hidden rounded-[10px] border border-border bg-card shadow-sm", className)}>
+    <div className={cn("overflow-hidden rounded-2xl border border-border bg-card shadow-md", className)}>
       <div className="divide-y divide-border">{children}</div>
     </div>
   )
 }
+
+List.displayName = "List"
 
 export {
   ListItem,
@@ -187,5 +201,5 @@ export {
   ListItemTag,
   ListItemDivider,
   ListItemEmpty,
-  List
+  List,
 }

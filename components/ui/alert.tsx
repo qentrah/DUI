@@ -3,28 +3,38 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const alertVariants = cva("relative w-full rounded-lg border p-4", {
-  variants: {
-    variant: {
-      default: "border-border bg-card text-foreground",
-      success: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400",
-      warning: "border-yellow-500/20 bg-yellow-500/10 text-yellow-400",
-      destructive: "border-destructive/20 bg-destructive/10 text-destructive"
-    }
-  },
-  defaultVariants: { variant: "default" }
-})
+const alertVariants = cva(
+  "alert relative w-full rounded-2xl p-4 shadow-md border transition-colors",
+  {
+    variants: {
+      variant: {
+        primary: "border-border bg-card text-foreground",
+        secondary: "border-border bg-secondary text-secondary-foreground",
+        success: "border-success-border bg-success-bg text-success",
+        warning: "border-warning-border bg-warning-bg text-warning",
+        danger: "border-destructive-border bg-destructive-bg text-destructive",
+        "danger-soft": "border-destructive-border bg-destructive-bg text-destructive",
+      },
+    },
+    defaultVariants: { variant: "primary" },
+  }
+)
 
-function Alert({ className, variant, ...props }: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>) {
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof alertVariants> {}
+
+function Alert({ className, variant, ...props }: AlertProps) {
   return <div role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
 }
+Alert.displayName = "Alert"
 
 function AlertTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h5 className={cn("mb-1 font-medium leading-none tracking-tight", className)} {...props} />
+  return <h5 className={cn("mb-1 font-semibold leading-none tracking-tight text-foreground", className)} {...props} />
 }
+AlertTitle.displayName = "AlertTitle"
 
 function AlertDescription({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("text-sm [&_p]:leading-relaxed", className)} {...props} />
+  return <div className={cn("text-sm [&_p]:leading-relaxed text-muted-foreground", className)} {...props} />
 }
+AlertDescription.displayName = "AlertDescription"
 
-export { Alert, AlertTitle, AlertDescription }
+export { Alert, AlertTitle, AlertDescription, alertVariants }
