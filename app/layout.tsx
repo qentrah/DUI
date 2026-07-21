@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { Inter, Noto_Kufi_Arabic } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+
 import './../styles/globals.css';
 import { LocaleProvider } from '@/components/site/locale-provider';
 import { SiteHeader } from '@/components/site/site-header';
