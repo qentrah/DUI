@@ -29,8 +29,8 @@ export function SiteHeader() {
           <Menu className="size-5" />
         </Button>
 
-        <Link href="/" className="flex items-center rounded-md bg-white px-3 py-1.5 ring-1 ring-border" aria-label="DUI home">
-          <span className="text-lg font-bold text-foreground">DUI</span>
+        <Link href="/" className="flex items-center rounded-md bg-white px-1.5 py-1 ring-1 ring-border" aria-label="DUI home">
+          <Image src="/logo.png" alt="DUI" width={40} height={40} className="h-8 w-auto" priority unoptimized />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, BookOpen, Boxes, Layout, Sparkles, Github, Search, Code, Copy, Zap } from "lucide-react"
 
 import { CopyCommand } from "@/components/site/copy-command"
@@ -88,6 +89,7 @@ export default function HomePage() {
         <section className="relative border-b border-border">
           <div className="mx-auto flex min-h-[560px] max-w-4xl flex-col items-center justify-center px-5 py-24 text-center">
             <div className="mb-6 flex items-center gap-3">
+              <Image src="/logo.png" alt="DUI" width={40} height={40} className="h-8 w-auto" priority unoptimized />
               <span className="text-sm font-semibold text-foreground">DUI</span>
               <Badge variant="outline" className="text-xs">
                 v0.2.0
