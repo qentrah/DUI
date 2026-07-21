@@ -31,23 +31,22 @@ export const metadata: Metadata = {
     siteName: 'DUI',
     title: 'DUI — qentrah Design System',
     description: 'Open-source React components, blocks, and agent skills for product teams. Built with Tailwind CSS and shadcn/ui.',
-    images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: 'DUI Design System' }],
+    images: [{ url: '/DUI_logo.png', width: 271, height: 120, alt: 'DUI Design System' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'DUI — qentrah Design System',
     description: 'Open-source React components, blocks, and agent skills for product teams. Built with Tailwind CSS and shadcn/ui.',
-    images: ['/images/og-image.png'],
+    images: ['/DUI_logo.png'],
     creator: '@qentrah',
   },
   robots: { index: true, follow: true },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
       { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: '/apple-icon.svg',
-    shortcut: '/favicon.ico',
+    shortcut: '/favicon.png',
   },
 };
 

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, BookOpen, Boxes, Layout, Sparkles, Github, Palette, Search, Code, Copy, Zap } from "lucide-react"
+import { ArrowRight, BookOpen, Boxes, Layout, Sparkles, Github, Search, Code, Copy, Zap } from "lucide-react"
 
 import { CopyCommand } from "@/components/site/copy-command"
 import { ThemeProvider } from "@/components/ui/theme-provider"
@@ -88,8 +88,7 @@ export default function HomePage() {
         <section className="relative border-b border-border">
           <div className="mx-auto flex min-h-[560px] max-w-4xl flex-col items-center justify-center px-5 py-24 text-center">
             <div className="mb-6 flex items-center gap-3">
-              <Palette className="size-6 text-primary" />
-              <span className="text-sm font-semibold text-foreground">DUI Component Library</span>
+              <span className="text-sm font-semibold text-foreground">DUI</span>
               <Badge variant="outline" className="text-xs">
                 v0.2.0
               </Badge>

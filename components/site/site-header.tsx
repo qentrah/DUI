@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { BookOpen, ChevronDown, Github, Languages, Menu, Sparkles } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -30,8 +29,8 @@ export function SiteHeader() {
           <Menu className="size-5" />
         </Button>
 
-        <Link href="/" className="flex items-center rounded-md bg-white px-1.5 py-1 ring-1 ring-border" aria-label="DUI home">
-          <Image src="/DUI_logo.png" alt="DUI" width={68} height={30} className="h-6 w-auto" priority unoptimized />
+        <Link href="/" className="flex items-center rounded-md bg-white px-3 py-1.5 ring-1 ring-border" aria-label="DUI home">
+          <span className="text-lg font-bold text-foreground">DUI</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
