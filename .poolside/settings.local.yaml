@@ -23,6 +23,10 @@ tools:
             - git diff *
             - npm ls *
             - npm install *
+            - cat *
+            - sleep 5
+            - curl *
+            - sleep 10
 paths:
     allow:
         - path: /var/folders/8b/5h9d2q1j1fd32dnjq1b5kjbh0000gn/T/**
