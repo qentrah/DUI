@@ -6,12 +6,16 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ColorDot } from "@/components/ui/color-dot"
 import { ColorSwatch } from "@/components/ui/color-swatch"
+import { CodeViewer } from "@/components/ui/code-viewer"
+import { Composer } from "@/components/ui/composer"
 import { DepartmentDot } from "@/components/ui/department-dot"
 import { EmptyState } from "@/components/ui/empty-state"
 import { FilterChipBar } from "@/components/ui/filter-chip"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Banner } from "@/components/ui/banner"
 import { Checkbox } from "@/components/ui/checkbox"
+import { CustomBanner } from "@/components/ui/custom-banner"
 import { LegendItem } from "@/components/ui/legend-item"
 import {
   List,
@@ -22,7 +26,10 @@ import {
   ListItemTag,
 } from "@/components/ui/list-item"
 import { ListRow } from "@/components/ui/list-row"
+import { Menu, SidebarMenu } from "@/components/ui/menu"
 import { Progress } from "@/components/ui/progress"
+import { Resizable, ResizablePanel } from "@/components/ui/resizable"
+import { SearchInput } from "@/components/ui/search-input"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
@@ -31,6 +38,7 @@ import { StatusPill } from "@/components/ui/status-pill"
 import { Switch } from "@/components/ui/switch"
 import { TagChip } from "@/components/ui/tag-chip"
 import { Textarea } from "@/components/ui/textarea"
+import { VideoPlayer } from "@/components/ui/video-player"
 import { useLocale } from "@/components/site/locale-provider"
 import { type ComponentSlug } from "@/lib/catalog"
 import { cn } from "@/lib/utils"
@@ -323,6 +331,123 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
         <DepartmentDot department="sales" showLabel />
       </div>
     )
+  }
+
+  if (slug === "video-player") {
+    return (
+      <VideoPlayer
+        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        poster="https://picsum.photos/seed/video/640/360"
+        variant={variant === "thumbnail" ? "thumbnail" : "default"}
+        controls={variant !== "thumbnail"}
+        autoPlay={false}
+      />
+    )
+  }
+
+  if (slug === "banner") {
+    return (
+      <Banner
+        variant={
+          variant === "default" ? "primary" : (variant as "primary" | "secondary" | "success" | "warning" | "danger" | "info")
+        }
+        title={variant === "default" ? "Information" : "Status"}
+        description="This is a notification banner with contextual styling."
+      />
+    )
+  }
+
+  if (slug === "custom-banner") {
+    return (
+      <CustomBanner
+        variant={variant === "announcement" ? "gradient" : variant === "promotion" ? "glass" : "primary"}
+        pattern={variant === "announcement" ? "dots" : variant === "promotion" ? "grid" : "none"}
+        hasGlow={variant === "announcement" || variant === "promotion"}
+        title={variant === "announcement" ? "New Feature" : variant === "promotion" ? "Special Offer" : "Update"}
+        description="This banner demonstrates custom styling with gradients and patterns."
+      />
+    )
+  }
+
+  if (slug === "code-viewer") {
+    return (
+      <CodeViewer
+        code={`function greet(name) {
+  console.log("Hello, " + name + "!")
+}
+
+greet("World") // Output: Hello, World!`}
+        language="javascript"
+        variant={variant === "minimal" ? "minimal" : "default"}
+        showLineNumbers={variant !== "minimal"}
+        highlightLines={[2]}
+      />
+    )
+  }
+
+  if (slug === "resizable") {
+    return (
+      <div className="w-full max-w-md">
+        <Resizable className="h-64 border border-border rounded-lg">
+          <ResizablePanel defaultSize={120} className="bg-muted/30">
+            <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+              Sidebar
+            </div>
+          </ResizablePanel>
+          <div className="w-px bg-border" />
+          <ResizablePanel className="bg-background">
+            <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+              Main content
+            </div>
+          </ResizablePanel>
+        </Resizable>
+      </div>
+    )
+  }
+
+  if (slug === "composer") {
+    return (
+      <Composer
+        value=""
+        onChange={() => {}}
+        placeholder="Type a message..."
+      />
+    )
+  }
+
+  if (slug === "search-input") {
+    return (
+      <SearchInput
+        value=""
+        onChange={() => {}}
+        placeholder="Search components..."
+        loading={variant === "loading"}
+      />
+    )
+  }
+
+  if (slug === "menu") {
+    const menuItems = [
+      {
+        id: "home",
+        label: "Home",
+        icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+      },
+      {
+        id: "docs",
+        label: "Documentation",
+        badge: 12
+      },
+      {
+        id: "components",
+        label: "Components",
+        children: [
+          { id: "ui", label: "UI Components" },
+          { id: "blocks", label: "Blocks" }
+        ]
+      }
+    ]
+    return variant === "sidebar" ? <SidebarMenu items={menuItems} /> : <Menu items={menuItems} />
   }
 
   return (

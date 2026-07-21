@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-color-filter",
+  "title": "Color Filter",
+  "description": "Theme color picker with component preview.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/card",
+    "qentrah/DUI/badge",
+    "qentrah/DUI/tag-chip",
+    "qentrah/DUI/color-swatch"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/color-filter.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Palette } from \"lucide-react\"\n\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { ColorSwatch } from \"@/components/ui/color-swatch\"\nimport { TagChip } from \"@/components/ui/tag-chip\"\nimport { cn } from \"@/lib/utils\"\n\nconst themeColors = [\n  { name: \"Primary\", color: \"#ffffff\", variable: \"--primary\" },\n  { name: \"Secondary\", color: \"#8b5cf6\", variable: \"--secondary\" },\n  { name: \"Success\", color: \"#22c55e\", variable: \"--success\" },\n  { name: \"Warning\", color: \"#f59e0c\", variable: \"--warning\" },\n  { name: \"Danger\", color: \"#ef4444\", variable: \"--destructive\" },\n]\n\nexport interface ColorFilterBlockProps {\n  title?: string\n  description?: string\n  colors?: Array<{ name: string; color: string }>\n  selectedColor?: string\n  onColorSelect?: (color: string) => void\n  className?: string\n}\n\nexport function ColorFilterBlock({\n  title = \"Theme colors\",\n  description = \"Select a color to preview components with that theme\",\n  colors = themeColors,\n  selectedColor = \"#ffffff\",\n  onColorSelect,\n  className,\n}: ColorFilterBlockProps) {\n  return (\n    <Card className={cn(className)}>\n      <CardHeader>\n        <div className=\"flex items-center gap-2\">\n          <Palette className=\"size-5 text-primary\" />\n          <CardTitle>{title}</CardTitle>\n        </div>\n        <CardDescription>{description}</CardDescription>\n      </CardHeader>\n      <CardContent className=\"space-y-4\">\n        <div className=\"flex flex-wrap gap-2\">\n          {colors.map((c) => (\n            <ColorSwatch\n              key={c.name}\n              color={c.color}\n              selected={selectedColor === c.color}\n              onClick={() => onColorSelect?.(c.color)}\n              ariaLabel={`Select ${c.name} theme`}\n            />\n          ))}\n        </div>\n        <div className=\"mt-4 space-y-3\">\n          <p className=\"text-sm font-medium text-foreground\">Color variants preview:</p>\n          <div className=\"flex flex-wrap gap-2\">\n            <TagChip tone=\"primary\" label=\"Primary\" />\n            <TagChip tone=\"secondary\" label=\"Secondary\" />\n            <TagChip tone=\"success\" label=\"Success\" />\n            <TagChip tone=\"warning\" label=\"Warning\" />\n            <TagChip tone=\"danger\" label=\"Danger\" />\n          </div>\n          <div className=\"flex flex-wrap gap-2\">\n            <Badge variant=\"primary\">Primary badge</Badge>\n            <Badge variant=\"secondary\">Secondary badge</Badge>\n            <Badge variant=\"success\">Success badge</Badge>\n            <Badge variant=\"warning\">Warning badge</Badge>\n            <Badge variant=\"danger\">Danger badge</Badge>\n          </div>\n        </div>\n      </CardContent>\n    </Card>\n  )\n}",
+      "type": "registry:block",
+      "target": "@ui/blocks/color-filter.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

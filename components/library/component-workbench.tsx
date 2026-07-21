@@ -42,7 +42,15 @@ const variants: Partial<Record<ComponentSlug, string[]>> = {
   "list-item": ["default"],
   "color-swatch": ["default", "idle"],
   "status-badge": ["default", "pending", "warning", "error", "inactive"],
-  "department-dot": ["default"]
+  "department-dot": ["default"],
+  "video-player": ["default", "thumbnail"],
+  "banner": ["default", "success", "warning", "danger"],
+  "custom-banner": ["default", "announcement", "promotion"],
+  "code-viewer": ["default", "minimal"],
+  "resizable": ["default"],
+  "composer": ["default"],
+  "search-input": ["default", "loading"],
+  "menu": ["default", "sidebar"]
 }
 
 const snippets: Partial<Record<ComponentSlug, (variant: string) => string>> = {
@@ -228,6 +236,105 @@ export function StatusBadgeDemo() {
 
 export function DepartmentDotDemo() {
   return <DepartmentDot department="engineering" showLabel />
+}`,
+  "video-player": (variant) => `import { VideoPlayer } from "@/components/ui/video-player"
+
+export function VideoPlayerDemo() {
+  return (
+    <VideoPlayer
+      src="https://example.com/video.mp4"
+      poster="https://example.com/poster.jpg"
+      variant="${variant === "default" ? "default" : "thumbnail"}"
+      controls
+      autoPlay={false}
+    />
+  )
+}`,
+  "banner": (variant) => `import { Banner } from "@/components/ui/banner"
+
+export function BannerDemo() {
+  return (
+    <Banner
+      variant="${variant}"
+      title="Title"
+      description="Banner description with context."
+    />
+  )
+}`,
+  "custom-banner": (variant) => `import { CustomBanner } from "@/components/ui/custom-banner"
+
+export function CustomBannerDemo() {
+  return (
+    <CustomBanner
+      variant="${variant === "announcement" ? "gradient" : variant === "promotion" ? "glass" : "primary"}"
+      pattern="${variant === "announcement" ? "dots" : variant === "promotion" ? "grid" : "none"}"
+      hasGlow={${variant === "announcement" || variant === "promotion"}}
+      title="Announcement"
+      description="This is a custom banner with styling."
+    />
+  )
+}`,
+  "code-viewer": (variant) => `import { CodeViewer } from "@/components/ui/code-viewer"
+
+export function CodeViewerDemo() {
+  return (
+    <CodeViewer
+      code={\`function greet(name) {
+  console.log("Hello, " + name + "!")
+}\`}
+      language="javascript"
+      variant="${variant}"
+      showLineNumbers
+    />
+  )
+}`,
+  "resizable": () => `import { Resizable, ResizablePanel } from "@/components/ui/resizable"
+
+export function ResizableDemo() {
+  return (
+    <Resizable>
+      <ResizablePanel defaultSize={200}>
+        <div className="p-4">Sidebar</div>
+      </ResizablePanel>
+      <div className="w-px bg-border" />
+      <ResizablePanel>
+        <div className="p-4">Main content</div>
+      </ResizablePanel>
+    </Resizable>
+  )
+}`,
+  "composer": () => `import { Composer } from "@/components/ui/composer"
+
+export function ComposerDemo() {
+  return (
+    <Composer
+      value=""
+      onChange={() => {}}
+      placeholder="Type a message..."
+    />
+  )
+}`,
+  "search-input": (variant) => `import { SearchInput } from "@/components/ui/search-input"
+
+export function SearchInputDemo() {
+  return (
+    <SearchInput
+      value=""
+      onChange={() => {}}
+      placeholder="Search components..."
+      ${variant === "loading" ? "loading" : ""}
+    />
+  )
+}`,
+  "menu": (variant) => `import { Menu } from "@/components/ui/menu"
+
+export function MenuDemo() {
+  const items = [
+    { id: "home", label: "Home", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg> },
+    { id: "docs", label: "Documentation", badge: 12 },
+    { id: "components", label: "Components", children: [{ id: "ui", label: "UI Components" }, { id: "blocks", label: "Blocks" }] }
+  ]
+  return <Menu items={items} />
 }`
 }
 
@@ -321,7 +428,7 @@ function CodeExample({
                   onClick={copyCode}
                   className="flex h-8 items-center gap-1.5 rounded-md border border-[#30363d] bg-[#21262d] px-2.5 font-medium text-[#f0f6fc] hover:bg-[#30363d]"
                 >
-                  {copied ? <Check className="size-3.5 text-emerald-400" /> : <Clipboard className="size-3.5" />}
+                  {copied ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
                   {copied ? "Copied" : "Copy"}
                 </button>
                 <button
@@ -368,7 +475,7 @@ function CodeExample({
                             {index + 1}
                           </span>
                           {line.map((token, tokenIndex) => (
-                            <span {...getTokenProps({ token })} key={tokenIndex} />
+                            <span {...getTokenProps({ token })} key={`${index}-${tokenIndex}`} />
                           ))}
                         </span>
                       )

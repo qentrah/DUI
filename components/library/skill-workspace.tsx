@@ -190,7 +190,7 @@ ${skill.content}`
                               {index + 1}
                             </span>
                             {line.map((token, tokenIndex) => (
-                              <span {...getTokenProps({ token })} key={tokenIndex} />
+                              <span {...getTokenProps({ token })} key={`${index}-${tokenIndex}`} />
                             ))}
                           </span>
                         )

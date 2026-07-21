@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "components/ui/separator.tsx",
-      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction Separator({ orientation = \"horizontal\", className, ...props }: React.HTMLAttributes<HTMLDivElement> & { orientation?: \"horizontal\" | \"vertical\" }) {\n  return <div role=\"separator\" aria-orientation={orientation} className={cn(\"shrink-0 bg-zinc-200\", orientation === \"horizontal\" ? \"h-px w-full\" : \"h-full w-px\", className)} {...props} />\n}\n\nexport { Separator }\n",
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst separatorVariants = cva(\n  \"separator shrink-0 bg-border transition-colors\",\n  {\n    variants: {\n      orientation: {\n        horizontal: \"h-px w-full\",\n        vertical: \"h-full w-px\",\n      },\n    },\n    defaultVariants: { orientation: \"horizontal\" },\n  }\n)\n\nexport interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof separatorVariants> {}\n\nfunction Separator({ orientation = \"horizontal\", className, ...props }: SeparatorProps) {\n  return (\n    <div\n      role=\"separator\"\n      aria-orientation={orientation === \"vertical\" ? \"vertical\" : undefined}\n      className={cn(separatorVariants({ orientation }), className)}\n      {...props}\n    />\n  )\n}\n\nSeparator.displayName = \"Separator\"\n\nexport { Separator, separatorVariants }",
       "type": "registry:ui",
       "target": "@ui/separator.tsx"
     }

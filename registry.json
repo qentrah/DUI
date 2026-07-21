@@ -261,13 +261,68 @@
       "files": [{"path": "components/ui/theme-provider.tsx", "type": "registry:ui", "target": "@ui/theme-provider.tsx"}]
     },
     {
-      "name": "five-icon",
+      "name": "video-player",
       "type": "registry:ui",
-      "title": "FiveIcon",
-      "description": "Icon container with themeable color variants.",
-      "dependencies": ["class-variance-authority"],
+      "title": "VideoPlayer",
+      "description": "Video player component with controls, variants, and thumbnail support.",
       "registryDependencies": ["qentrah/DUI/utils"],
-      "files": [{"path": "components/ui/five-icon.tsx", "type": "registry:ui", "target": "@ui/five-icon.tsx"}]
+      "files": [{"path": "components/ui/video-player.tsx", "type": "registry:ui", "target": "@ui/video-player.tsx"}]
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "Notification banner component with status variants.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/banner.tsx", "type": "registry:ui", "target": "@ui/banner.tsx"}]
+    },
+    {
+      "name": "custom-banner",
+      "type": "registry:ui",
+      "title": "CustomBanner",
+      "description": "Customizable banner with gradient backgrounds, patterns, and glow effects.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/custom-banner.tsx", "type": "registry:ui", "target": "@ui/custom-banner.tsx"}]
+    },
+    {
+      "name": "code-viewer",
+      "type": "registry:ui",
+      "title": "CodeViewer",
+      "description": "Code display component with syntax highlighting and line numbers.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/code-viewer.tsx", "type": "registry:ui", "target": "@ui/code-viewer.tsx"}]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Resizable panel container with horizontal and vertical layouts.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/resizable.tsx", "type": "registry:ui", "target": "@ui/resizable.tsx"}]
+    },
+    {
+      "name": "composer",
+      "type": "registry:ui",
+      "title": "Composer",
+      "description": "AI chat composer input with auto-expand and action buttons.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/composer.tsx", "type": "registry:ui", "target": "@ui/composer.tsx"}]
+    },
+    {
+      "name": "search-input",
+      "type": "registry:ui",
+      "title": "SearchInput",
+      "description": "Search input with clear button, loading state, and results dropdown.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/search-input.tsx", "type": "registry:ui", "target": "@ui/search-input.tsx"}]
+    },
+    {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "description": "Navigation menu with items and submenus.",
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/menu.tsx", "type": "registry:ui", "target": "@ui/menu.tsx"}]
     },
     {
       "name": "blocks-sign-in",

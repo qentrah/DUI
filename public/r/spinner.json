@@ -12,7 +12,7 @@
   "files": [
     {
       "path": "components/ui/spinner.tsx",
-      "content": "import { LoaderCircle } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction Spinner({ className, ...props }: React.ComponentProps<typeof LoaderCircle>) {\n  return <LoaderCircle aria-label=\"Loading\" className={cn(\"size-4 animate-spin\", className)} {...props} />\n}\n\nexport { Spinner }\n",
+      "content": "import * as React from \"react\"\nimport { LoaderCircle } from \"lucide-react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst spinnerVariants = cva(\"spinner animate-spin transition-colors\", {\n  variants: {\n    size: {\n      sm: \"size-3\",\n      md: \"size-4\",\n      lg: \"size-5\",\n    },\n  },\n  defaultVariants: { size: \"md\" },\n})\n\nexport interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof spinnerVariants> {\n  /** Color variant for the spinner */\n  color?: \"default\" | \"primary\" | \"current\"\n}\n\nfunction Spinner({ className, size, color = \"default\", ...props }: SpinnerProps) {\n  const colorClass = {\n    default: \"text-foreground\",\n    primary: \"text-primary\",\n    current: \"text-current\",\n  }\n\n  return (\n    <span className={cn(spinnerVariants({ size }), colorClass[color], className)} {...props}>\n      <LoaderCircle className=\"h-full w-full\" />\n    </span>\n  )\n}\n\nSpinner.displayName = \"Spinner\"\n\nexport { Spinner, spinnerVariants }",
       "type": "registry:ui",
       "target": "@ui/spinner.tsx"
     }

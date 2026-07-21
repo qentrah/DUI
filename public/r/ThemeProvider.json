@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ThemeProvider",
+  "title": "Theme Provider",
+  "description": "Theme context provider for custom color themes.",
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/theme-provider.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ntype ThemeColor = \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\"\n\ninterface ThemeConfig {\n  primary: string\n  secondary: string\n  success: string\n  warning: string\n  danger: string\n}\n\nconst defaultTheme: ThemeConfig = {\n  primary: \"#ffffff\",\n  secondary: \"#8b5cf6\",\n  success: \"#22c55e\",\n  warning: \"#f59e0c\",\n  danger: \"#ef4444\",\n}\n\ninterface ThemeContextValue {\n  theme: ThemeConfig\n  setTheme: (theme: Partial<ThemeConfig>) => void\n  color: ThemeColor\n  setColor: (color: ThemeColor) => void\n}\n\nconst ThemeContext = React.createContext<ThemeContextValue | undefined>(undefined)\n\nexport function ThemeProvider({\n  children,\n  defaultTheme: customDefaultTheme = defaultTheme,\n}: {\n  children: React.ReactNode\n  defaultTheme?: Partial<ThemeConfig>\n}) {\n  const [theme, setThemeState] = React.useState<ThemeConfig>({\n    ...defaultTheme,\n    ...customDefaultTheme,\n  })\n  const [color, setColor] = React.useState<ThemeColor>(\"primary\")\n\n  function setTheme(newTheme: Partial<ThemeConfig>) {\n    setThemeState((prev) => ({ ...prev, ...newTheme }))\n  }\n\n  return (\n    <ThemeContext.Provider value={{ theme, setTheme, color, setColor }}>\n      <style>{`\n        :root {\n          --theme-primary: ${theme.primary};\n          --theme-secondary: ${theme.secondary};\n          --theme-success: ${theme.success};\n          --theme-warning: ${theme.warning};\n          --theme-danger: ${theme.danger};\n        }\n      `}</style>\n      {children}\n    </ThemeContext.Provider>\n  )\n}\n\nexport function useTheme() {\n  const context = React.useContext(ThemeContext)\n  if (!context) {\n    throw new Error(\"useTheme must be used within ThemeProvider\")\n  }\n  return context\n}\n\nexport type { ThemeConfig, ThemeColor }\nexport { ThemeContext }",
+      "type": "registry:ui",
+      "target": "@ui/theme-provider.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "components/ui/skeleton.tsx",
-      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nfunction Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {\n  return <div className={cn(\"animate-pulse rounded-md bg-zinc-200\", className)} {...props} />\n}\n\nexport { Skeleton }\n",
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst skeletonVariants = cva(\"skeleton animate-pulse rounded-xl bg-surface-secondary transition-colors\", {\n  variants: {\n    rounded: {\n      sm: \"rounded-sm\",\n      md: \"rounded-md\",\n      lg: \"rounded-lg\",\n      full: \"rounded-full\",\n      none: \"rounded-none\",\n    },\n  },\n  defaultVariants: { rounded: \"md\" },\n})\n\nexport interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof skeletonVariants> {}\n\nfunction Skeleton({ className, rounded, ...props }: SkeletonProps) {\n  return <div className={cn(skeletonVariants({ rounded }), className)} {...props} />\n}\n\nSkeleton.displayName = \"Skeleton\"\n\nexport { Skeleton, skeletonVariants }",
       "type": "registry:ui",
       "target": "@ui/skeleton.tsx"
     }

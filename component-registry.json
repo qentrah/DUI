@@ -301,14 +301,84 @@
       "notes": "Install with qentrah/DUI/blocks-color-filter."
     },
     {
-      "name": "FiveIcon",
-      "path": "components/ui/five-icon.tsx",
+      "name": "VideoPlayer",
+      "path": "components/ui/video-player.tsx",
       "kind": "primitive",
-      "summary": "Icon container with themeable color variants.",
-      "usedIn": ["UI primitives"],
-      "props": ["size", "variant", "icon", "label"],
+      "summary": "Video player component with controls, variants, and thumbnail support.",
+      "usedIn": ["Media displays"],
+      "props": ["src", "poster", "variant", "size", "controls", "loop", "muted", "autoPlay"],
       "createdAt": "2026-07-21",
-      "notes": "Install with qentrah/DUI/five-icon."
+      "notes": "Install with qentrah/DUI/video-player."
+    },
+    {
+      "name": "Banner",
+      "path": "components/ui/banner.tsx",
+      "kind": "primitive",
+      "summary": "Banner component for notifications and alerts with multiple variants.",
+      "usedIn": ["Notification panels"],
+      "props": ["variant", "size", "title", "description", "icon", "action", "dismissible"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/banner."
+    },
+    {
+      "name": "CustomBanner",
+      "path": "components/ui/custom-banner.tsx",
+      "kind": "primitive",
+      "summary": "Customizable banner with gradient backgrounds, patterns, and glow effects.",
+      "usedIn": ["Marketing pages", "Announcement banners"],
+      "props": ["variant", "size", "pattern", "hasGlow", "title", "action"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/custom-banner."
+    },
+    {
+      "name": "CodeViewer",
+      "path": "components/ui/code-viewer.tsx",
+      "kind": "primitive",
+      "summary": "Code display component with syntax highlighting and line numbers.",
+      "usedIn": ["Documentation", "Code playgrounds"],
+      "props": ["code", "language", "showLineNumbers", "showCopyButton", "highlightLines"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/code-viewer."
+    },
+    {
+      "name": "Resizable",
+      "path": "components/ui/resizable.tsx",
+      "kind": "primitive",
+      "summary": "Resizable panel container with horizontal and vertical layouts.",
+      "usedIn": ["Layout panels", "Sidebar layouts"],
+      "props": ["direction", "disabled"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/resizable."
+    },
+    {
+      "name": "Composer",
+      "path": "components/ui/composer.tsx",
+      "kind": "primitive",
+      "summary": "AI chat composer input with auto-expand and action buttons.",
+      "usedIn": ["Chat interfaces", "AI assistants"],
+      "props": ["value", "onChange", "onSubmit", "placeholder", "showCharCount", "maxLength"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/composer."
+    },
+    {
+      "name": "SearchInput",
+      "path": "components/ui/search-input.tsx",
+      "kind": "primitive",
+      "summary": "Search input with clear button, loading state, and optional results dropdown.",
+      "usedIn": ["Sidebar search", "Global search"],
+      "props": ["value", "onChange", "placeholder", "loading", "onClear", "onSubmit"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/search-input."
+    },
+    {
+      "name": "Menu",
+      "path": "components/ui/menu.tsx",
+      "kind": "primitive",
+      "summary": "Navigation menu with items and submenus.",
+      "usedIn": ["Sidebar navigation", "Component menus"],
+      "props": ["items", "activeItem", "onItemClick", "variant"],
+      "createdAt": "2026-07-21",
+      "notes": "Install with qentrah/DUI/menu."
     }
   ]
 }
