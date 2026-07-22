@@ -15,14 +15,10 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
   const item = getBlock(slug)
   if (!item) notFound()
 
-  // Read block source code directly from the filesystem (RSC/build-time execution)
-  const filePath = path.join(process.cwd(), "components", "blocks", `${slug}.tsx`)
-  let code = ""
-  try {
-    code = fs.readFileSync(filePath, "utf8")
-  } catch (error) {
-    console.error(`Failed to read code for block: ${slug}`, error)
-  }
+  const filePath = path.join(process.cwd(), "components", "blocks", item.source)
+  const code = fs.readFileSync(filePath, "utf8")
+  const variants = "variants" in item ? item.variants : undefined
+  const variantCodes = variants ? Object.fromEntries(variants.map((variant) => [variant.id, fs.readFileSync(path.join(process.cwd(), "components", "blocks", variant.source), "utf8")])) : undefined
 
   return (
     <SectionShell
@@ -40,7 +36,7 @@ export default async function BlockPage({ params }: { params: Promise<{ slug: st
         <p className="mt-4 text-muted-foreground">{item.description}</p>
 
         <div id="preview" className="scroll-mt-24">
-          <BlockWorkspace block={item} code={code} />
+          <BlockWorkspace block={item} code={code} variantCodes={variantCodes} />
         </div>
       </div>
     </SectionShell>

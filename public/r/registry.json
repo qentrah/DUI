@@ -288,7 +288,8 @@
       "name": "code-viewer",
       "type": "registry:ui",
       "title": "CodeViewer",
-      "description": "Code display component with syntax highlighting and line numbers.",
+      "description": "Multi-language code, terminal, and prompt viewer with token highlighting and customizable syntax themes.",
+      "dependencies": ["prism-react-renderer"],
       "registryDependencies": ["qentrah/DUI/utils"],
       "files": [{"path": "components/ui/code-viewer.tsx", "type": "registry:ui", "target": "@ui/code-viewer.tsx"}]
     },
@@ -296,7 +297,7 @@
       "name": "resizable",
       "type": "registry:ui",
       "title": "Resizable",
-      "description": "Resizable panel container with horizontal and vertical layouts.",
+      "description": "Accessible draggable panels with horizontal, vertical, nested, and framed layouts.",
       "registryDependencies": ["qentrah/DUI/utils"],
       "files": [{"path": "components/ui/resizable.tsx", "type": "registry:ui", "target": "@ui/resizable.tsx"}]
     },
@@ -304,9 +305,18 @@
       "name": "composer",
       "type": "registry:ui",
       "title": "Composer",
-      "description": "AI chat composer input with auto-expand and action buttons.",
+      "description": "Controlled AI chat composer with auto-expand, actions, character limits, and size variants.",
       "registryDependencies": ["qentrah/DUI/utils"],
       "files": [{"path": "components/ui/composer.tsx", "type": "registry:ui", "target": "@ui/composer.tsx"}]
+    },
+    {
+      "name": "ai-composer",
+      "type": "registry:ui",
+      "title": "AIComposer",
+      "description": "Production AI composer with attachments, modes, plugins, context badges, and send or stop states.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils"],
+      "files": [{"path": "components/ui/ai-composer.tsx", "type": "registry:ui", "target": "@ui/ai-composer.tsx"}]
     },
     {
       "name": "search-input",
@@ -324,6 +334,17 @@
       "registryDependencies": ["qentrah/DUI/utils"],
       "files": [{"path": "components/ui/menu.tsx", "type": "registry:ui", "target": "@ui/menu.tsx"}]
     },
+    {"name":"dropdown","type":"registry:ui","title":"Dropdown","description":"Accessible single-selection dropdown with descriptions.","dependencies":["lucide-react"],"registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/dropdown.tsx","type":"registry:ui","target":"@ui/dropdown.tsx"}]},
+    {"name":"sidebar","type":"registry:ui","title":"Sidebar","description":"Collapsible application sidebar with mobile drawer support.","dependencies":["lucide-react"],"registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/sidebar.tsx","type":"registry:ui","target":"@ui/sidebar.tsx"}]},
+    {"name":"mobile-nav","type":"registry:ui","title":"MobileNav","description":"Safe-area-aware mobile bottom navigation.","registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/mobile-nav.tsx","type":"registry:ui","target":"@ui/mobile-nav.tsx"}]},
+    {"name":"modal","type":"registry:ui","title":"Modal","description":"Controlled modal dialog with overlay and keyboard dismissal.","dependencies":["lucide-react"],"registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/modal.tsx","type":"registry:ui","target":"@ui/modal.tsx"}]},
+    {"name":"popover","type":"registry:ui","title":"Popover","description":"Anchored contextual content with controlled state.","registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/popover.tsx","type":"registry:ui","target":"@ui/popover.tsx"}]},
+    {"name":"chart","type":"registry:ui","title":"Chart","description":"Dependency-free accessible bar and line charts.","registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/chart.tsx","type":"registry:ui","target":"@ui/chart.tsx"}]},
+    {"name":"table","type":"registry:ui","title":"Table","description":"Responsive semantic table primitives.","registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/table.tsx","type":"registry:ui","target":"@ui/table.tsx"}]},
+    {"name":"cursor","type":"registry:ui","title":"Cursor","description":"Custom pointer cursor with dot, ring, and label variants.","registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/cursor.tsx","type":"registry:ui","target":"@ui/cursor.tsx"}]},
+    {"name":"css-motion","type":"registry:ui","title":"CSSMotion","description":"Dependency-free CSS entrance animation with reduced-motion support.","registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/css-motion.tsx","type":"registry:ui","target":"@ui/css-motion.tsx"}]},
+    {"name":"gsap-motion","type":"registry:ui","title":"GsapMotion","description":"Scoped GSAP stagger animation wrapper.","dependencies":["gsap","@gsap/react"],"registryDependencies":["qentrah/DUI/utils"],"files":[{"path":"components/ui/gsap-motion.tsx","type":"registry:ui","target":"@ui/gsap-motion.tsx"}]},
+    {"name":"motion-reveal","type":"registry:ui","title":"MotionReveal","description":"Motion for React viewport reveal component.","dependencies":["motion"],"files":[{"path":"components/ui/motion-reveal.tsx","type":"registry:ui","target":"@ui/motion-reveal.tsx"}]},
     {
       "name": "blocks-sign-in",
       "type": "registry:block",
@@ -332,13 +353,27 @@
       "dependencies": ["lucide-react"],
       "registryDependencies": [
         "qentrah/DUI/utils",
-        "qentrah/DUI/card",
         "qentrah/DUI/input",
         "qentrah/DUI/button",
-        "qentrah/DUI/separator",
-        "qentrah/DUI/badge"
+        "qentrah/DUI/separator"
       ],
       "files": [{"path": "components/blocks/sign-in.tsx", "type": "registry:block", "target": "@ui/blocks/sign-in.tsx"}]
+    },
+    {
+      "name": "blocks-sign-in-css",
+      "type": "registry:block",
+      "title": "Sign In Form — CSS Motion",
+      "description": "Sign-in form enhanced by the dependency-free CSSMotion plugin.",
+      "registryDependencies": ["qentrah/DUI/blocks-sign-in", "qentrah/DUI/css-motion"],
+      "files": [{"path": "components/blocks/sign-in-css.tsx", "type": "registry:block", "target": "@ui/blocks/sign-in-css.tsx"}]
+    },
+    {
+      "name": "blocks-sign-in-gsap",
+      "type": "registry:block",
+      "title": "Sign In Form — GSAP Motion",
+      "description": "Sign-in form enhanced by the GsapMotion plugin.",
+      "registryDependencies": ["qentrah/DUI/blocks-sign-in", "qentrah/DUI/gsap-motion"],
+      "files": [{"path": "components/blocks/sign-in-gsap.tsx", "type": "registry:block", "target": "@ui/blocks/sign-in-gsap.tsx"}]
     },
     {
       "name": "blocks-session",
@@ -348,10 +383,10 @@
       "dependencies": ["lucide-react"],
       "registryDependencies": [
         "qentrah/DUI/utils",
-        "qentrah/DUI/card",
         "qentrah/DUI/avatar",
         "qentrah/DUI/badge",
         "qentrah/DUI/button",
+        "qentrah/DUI/separator",
         "qentrah/DUI/status-pill"
       ],
       "files": [{"path": "components/blocks/session-block.tsx", "type": "registry:block", "target": "@ui/blocks/session.tsx"}]
@@ -371,6 +406,24 @@
       "files": [{"path": "components/blocks/hero-sections.tsx", "type": "registry:block", "target": "@ui/blocks/hero-sections.tsx"}]
     },
     {
+      "name": "blocks-hero-simple",
+      "type": "registry:block",
+      "title": "Hero Simple",
+      "description": "Simple installable hero section.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/badge", "qentrah/DUI/button"],
+      "files": [{"path": "components/blocks/hero-sections.tsx", "type": "registry:block", "target": "@ui/blocks/hero-sections.tsx"}]
+    },
+    {
+      "name": "blocks-hero-centered",
+      "type": "registry:block",
+      "title": "Hero Centered",
+      "description": "Centered installable hero section with dual actions.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/badge", "qentrah/DUI/button"],
+      "files": [{"path": "components/blocks/hero-sections.tsx", "type": "registry:block", "target": "@ui/blocks/hero-sections.tsx"}]
+    },
+    {
       "name": "blocks-color-filter",
       "type": "registry:block",
       "title": "Color Filter",
@@ -378,12 +431,58 @@
       "dependencies": ["lucide-react"],
       "registryDependencies": [
         "qentrah/DUI/utils",
-        "qentrah/DUI/card",
         "qentrah/DUI/badge",
+        "qentrah/DUI/button",
+        "qentrah/DUI/separator",
         "qentrah/DUI/tag-chip",
         "qentrah/DUI/color-swatch"
       ],
       "files": [{"path": "components/blocks/color-filter.tsx", "type": "registry:block", "target": "@ui/blocks/color-filter.tsx"}]
+    },
+    {
+      "name": "blocks-cta-section", "type": "registry:block", "title": "CTA Section", "description": "Focused call-to-action section.", "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/badge", "qentrah/DUI/button"],
+      "files": [{"path": "components/blocks/cta-section.tsx", "type": "registry:block", "target": "@ui/blocks/cta-section.tsx"}]
+    },
+    {
+      "name": "blocks-feature-grid", "type": "registry:block", "title": "Feature Grid", "description": "Responsive product feature grid.", "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/badge"],
+      "files": [{"path": "components/blocks/feature-grid.tsx", "type": "registry:block", "target": "@ui/blocks/feature-grid.tsx"}]
+    },
+    {
+      "name": "blocks-testimonial-section", "type": "registry:block", "title": "Testimonial Section", "description": "Customer quote and identity section.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/avatar", "qentrah/DUI/badge"],
+      "files": [{"path": "components/blocks/testimonial-section.tsx", "type": "registry:block", "target": "@ui/blocks/testimonial-section.tsx"}]
+    },
+    {
+      "name": "blocks-logo-cloud", "type": "registry:block", "title": "Logo Cloud", "description": "Customer and partner logo strip.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/separator"],
+      "files": [{"path": "components/blocks/logo-cloud.tsx", "type": "registry:block", "target": "@ui/blocks/logo-cloud.tsx"}]
+    },
+    {
+      "name": "blocks-faq-section", "type": "registry:block", "title": "FAQ Section", "description": "Accessible native disclosure list.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/separator"],
+      "files": [{"path": "components/blocks/faq-section.tsx", "type": "registry:block", "target": "@ui/blocks/faq-section.tsx"}]
+    },
+    {
+      "name": "blocks-gallery-mosaic", "type": "registry:block", "title": "Gallery Mosaic", "description": "Responsive editorial image mosaic with a contextual cursor.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/badge", "qentrah/DUI/cursor"],
+      "files": [{"path": "components/blocks/gallery-mosaic.tsx", "type": "registry:block", "target": "@ui/blocks/gallery-mosaic.tsx"}]
+    },
+    {
+      "name": "blocks-photo-story", "type": "registry:block", "title": "Photo Story", "description": "Responsive image-led editorial story section.", "dependencies": ["lucide-react"],
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/badge", "qentrah/DUI/button"],
+      "files": [{"path": "components/blocks/photo-story.tsx", "type": "registry:block", "target": "@ui/blocks/photo-story.tsx"}]
+    },
+    {
+      "name": "blocks-testimonial-grid", "type": "registry:block", "title": "Testimonial Grid", "description": "Responsive customer testimonial collection.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/avatar", "qentrah/DUI/badge"],
+      "files": [{"path": "components/blocks/testimonial-grid.tsx", "type": "registry:block", "target": "@ui/blocks/testimonial-grid.tsx"}]
+    },
+    {
+      "name": "blocks-local-logo-wall", "type": "registry:block", "title": "Local Logo Wall", "description": "Responsive regional partner brand wall.",
+      "registryDependencies": ["qentrah/DUI/utils", "qentrah/DUI/separator"],
+      "files": [{"path": "components/blocks/local-logo-wall.tsx", "type": "registry:block", "target": "@ui/blocks/local-logo-wall.tsx"}]
     }
   ]
 }

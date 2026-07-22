@@ -50,13 +50,13 @@ export function SiteHeader() {
               {isArabic ? "المكوّنات" : "Components"}
               <ChevronDown className="size-3.5 transition group-hover/menu:rotate-180" />
             </Link>
-            <div className="pointer-events-none invisible absolute start-1/2 top-full z-50 w-72 -translate-x-1/2 pt-2 opacity-0 transition duration-150 group-hover/menu:pointer-events-auto group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:pointer-events-auto group-focus-within/menu:visible group-focus-within/menu:opacity-100">
+            <div className="pointer-events-none invisible absolute start-1/2 top-full z-50 w-[48rem] max-w-[calc(100vw-4rem)] -translate-x-1/4 pt-2 opacity-0 transition duration-150 group-hover/menu:pointer-events-auto group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:pointer-events-auto group-focus-within/menu:visible group-focus-within/menu:opacity-100">
               <div className="rounded-xl border border-border bg-popover p-2 shadow-2xl">
                 <Link href="/components" className="mb-1 block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent">
                   {isArabic ? "عرض جميع المكوّنات" : "Browse all components"}
                 </Link>
                 <div className="h-px bg-border" />
-                <div className="grid grid-cols-2 gap-1 pt-1">
+                <div className="grid grid-cols-4 gap-1 pt-1">
                   {componentCatalog.map((item) => (
                     <Link
                       key={item.slug}

@@ -1,0 +1,25 @@
+"use client"
+
+import * as React from "react"
+import { ChevronLeft, Menu, X } from "lucide-react"
+import { cn } from "@/lib/utils"
+
+export interface SidebarItem { id: string; label: string; icon?: React.ReactNode; badge?: string | number; disabled?: boolean }
+export interface SidebarProps { items: readonly SidebarItem[]; activeId?: string; onItemSelect?: (item: SidebarItem) => void; open?: boolean; defaultOpen?: boolean; onOpenChange?: (open: boolean) => void; collapsible?: boolean; header?: React.ReactNode; footer?: React.ReactNode; className?: string }
+
+function Sidebar({ items, activeId, onItemSelect, open, defaultOpen = true, onOpenChange, collapsible = true, header, footer, className }: SidebarProps) {
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)
+  const isOpen = open ?? internalOpen
+  const update = (next: boolean) => { setInternalOpen(next); onOpenChange?.(next) }
+  return <aside className={cn("flex h-full flex-col border-e border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200", isOpen ? "w-64" : "w-16", className)}>
+    <header className={cn("flex h-14 items-center gap-3 border-b border-sidebar-border px-3", !isOpen && "justify-center")}>{isOpen && <div className="min-w-0 flex-1">{header ?? <strong>DUI</strong>}</div>}{collapsible && <button type="button" onClick={() => update(!isOpen)} className="grid size-8 place-items-center rounded-lg text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground" aria-label={isOpen ? "Collapse sidebar" : "Expand sidebar"}>{isOpen ? <ChevronLeft className="size-4 rtl:rotate-180" /> : <Menu className="size-4" />}</button>}</header>
+    <nav className="flex-1 space-y-1 overflow-y-auto p-2">{items.map((item) => <button type="button" key={item.id} disabled={item.disabled} onClick={() => onItemSelect?.(item)} className={cn("flex h-10 w-full items-center gap-3 rounded-lg px-3 text-sm transition hover:bg-sidebar-accent", item.id === activeId && "bg-sidebar-accent font-medium", item.disabled && "opacity-40")} title={!isOpen ? item.label : undefined}><span className="grid size-4 shrink-0 place-items-center">{item.icon}</span>{isOpen && <><span className="min-w-0 flex-1 truncate text-start">{item.label}</span>{item.badge != null && <span className="rounded bg-muted px-1.5 py-0.5 text-[10px]">{item.badge}</span>}</>}</button>)}</nav>
+    {footer && isOpen && <footer className="border-t border-sidebar-border p-3">{footer}</footer>}
+  </aside>
+}
+
+function MobileSidebar({ open, onOpenChange, children }: { open: boolean; onOpenChange: (open: boolean) => void; children: React.ReactNode }) {
+  return <div className={cn("fixed inset-0 z-[60] lg:hidden", open ? "" : "pointer-events-none")}><button type="button" onClick={() => onOpenChange(false)} className={cn("absolute inset-0 bg-black/60 transition", open ? "opacity-100" : "opacity-0")} aria-label="Close navigation" /><div className={cn("absolute inset-y-0 start-0 w-72 bg-sidebar transition-transform", open ? "translate-x-0" : "-translate-x-full rtl:translate-x-full")}><button type="button" onClick={() => onOpenChange(false)} className="absolute end-3 top-3 z-10 rounded-lg p-2 hover:bg-sidebar-accent" aria-label="Close navigation"><X className="size-4" /></button>{children}</div></div>
+}
+
+export { Sidebar, MobileSidebar }

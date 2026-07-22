@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table",
+  "title": "Table",
+  "description": "Responsive semantic table primitives.",
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/table.tsx",
+      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Table({ className, ...props }: React.ComponentProps<\"table\">) { return <div className=\"w-full overflow-auto\"><table className={cn(\"w-full caption-bottom text-sm\", className)} {...props} /></div> }\nfunction TableHeader({ className, ...props }: React.ComponentProps<\"thead\">) { return <thead className={cn(\"border-b border-border\", className)} {...props} /> }\nfunction TableBody({ className, ...props }: React.ComponentProps<\"tbody\">) { return <tbody className={cn(\"[&_tr:last-child]:border-0\", className)} {...props} /> }\nfunction TableFooter({ className, ...props }: React.ComponentProps<\"tfoot\">) { return <tfoot className={cn(\"border-t border-border bg-muted/40 font-medium\", className)} {...props} /> }\nfunction TableRow({ className, ...props }: React.ComponentProps<\"tr\">) { return <tr className={cn(\"border-b border-border transition hover:bg-muted/40 data-[selected=true]:bg-muted\", className)} {...props} /> }\nfunction TableHead({ className, ...props }: React.ComponentProps<\"th\">) { return <th className={cn(\"h-11 px-4 text-start align-middle text-xs font-medium text-muted-foreground\", className)} {...props} /> }\nfunction TableCell({ className, ...props }: React.ComponentProps<\"td\">) { return <td className={cn(\"px-4 py-3 align-middle\", className)} {...props} /> }\nfunction TableCaption({ className, ...props }: React.ComponentProps<\"caption\">) { return <caption className={cn(\"mt-4 text-sm text-muted-foreground\", className)} {...props} /> }\n\nexport { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption }\n",
+      "type": "registry:ui",
+      "target": "@ui/table.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

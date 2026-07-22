@@ -46,11 +46,23 @@ const variants: Partial<Record<ComponentSlug, string[]>> = {
   "video-player": ["default", "thumbnail"],
   "banner": ["default", "success", "warning", "danger"],
   "custom-banner": ["default", "announcement", "promotion"],
-  "code-viewer": ["default", "minimal"],
-  "resizable": ["default"],
-  "composer": ["default"],
+  "code-viewer": ["typescript", "python", "css", "json", "forest", "amber", "ocean", "rose", "dracula", "night-owl", "command", "prompt"],
+  "resizable": ["horizontal", "vertical", "nested", "framed"],
+  "composer": ["default", "compact", "actions", "counter"],
+  "ai-composer": ["landing", "thread", "sending"],
   "search-input": ["default", "loading"],
-  "menu": ["default", "sidebar"]
+  "menu": ["default", "sidebar"],
+  "dropdown": ["default"],
+  "sidebar": ["expanded", "collapsed"],
+  "mobile-nav": ["default"],
+  "modal": ["default"],
+  "popover": ["default"],
+  "chart": ["bar", "line"],
+  "table": ["default"],
+  "cursor": ["ring", "dot", "label"],
+  "css-motion": ["default"],
+  "gsap-motion": ["default"],
+  "motion-reveal": ["default"]
 }
 
 const snippets: Partial<Record<ComponentSlug, (variant: string) => string>> = {
@@ -279,38 +291,82 @@ export function CustomBannerDemo() {
 export function CodeViewerDemo() {
   return (
     <CodeViewer
-      code={\`function greet(name) {
-  console.log("Hello, " + name + "!")
-}\`}
-      language="javascript"
-      variant="${variant}"
-      showLineNumbers
+      code={\`${variant === "prompt" ? "Review this component and suggest a focused fix." : variant === "command" ? "npx shadcn@latest add qentrah/DUI/code-viewer" : variant === "python" ? `def greet(name: str) -> str:
+    return f"Hello, {name}!"` : variant === "css" ? `.button:hover {
+  color: var(--accent);
+}` : variant === "json" ? `{
+  "theme": "system",
+  "enabled": true
+}` : `interface User {
+  name: string
+}`}\`}
+      language="${variant === "command" ? "bash" : ["python", "css", "json"].includes(variant) ? variant : "typescript"}"
+      mode="${variant === "prompt" ? "prompt" : variant === "command" ? "command" : "code"}"
+      variant="${variant === "command" ? "terminal" : variant === "prompt" || variant === "illustrative" ? "illustrative" : "github"}"
+      theme="${["forest", "amber", "ocean", "rose", "dracula", "night-owl"].includes(variant) ? variant : "system"}"
+      ${variant === "command" || variant === "prompt" ? "editable" : "showLineNumbers"}
+      ${variant === "command" || variant === "prompt" ? "onRun={(value) => console.log(value)}" : ""}
     />
   )
 }`,
-  "resizable": () => `import { Resizable, ResizablePanel } from "@/components/ui/resizable"
+  "resizable": (variant) => `import { Resizable, ResizableHandle, ResizablePanel } from "@/components/ui/resizable"
 
 export function ResizableDemo() {
   return (
-    <Resizable>
-      <ResizablePanel defaultSize={200}>
-        <div className="p-4">Sidebar</div>
+    <Resizable direction="${variant === "vertical" ? "vertical" : "horizontal"}"${variant === "framed" ? ' variant="framed"' : ""} className="h-72">
+      <ResizablePanel defaultSize={${variant === "vertical" ? 96 : 200}} minSize={72}>
+        <div className="p-4">${variant === "vertical" ? "Top panel" : "Sidebar"}</div>
       </ResizablePanel>
-      <div className="w-px bg-border" />
+      <ResizableHandle />
       <ResizablePanel>
         <div className="p-4">Main content</div>
       </ResizablePanel>
     </Resizable>
   )
 }`,
-  "composer": () => `import { Composer } from "@/components/ui/composer"
+  "composer": (variant) => `"use client"
+
+import * as React from "react"
+import { Composer${variant === "actions" ? ", ComposerAction, ComposerFooter" : ""} } from "@/components/ui/composer"
 
 export function ComposerDemo() {
+  const [value, setValue] = React.useState("")
+
   return (
     <Composer
-      value=""
-      onChange={() => {}}
+      value={value}
+      onChange={setValue}
+      onSubmit={() => setValue("")}
       placeholder="Type a message..."
+      ${variant === "compact" ? 'size="sm"' : ""}
+      ${variant === "counter" ? "showCharCount maxLength={240}" : ""}
+      ${variant === "actions" ? 'footer={<ComposerFooter><ComposerAction label="Attach" /><ComposerAction label="Search web" /></ComposerFooter>}' : ""}
+    />
+  )
+}`,
+  "ai-composer": (variant) => `"use client"
+
+import * as React from "react"
+import { AIComposer, type AIComposerMode } from "@/components/ui/ai-composer"
+
+export function AIComposerDemo() {
+  const [value, setValue] = React.useState("")
+  const [mode, setMode] = React.useState<AIComposerMode>("ask")
+
+  return (
+    <AIComposer
+      value={value}
+      onChange={setValue}
+      onSend={async (message, files) => {
+        console.log({ message, files })
+      }}
+      mode={mode}
+      onModeChange={setMode}
+      layout="${variant === "landing" ? "landing" : "thread"}"
+      ${variant === "sending" ? "sending\n      onStop={() => console.log(\"stop\")}" : ""}
+      plugins={[
+        { id: "github", label: "GitHub", description: "qentrah/DUI" }
+      ]}
     />
   )
 }`,
@@ -326,7 +382,7 @@ export function SearchInputDemo() {
     />
   )
 }`,
-  "menu": (variant) => `import { Menu } from "@/components/ui/menu"
+  "menu": () => `import { Menu } from "@/components/ui/menu"
 
 export function MenuDemo() {
   const items = [
@@ -335,6 +391,65 @@ export function MenuDemo() {
     { id: "components", label: "Components", children: [{ id: "ui", label: "UI Components" }, { id: "blocks", label: "Blocks" }] }
   ]
   return <Menu items={items} />
+}`,
+  "dropdown": () => `import { Dropdown } from "@/components/ui/dropdown"
+
+export function DropdownDemo() {
+  return <Dropdown label="Model" defaultValue="reasoning" options={[{ value: "reasoning", label: "DUI Reasoning" }, { value: "fast", label: "DUI Fast" }]} />
+}`,
+  "sidebar": () => `import { Home, Settings } from "lucide-react"
+import { Sidebar } from "@/components/ui/sidebar"
+
+export function SidebarDemo() {
+  return <Sidebar activeId="home" items={[{ id: "home", label: "Overview", icon: <Home /> }, { id: "settings", label: "Settings", icon: <Settings /> }]} />
+}`,
+  "mobile-nav": () => `import { Home, User } from "lucide-react"
+import { MobileNav } from "@/components/ui/mobile-nav"
+
+export function MobileNavDemo() {
+  return <MobileNav activeId="home" items={[{ id: "home", label: "Home", icon: <Home /> }, { id: "profile", label: "Profile", icon: <User /> }]} />
+}`,
+  "modal": () => `import { Modal } from "@/components/ui/modal"
+
+export function ModalDemo() {
+  return <Modal open={open} onOpenChange={setOpen} title="Publish component">Review the component before publishing.</Modal>
+}`,
+  "popover": () => `import { Popover } from "@/components/ui/popover"
+
+export function PopoverDemo() {
+  return <Popover trigger={<button>Open details</button>}>Contextual content</Popover>
+}`,
+  "chart": (variant) => `import { Chart } from "@/components/ui/chart"
+
+export function ChartDemo() {
+  return <Chart type="${variant}" data={[{ label: "Mon", value: 32 }, { label: "Tue", value: 58 }]} />
+}`,
+  "table": () => `import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+
+export function TableDemo() {
+  return <Table><TableHeader><TableRow><TableHead>Name</TableHead><TableHead>Status</TableHead></TableRow></TableHeader><TableBody><TableRow><TableCell>AIComposer</TableCell><TableCell>New</TableCell></TableRow></TableBody></Table>
+}`,
+  "cursor": (variant) => `"use client"
+
+import { Cursor } from "@/components/ui/cursor"
+
+export function CursorDemo() {
+  return <Cursor variant="${variant}"${variant === "label" ? ' label="Explore"' : ""} />
+}`,
+  "css-motion": () => `import { CSSMotion } from "@/components/ui/css-motion"
+
+export function CSSMotionDemo() {
+  return <CSSMotion>Native CSS reveal</CSSMotion>
+}`,
+  "gsap-motion": () => `import { GsapMotion } from "@/components/ui/gsap-motion"
+
+export function GsapMotionDemo() {
+  return <GsapMotion><div data-motion-item>Reveal me</div></GsapMotion>
+}`,
+  "motion-reveal": () => `import { MotionReveal } from "@/components/ui/motion-reveal"
+
+export function MotionRevealDemo() {
+  return <MotionReveal>Reveal on view</MotionReveal>
 }`
 }
 
@@ -467,16 +582,17 @@ function CodeExample({
                       const lineProps = getLineProps({ line })
                       return (
                         <span
-                          {...lineProps}
-                          key={index}
+                          key={`line-${index}`}
+                          style={lineProps.style}
                           className={cn(lineProps.className, "code-line block pe-8")}
                         >
                           <span className="sticky start-0 inline-block w-12 select-none bg-[#0d1117] pe-4 text-end text-[#6e7681]">
                             {index + 1}
                           </span>
-                          {line.map((token, tokenIndex) => (
-                            <span {...getTokenProps({ token })} key={`${index}-${tokenIndex}`} />
-                          ))}
+                          {line.map((token, tokenIndex) => {
+                            const tokenProps = getTokenProps({ token })
+                            return <span key={`token-${index}-${tokenIndex}`} className={tokenProps.className} style={tokenProps.style}>{tokenProps.children}</span>
+                          })}
                         </span>
                       )
                     })}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-gallery-mosaic",
+  "title": "Gallery Mosaic",
+  "description": "Responsive editorial image mosaic with a contextual cursor.",
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/badge",
+    "qentrah/DUI/cursor"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/gallery-mosaic.tsx",
+      "content": "import { Badge } from \"@/components/ui/badge\"\nimport { Cursor } from \"@/components/ui/cursor\"\nimport { cn } from \"@/lib/utils\"\n\nconst defaultImages = [\n  { src: \"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80\", alt: \"Warm collaborative workspace\" },\n  { src: \"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80\", alt: \"Modern studio interior\" },\n  { src: \"https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80\", alt: \"Team working in an open office\" },\n]\n\nexport interface GalleryMosaicProps { title?: string; images?: typeof defaultImages; className?: string }\n\nfunction GalleryMosaic({ title = \"Spaces made for better work\", images = defaultImages, className }: GalleryMosaicProps) {\n  return (\n    <section className={cn(\"relative w-full px-4 py-12 sm:px-6 md:px-10\", className)}>\n      <Cursor variant=\"label\" label=\"View project\" />\n      <div className=\"mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between\"><div><Badge variant=\"outline\">Cursor gallery</Badge><h2 className=\"mt-4 max-w-xl text-3xl font-semibold tracking-[-0.04em] sm:text-4xl\">{title}</h2></div><p className=\"max-w-xs text-sm leading-6 text-muted-foreground\">A responsive editorial gallery with a contextual pointer treatment.</p></div>\n      <div className=\"grid auto-rows-[180px] gap-3 sm:grid-cols-2 sm:auto-rows-[220px] lg:grid-cols-3\">\n        {images.map((image, index) => <figure key={image.src} className={cn(\"overflow-hidden rounded-xl bg-muted\", index === 0 && \"sm:row-span-2 lg:col-span-2\")}>\n          {/* eslint-disable-next-line @next/next/no-img-element */}\n          <img src={image.src} alt={image.alt} className=\"size-full object-cover transition duration-500 hover:scale-[1.03] motion-reduce:transition-none\" />\n        </figure>)}\n      </div>\n    </section>\n  )\n}\n\nexport { GalleryMosaic }\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/gallery-mosaic.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

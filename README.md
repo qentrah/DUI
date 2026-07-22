@@ -10,6 +10,8 @@
 
 DUI is the design system and [shadcn](https://ui.shadcn.com/) registry maintained by [qentrah](https://github.com/qentrah). Components are copied into your application as source code, so your team owns every line and can adapt the system without adding a runtime UI-library dependency.
 
+![DUI landing page](./public/product-hunt-landing.jpg)
+
 ## Why DUI?
 
 - Distributed through the shadcn CLI
@@ -89,11 +91,52 @@ npx shadcn@latest add qentrah/DUI/button#v0.1.0
 - `status-badge`
 - `department-dot`
 
+### Application components
+
+- `video-player`
+- `banner`
+- `custom-banner`
+- `code-viewer`
+- `resizable`
+- `composer`
+- `ai-composer`
+- `search-input`
+- `menu`
+- `dropdown`
+- `sidebar`
+- `mobile-nav`
+- `modal`
+- `popover`
+- `chart`
+- `table`
+- `cursor`
+
+### Motion plugins
+
+- `css-motion`
+- `gsap-motion`
+- `motion-reveal`
+
 ### Blocks
 
-- `blocks-dashboard-panel`
-- `blocks-filter-toolbar`
-- `blocks-member-list`
+- `blocks-sign-in`
+- `blocks-sign-in-css`
+- `blocks-sign-in-gsap`
+- `blocks-session`
+- `blocks-color-filter`
+- `blocks-hero-simple`
+- `blocks-hero-centered`
+- `blocks-cta-section`
+- `blocks-feature-grid`
+- `blocks-gallery-mosaic`
+- `blocks-photo-story`
+- `blocks-testimonial-section`
+- `blocks-testimonial-grid`
+- `blocks-logo-cloud`
+- `blocks-local-logo-wall`
+- `blocks-faq-section`
+
+Blocks install their declared DUI primitives automatically. Motion-enhanced variants are separate registry entries, so products can start with the normal block and opt into CSS or GSAP only when needed.
 
 The source of truth is [`registry.json`](./registry.json). Built registry payloads are generated in [`public/r`](./public/r).
 

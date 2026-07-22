@@ -1,200 +1,177 @@
 "use client"
 
 import * as React from "react"
-import { 
-  QrCode, 
-  Send, 
-  ChevronRight, 
-  Smartphone, 
-  Lock,
-  Calendar,
-  CreditCard
+import {
+  Bot,
+  ChevronDown,
+  FileText,
+  Globe2,
+  Image as ImageIcon,
+  Link2,
+  PanelRight,
+  Search,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Progress } from "@/components/ui/progress"
-import { Separator } from "@/components/ui/separator"
 import { useLocale } from "@/components/site/locale-provider"
+import { Button } from "@/components/ui/button"
+import {
+  Composer,
+  ComposerAction,
+  ComposerFooter,
+} from "@/components/ui/composer"
+import { cn } from "@/lib/utils"
+
+type PreviewSize = "compact" | "default" | "wide"
+
+const previewWidths: Record<PreviewSize, string> = {
+  compact: "max-w-xl",
+  default: "max-w-3xl",
+  wide: "max-w-5xl",
+}
 
 export function LandingShowcase() {
   const { isArabic } = useLocale()
+  const [value, setValue] = React.useState("")
+  const [model, setModel] = React.useState("DUI Reasoning")
+  const [previewSize, setPreviewSize] = React.useState<PreviewSize>("default")
+  const [messages, setMessages] = React.useState<string[]>([])
 
-  const [chatInput, setChatInput] = React.useState("")
-  const [messages, setMessages] = React.useState([
-    { sender: "ai", text: isArabic ? "مرحباً! كيف يمكنني مساعدتك؟" : "Hi! How can I help you today?" }
-  ])
-
-  const handleSendChat = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!chatInput.trim()) return
-    setMessages((prev) => [...prev, { sender: "user", text: chatInput.trim() }])
-    setChatInput("")
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { sender: "ai", text: isArabic ? "تم استلام رسالتك." : "Got it, working on that now." }])
-    }, 800)
+  const submitMessage = (message: string) => {
+    const trimmedMessage = message.trim()
+    if (!trimmedMessage) return
+    setMessages((current) => [...current, trimmedMessage])
+    setValue("")
   }
 
   return (
-    <section className="border-b border-border bg-background px-5 py-20">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-center text-sm text-muted-foreground mb-10">
-          {isArabic ? "مكوّنات حقيقية — ليست رسومات ثابتة" : "Real components — not static mockups"}
-        </p>
+    <section className="border-y border-border bg-muted/20 py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div className="max-w-2xl">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              {isArabic ? "مكوّن عام جاهز للإنتاج" : "Production-ready public component"}
+            </p>
+            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+              {isArabic ? "تجربة حقيقية، وليست مجموعة بطاقات." : "A real product surface, not a grid of cards."}
+            </h2>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground sm:text-base">
+              {isArabic
+                ? "غيّر حجم الواجهة، اختر النموذج، واستخدم المحرر كما سيفعل المستخدم النهائي."
+                : "Resize the surface, switch models, and use the composer exactly as an end user would."}
+            </p>
+          </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Card 1 — Stats */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardDescription>{isArabic ? "المساهمات" : "Contributions"}</CardDescription>
-              <div className="flex items-baseline gap-2">
-                <CardTitle className="text-3xl font-bold tracking-tight">1,284</CardTitle>
-                <span className="text-xs font-medium text-emerald-500">+12.4%</span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="flex h-24 items-end gap-1.5">
-                {[40, 65, 50, 80, 60, 90, 70, 85].map((h, i) => (
-                  <div key={i} className="flex-1 rounded-sm bg-primary/20 hover:bg-primary/40 transition-colors" style={{ height: `${h}%` }} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="flex items-center gap-1 rounded-lg border border-border bg-background p-1" aria-label="Preview size">
+            {(["compact", "default", "wide"] as const).map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => setPreviewSize(size)}
+                className={cn(
+                  "rounded-md px-3 py-1.5 text-xs font-medium capitalize transition-colors",
+                  previewSize === size ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+                )}
+                aria-pressed={previewSize === size}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
 
-          {/* Card 2 — Form */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">{isArabic ? "هدف جديد" : "New milestone"}</CardTitle>
-              <CardDescription>{isArabic ? "حدد الهدف المالي." : "Set a financial target."}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Input label={isArabic ? "الاسم" : "Name"} placeholder="e.g. New car" />
-              <div className="grid grid-cols-2 gap-2">
-                <Input label={isArabic ? "المبلغ" : "Amount"} defaultValue="$15,000" />
-                <Input label={isArabic ? "التاريخ" : "Date"} defaultValue="Dec 2026" />
+        <div className={cn("mx-auto overflow-hidden border border-border bg-background shadow-2xl shadow-black/20 transition-[max-width] duration-300", previewWidths[previewSize])}>
+          <header className="flex min-h-14 items-center justify-between border-b border-border px-4">
+            <div className="flex items-center gap-2.5">
+              <span className="grid size-8 place-items-center rounded-lg bg-foreground text-background">
+                <Bot className="size-4" />
+              </span>
+              <div>
+                <p className="text-sm font-medium">Public assistant</p>
+                <p className="text-[11px] text-muted-foreground">dui.chat/product</p>
               </div>
-            </CardContent>
-            <CardFooter className="gap-2">
-              <Button size="sm" className="flex-1">{isArabic ? "إنشاء" : "Create"}</Button>
-              <Button size="sm" variant="outline" className="flex-1">{isArabic ? "إلغاء" : "Cancel"}</Button>
-            </CardFooter>
-          </Card>
+            </div>
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm" className="size-8 p-0" aria-label="Search conversation"><Search className="size-4" /></Button>
+              <Button variant="ghost" size="sm" className="size-8 p-0" aria-label="Open details"><PanelRight className="size-4" /></Button>
+            </div>
+          </header>
 
-          {/* Card 3 — Chat */}
-          <Card className="flex flex-col sm:col-span-2 lg:col-span-1">
-            <CardHeader className="py-3 border-b border-border">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm">{isArabic ? "المساعد" : "AI Assistant"}</CardTitle>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <span className="size-1.5 rounded-full bg-emerald-500" />
-                    <span className="text-[10px] text-muted-foreground">Online</span>
+          <div className="flex min-h-[440px] flex-col px-4 py-6 sm:min-h-[500px] sm:px-8">
+            <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center">
+              {messages.length === 0 ? (
+                <div className="py-8">
+                  <span className="mb-5 grid size-11 place-items-center rounded-xl border border-border bg-muted/50">
+                    <Sparkles className="size-5" />
+                  </span>
+                  <h3 className="text-2xl font-semibold tracking-tight">
+                    {isArabic ? "بماذا يمكنني مساعدتك؟" : "What can I help you make?"}
+                  </h3>
+                  <p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">
+                    {isArabic ? "اسأل عن منتجك، واجهتك، أو ألصق ملفاً لبدء العمل." : "Ask about your product, explore an interface, or attach context to get started."}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-5 py-8" aria-live="polite">
+                  {messages.map((message, index) => (
+                    <div key={`${message}-${index}`} className="ms-auto max-w-[85%] rounded-2xl rounded-ee-sm bg-muted px-4 py-3 text-sm leading-6">
+                      {message}
+                    </div>
+                  ))}
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="size-1.5 animate-pulse rounded-full bg-foreground" />
+                    {isArabic ? "جارٍ تجهيز الإجابة…" : "Preparing a response…"}
                   </div>
                 </div>
-                <Badge variant="outline" className="text-[10px]">GPT-4</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="flex-1 p-3 space-y-2 min-h-[120px]">
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`rounded-lg px-3 py-1.5 text-xs max-w-[80%] ${
-                    msg.sender === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-foreground"
-                  }`}>
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-            <CardFooter className="p-3 border-t border-border">
-              <form onSubmit={handleSendChat} className="relative w-full">
-                <Input
-                  placeholder={isArabic ? "اكتب رسالة..." : "Type a message..."}
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  className="pe-9 h-8 text-xs"
-                />
-                <button type="submit" className="absolute end-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground" aria-label="Send">
-                  <Send className="size-3.5" />
-                </button>
-              </form>
-            </CardFooter>
-          </Card>
+              )}
 
-          {/* Card 4 — Progress */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">{isArabic ? "أهداف الادخار" : "Savings"}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">{isArabic ? "التقاعد" : "Retirement"}</span>
-                  <span className="font-medium">65%</span>
-                </div>
-                <Progress value={65} />
-              </div>
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">{isArabic ? "عقارات" : "Real estate"}</span>
-                  <span className="font-medium">32%</span>
-                </div>
-                <Progress value={32} />
-              </div>
-              <Separator />
-              <div className="flex justify-between text-xs">
-                <span className="text-muted-foreground">{isArabic ? "مجموع المدخرات" : "Total saved"}</span>
-                <span className="font-semibold">$300,200</span>
-              </div>
-            </CardContent>
-          </Card>
+              <Composer
+                value={value}
+                onChange={setValue}
+                onSubmit={submitMessage}
+                placeholder={isArabic ? "اكتب رسالة…" : "Message the public assistant…"}
+                className="max-w-none rounded-2xl shadow-lg shadow-black/10"
+                footer={
+                  <ComposerFooter className="justify-between">
+                    <div className="flex items-center gap-1">
+                      <ComposerAction icon={<Link2 className="size-4" />} label={isArabic ? "إرفاق" : "Attach"} />
+                      <ComposerAction icon={<Globe2 className="size-4" />} label={isArabic ? "الويب" : "Web"} />
+                    </div>
+                    <label className="relative">
+                      <span className="sr-only">{isArabic ? "اختر النموذج" : "Choose model"}</span>
+                      <select
+                        value={model}
+                        onChange={(event) => setModel(event.target.value)}
+                        className="h-8 appearance-none rounded-md border-0 bg-muted py-0 ps-2.5 pe-7 text-xs font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <option>DUI Reasoning</option>
+                        <option>DUI Fast</option>
+                        <option>DUI Vision</option>
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute end-2 top-1/2 size-3 -translate-y-1/2" />
+                    </label>
+                  </ComposerFooter>
+                }
+              />
+            </div>
+          </div>
 
-          {/* Card 5 — QR */}
-          <Card className="flex flex-col items-center text-center">
-            <CardContent className="pt-6 pb-4">
-              <div className="mx-auto rounded-xl border border-border p-5 mb-4">
-                <QrCode className="size-24 text-foreground" />
-              </div>
-              <p className="text-sm font-medium">{isArabic ? "امسح للاتصال" : "Scan to connect"}</p>
-              <p className="mt-1 text-xs text-muted-foreground max-w-[200px]">
-                {isArabic ? "افتح تطبيق الهاتف لربط جهازك." : "Open the mobile app and scan this code."}
-              </p>
-            </CardContent>
-            <CardFooter className="border-t border-border w-full justify-center py-3 text-xs text-muted-foreground">
-              <Smartphone className="size-3.5 me-1.5" />
-              {isArabic ? "iOS و Android" : "iOS & Android"}
-            </CardFooter>
-          </Card>
-
-          {/* Card 6 — List */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">{isArabic ? "العمليات" : "Operations"}</CardTitle>
-              <CardDescription>{isArabic ? "إدارة التحويلات" : "Manage transfers"}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-1">
-              {[
-                { icon: CreditCard, label: isArabic ? "المدفوعات" : "Payments", sub: isArabic ? "إدارة البطاقات" : "Manage cards" },
-                { icon: Calendar, label: isArabic ? "المجدولة" : "Scheduled", sub: isArabic ? "التحويلات الآلية" : "Auto transfers" },
-                { icon: Lock, label: isArabic ? "الحماية" : "Security", sub: isArabic ? "تحديث البيانات" : "Update credentials" }
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-accent cursor-pointer"
-                >
-                  <item.icon className="size-4 text-muted-foreground shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm">{item.label}</p>
-                    <p className="text-xs text-muted-foreground">{item.sub}</p>
-                  </div>
-                  <ChevronRight className="size-4 text-muted-foreground" />
+          <footer className="grid border-t border-border sm:grid-cols-3">
+            {[
+              [ShieldCheck, isArabic ? "آمن افتراضياً" : "Safe by default"],
+              [FileText, isArabic ? "يدعم الملفات" : "File-aware"],
+              [ImageIcon, isArabic ? "يفهم الصور" : "Vision-ready"],
+            ].map(([Icon, label], index) => {
+              const FooterIcon = Icon as typeof ShieldCheck
+              return (
+                <div key={String(label)} className={cn("flex items-center gap-2 px-4 py-3 text-xs text-muted-foreground", index > 0 && "border-t border-border sm:border-s sm:border-t-0")}>
+                  <FooterIcon className="size-3.5" />
+                  {label as string}
                 </div>
-              ))}
-            </CardContent>
-          </Card>
+              )
+            })}
+          </footer>
         </div>
       </div>
     </section>

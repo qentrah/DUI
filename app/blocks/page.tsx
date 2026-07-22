@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Terminal } from "lucide-react"
 
 import { SectionShell } from "@/components/site/section-shell"
-import { blockCatalog, getBlocksNavGroups } from "@/lib/catalog"
+import { getBlocksNavGroups, getGroupedBlocks, isNewBlock } from "@/lib/catalog"
 
 export default function BlocksIndexPage() {
   return (
@@ -27,43 +27,34 @@ export default function BlocksIndexPage() {
         <section id="blocks" className="mt-12 scroll-mt-24">
           <h2 className="text-xl font-semibold border-b border-border pb-3">Blocks catalog</h2>
           
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
-            {blockCatalog.map((item) => (
+          <div className="mt-8 space-y-10">
+            {getGroupedBlocks().map(({ group, items }) => (
+              <section key={group} aria-labelledby={`group-${group.toLowerCase().replace(" ", "-")}`}>
+                <h3 id={`group-${group.toLowerCase().replace(" ", "-")}`} className="text-sm font-semibold text-muted-foreground">{group}</h3>
+                <div className="mt-3 divide-y divide-border border-y border-border">
+                  {items.map((item) => (
               <Link
                 key={item.slug}
                 href={`/blocks/${item.slug}`}
-                className="group relative flex flex-col justify-between rounded-xl border border-border bg-card p-5 transition-all hover:bg-accent/40 hover:border-foreground/20"
+                className="group grid gap-4 py-5 transition-colors hover:bg-accent/30 sm:grid-cols-[1fr_auto] sm:px-3"
               >
                 <div>
-                  <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  <h4 className="flex items-center gap-2 font-semibold text-foreground">
                     {item.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    {isNewBlock(item.slug) && <span className="size-1.5 rounded-full bg-primary" aria-label="New block" />}
+                  </h4>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
-                  
-                  <div className="mt-4">
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/80">
-                      Uses primitives
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {item.components.map((name) => (
-                        <span
-                          key={name}
-                          className="inline-block rounded-md bg-zinc-800/40 border border-zinc-700/30 px-2 py-0.5 text-xs text-zinc-300"
-                        >
-                          {name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </div>
-
-                <div className="mt-6 pt-4 border-t border-border/60 flex items-center gap-2 text-xs font-mono text-muted-foreground">
-                  <Terminal className="size-3.5 text-zinc-500" />
-                  <span>npx shadcn add blocks-{item.slug}</span>
+                <div className="flex items-center gap-2 self-center text-xs font-mono text-muted-foreground">
+                  <Terminal className="size-3.5" />
+                  <span>blocks-{item.slug}</span>
                 </div>
               </Link>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         </section>

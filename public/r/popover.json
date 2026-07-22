@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "description": "Anchored contextual content with controlled state.",
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/popover.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface PopoverProps { trigger: React.ReactNode; children: React.ReactNode; open?: boolean; defaultOpen?: boolean; onOpenChange?: (open: boolean) => void; align?: \"start\" | \"center\" | \"end\"; className?: string }\n\nfunction Popover({ trigger, children, open, defaultOpen = false, onOpenChange, align = \"center\", className }: PopoverProps) {\n  const [internalOpen, setInternalOpen] = React.useState(defaultOpen)\n  const isOpen = open ?? internalOpen\n  const update = (next: boolean) => { setInternalOpen(next); onOpenChange?.(next) }\n  return <div className=\"relative inline-block\" onKeyDown={(event) => { if (event.key === \"Escape\") update(false) }}>\n    {isOpen && <button type=\"button\" className=\"fixed inset-0 z-20 cursor-default\" aria-label=\"Close popover\" onClick={() => update(false)} />}\n    <span className=\"relative z-30 inline-flex\" onClick={() => update(!isOpen)}>{trigger}</span>\n    {isOpen && <div role=\"dialog\" className={cn(\"absolute top-full z-30 mt-2 w-72 rounded-xl border border-border bg-popover p-4 text-popover-foreground shadow-2xl\", align === \"start\" ? \"start-0\" : align === \"end\" ? \"end-0\" : \"start-1/2 -translate-x-1/2\", className)}>{children}</div>}\n  </div>\n}\n\nexport { Popover }\n",
+      "type": "registry:ui",
+      "target": "@ui/popover.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

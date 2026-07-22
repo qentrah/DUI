@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-cta-section",
+  "title": "CTA Section",
+  "description": "Focused call-to-action section.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/badge",
+    "qentrah/DUI/button"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/cta-section.tsx",
+      "content": "import { ArrowRight } from \"lucide-react\"\n\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface CtaSectionProps {\n  eyebrow?: string\n  title?: string\n  description?: string\n  primaryLabel?: string\n  secondaryLabel?: string\n  className?: string\n}\n\nfunction CtaSection({\n  eyebrow = \"Start building\",\n  title = \"Ship the interface your product deserves.\",\n  description = \"Compose accessible DUI primitives into a product that feels considered from the first interaction.\",\n  primaryLabel = \"Get started\",\n  secondaryLabel = \"Read the docs\",\n  className,\n}: CtaSectionProps) {\n  return (\n    <section className={cn(\"w-full px-6 py-16 text-center md:px-12 md:py-20\", className)}>\n      <div className=\"mx-auto max-w-2xl\">\n        <Badge variant=\"outline\">{eyebrow}</Badge>\n        <h2 className=\"mt-5 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl\">{title}</h2>\n        <p className=\"mx-auto mt-4 max-w-xl leading-7 text-muted-foreground\">{description}</p>\n        <div className=\"mt-8 flex flex-col justify-center gap-3 sm:flex-row\">\n          <Button size=\"lg\">{primaryLabel}<ArrowRight className=\"ms-2 size-4\" /></Button>\n          <Button size=\"lg\" variant=\"outline\">{secondaryLabel}</Button>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport { CtaSection }\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/cta-section.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

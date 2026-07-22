@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "modal",
+  "title": "Modal",
+  "description": "Controlled modal dialog with overlay and keyboard dismissal.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/modal.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { X } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface ModalProps { open: boolean; onOpenChange: (open: boolean) => void; title: string; description?: string; children: React.ReactNode; footer?: React.ReactNode; size?: \"sm\" | \"md\" | \"lg\"; className?: string }\n\nfunction Modal({ open, onOpenChange, title, description, children, footer, size = \"md\", className }: ModalProps) {\n  React.useEffect(() => {\n    if (!open) return\n    const close = (event: KeyboardEvent) => { if (event.key === \"Escape\") onOpenChange(false) }\n    window.addEventListener(\"keydown\", close)\n    return () => window.removeEventListener(\"keydown\", close)\n  }, [onOpenChange, open])\n  if (!open) return null\n  return <div className=\"fixed inset-0 z-[70] grid place-items-center p-4\" role=\"presentation\">\n    <button type=\"button\" className=\"absolute inset-0 bg-black/65 backdrop-blur-sm\" aria-label=\"Close modal\" onClick={() => onOpenChange(false)} />\n    <section role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"modal-title\" className={cn(\"relative w-full rounded-2xl border border-border bg-background shadow-2xl\", size === \"sm\" ? \"max-w-sm\" : size === \"lg\" ? \"max-w-2xl\" : \"max-w-lg\", className)}>\n      <header className=\"flex items-start gap-4 border-b border-border px-5 py-4\"><div className=\"min-w-0 flex-1\"><h2 id=\"modal-title\" className=\"font-semibold\">{title}</h2>{description && <p className=\"mt-1 text-sm text-muted-foreground\">{description}</p>}</div><button type=\"button\" onClick={() => onOpenChange(false)} className=\"rounded-lg p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground\" aria-label=\"Close modal\"><X className=\"size-4\" /></button></header>\n      <div className=\"px-5 py-5\">{children}</div>{footer && <footer className=\"flex justify-end gap-2 border-t border-border px-5 py-4\">{footer}</footer>}\n    </section>\n  </div>\n}\n\nexport { Modal }\n",
+      "type": "registry:ui",
+      "target": "@ui/modal.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

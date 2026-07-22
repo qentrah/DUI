@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gsap-motion",
+  "title": "GsapMotion",
+  "description": "Scoped GSAP stagger animation wrapper.",
+  "dependencies": [
+    "gsap",
+    "@gsap/react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/gsap-motion.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { useGSAP } from \"@gsap/react\"\nimport gsap from \"gsap\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport interface GsapMotionProps extends React.HTMLAttributes<HTMLDivElement> {\n  itemSelector?: string\n  stagger?: number\n  duration?: number\n}\n\nfunction GsapMotion({ children, itemSelector = \"[data-motion-item]\", stagger = 0.12, duration = 0.65, className, ...props }: GsapMotionProps) {\n  const scope = React.useRef<HTMLDivElement>(null)\n\n  useGSAP(() => {\n    if (window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) return\n    gsap.fromTo(itemSelector, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration, stagger, ease: \"power3.out\" })\n  }, { scope, dependencies: [itemSelector, stagger, duration], revertOnUpdate: true })\n\n  return <div ref={scope} className={cn(className)} {...props}>{children}</div>\n}\n\nGsapMotion.displayName = \"GsapMotion\"\n\nexport { GsapMotion }\n",
+      "type": "registry:ui",
+      "target": "@ui/gsap-motion.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

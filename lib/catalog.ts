@@ -29,42 +29,172 @@ export const componentCatalog = [
   { slug: "code-viewer", name: "CodeViewer", category: "Data display", description: "Code display with syntax highlighting." },
   { slug: "resizable", name: "Resizable", category: "Layout", description: "Draggable panel container for layouts." },
   { slug: "composer", name: "Composer", category: "Forms", description: "AI chat input with auto-expand and actions." },
+  { slug: "ai-composer", name: "AIComposer", category: "AI", description: "Production composer with attachments, modes, plugins, context badges, and send states." },
   { slug: "search-input", name: "SearchInput", category: "Forms", description: "Search input with clear button and loading state." },
-  { slug: "menu", name: "Menu", category: "Layout", description: "Navigation menu with items and submenus." }
+  { slug: "menu", name: "Menu", category: "Layout", description: "Navigation menu with items and submenus." },
+  { slug: "dropdown", name: "Dropdown", category: "Overlays", description: "Accessible single-selection dropdown with descriptions." },
+  { slug: "sidebar", name: "Sidebar", category: "Navigation", description: "Collapsible application sidebar with mobile drawer support." },
+  { slug: "mobile-nav", name: "MobileNav", category: "Navigation", description: "Safe-area-aware mobile bottom navigation." },
+  { slug: "modal", name: "Modal", category: "Overlays", description: "Controlled modal dialog with overlay and keyboard dismissal." },
+  { slug: "popover", name: "Popover", category: "Overlays", description: "Anchored contextual content with controlled state." },
+  { slug: "chart", name: "Chart", category: "Data visualization", description: "Dependency-free accessible bar and line charts." },
+  { slug: "table", name: "Table", category: "Data display", description: "Responsive semantic table primitives." },
+  { slug: "cursor", name: "Cursor", category: "Interaction", description: "Custom pointer cursor with dot, ring, and label variants." },
+  { slug: "css-motion", name: "CSSMotion", category: "Interaction", description: "Dependency-free CSS entrance animation with reduced-motion support." },
+  { slug: "gsap-motion", name: "GsapMotion", category: "Interaction", description: "Scoped GSAP stagger animation wrapper for React content." },
+  { slug: "motion-reveal", name: "MotionReveal", category: "Interaction", description: "Motion for React viewport reveal with reduced-motion support." }
 ] as const
+
+export const newComponentSlugs = new Set<string>(["ai-composer", "dropdown", "sidebar", "mobile-nav", "modal", "popover", "chart", "table", "cursor", "css-motion", "gsap-motion", "motion-reveal"])
+
+export function isNewComponent(slug: string) { return newComponentSlugs.has(slug) }
+
+export const componentGroupOrder = ["AI", "Navigation", "Interaction", "Forms", "Data", "Feedback", "Overlays", "Layout", "Media"] as const
+
+export function getComponentGroup(item: (typeof componentCatalog)[number]) {
+  if (["composer", "ai-composer"].includes(item.slug)) return "AI"
+  if (["menu", "sidebar", "mobile-nav"].includes(item.slug)) return "Navigation"
+  if (item.category === "Interaction") return "Interaction"
+  if (["Forms", "Actions"].includes(item.category)) return "Forms"
+  if (["Data display", "Data visualization"].includes(item.category)) return "Data"
+  if (item.category === "Feedback") return "Feedback"
+  if (item.category === "Overlays") return "Overlays"
+  if (item.category === "Media") return "Media"
+  return "Layout"
+}
+
+export function getGroupedComponents() {
+  return componentGroupOrder.map((group) => ({ group, items: componentCatalog.filter((item) => getComponentGroup(item) === group) })).filter((entry) => entry.items.length)
+}
 
 export const blockCatalog = [
   {
     slug: "sign-in",
     name: "Sign In Form",
+    category: "Application",
+    source: "sign-in.tsx",
     description: "Authentication form with OAuth providers and email/password fields.",
-    components: ["card", "input", "button", "separator", "badge"]
+    components: ["input", "button", "separator"],
+    variants: [
+      { id: "normal", label: "Normal", registrySlug: "blocks-sign-in", source: "sign-in.tsx", components: ["input", "button", "separator"] },
+      { id: "css", label: "CSS animation", registrySlug: "blocks-sign-in-css", source: "sign-in-css.tsx", components: ["input", "button", "separator", "css-motion"] },
+      { id: "gsap", label: "GSAP animation", registrySlug: "blocks-sign-in-gsap", source: "sign-in-gsap.tsx", components: ["input", "button", "separator", "gsap-motion"] }
+    ]
   },
   {
     slug: "session",
     name: "Session Block",
+    category: "Application",
+    source: "session-block.tsx",
     description: "User session display with status indicator and sign out action.",
-    components: ["card", "avatar", "badge", "button", "status-pill"]
+    components: ["avatar", "badge", "button", "separator", "status-pill"]
   },
   {
     slug: "hero-simple",
     name: "Hero Simple",
+    category: "Heroes",
+    source: "hero-sections.tsx",
     description: "Simple hero section with title, description, and primary action.",
     components: ["card", "badge", "button"]
   },
   {
     slug: "hero-centered",
     name: "Hero Centered",
+    category: "Heroes",
+    source: "hero-sections.tsx",
     description: "Centered hero section with badges and dual actions.",
     components: ["card", "badge", "button"]
   },
   {
     slug: "color-filter",
     name: "Color Filter",
+    category: "Application",
+    source: "color-filter.tsx",
     description: "Theme color picker with component preview.",
-    components: ["card", "badge", "tag-chip", "color-swatch"]
+    components: ["badge", "button", "separator", "tag-chip", "color-swatch"]
+  },
+  {
+    slug: "cta-section",
+    name: "CTA Section",
+    category: "CTA",
+    source: "cta-section.tsx",
+    description: "Focused call-to-action section with primary and secondary paths.",
+    components: ["badge", "button"]
+  },
+  {
+    slug: "feature-grid",
+    name: "Feature Grid",
+    category: "Features",
+    source: "feature-grid.tsx",
+    description: "Responsive product feature grid with concise supporting content.",
+    components: ["badge"]
+  },
+  {
+    slug: "testimonial-section",
+    name: "Testimonial Section",
+    category: "Social proof",
+    source: "testimonial-section.tsx",
+    description: "Customer quote with identity, role, and outcome context.",
+    components: ["avatar", "badge"]
+  },
+  {
+    slug: "logo-cloud",
+    name: "Logo Cloud",
+    category: "Social proof",
+    source: "logo-cloud.tsx",
+    description: "Quiet customer and partner logo strip for trust-building pages.",
+    components: ["separator"]
+  },
+  {
+    slug: "faq-section",
+    name: "FAQ Section",
+    category: "Content",
+    source: "faq-section.tsx",
+    description: "Accessible native disclosure list for common product questions.",
+    components: ["separator"]
+  },
+  {
+    slug: "gallery-mosaic",
+    name: "Gallery Mosaic",
+    category: "Gallery",
+    source: "gallery-mosaic.tsx",
+    description: "Responsive editorial image mosaic with a contextual cursor.",
+    components: ["badge", "cursor"]
+  },
+  {
+    slug: "photo-story",
+    name: "Photo Story",
+    category: "Gallery",
+    source: "photo-story.tsx",
+    description: "Responsive image-led story section with focused editorial content.",
+    components: ["badge", "button"]
+  },
+  {
+    slug: "testimonial-grid",
+    name: "Testimonial Grid",
+    category: "Social proof",
+    source: "testimonial-grid.tsx",
+    description: "Responsive three-column customer testimonial collection.",
+    components: ["avatar", "badge"]
+  },
+  {
+    slug: "local-logo-wall",
+    name: "Local Logo Wall",
+    category: "Social proof",
+    source: "local-logo-wall.tsx",
+    description: "Responsive regional partner and customer brand wall.",
+    components: ["separator"]
   }
 ] as const
+
+export const newBlockSlugs = new Set<string>(["cta-section", "feature-grid", "testimonial-section", "logo-cloud", "faq-section", "gallery-mosaic", "photo-story", "testimonial-grid", "local-logo-wall"])
+export const blockGroupOrder = ["Application", "Heroes", "CTA", "Features", "Gallery", "Social proof", "Content"] as const
+
+export function isNewBlock(slug: string) { return newBlockSlugs.has(slug) }
+
+export function getGroupedBlocks() {
+  return blockGroupOrder.map((group) => ({ group, items: blockCatalog.filter((item) => item.category === group) })).filter((entry) => entry.items.length)
+}
 
 export const skillCatalog = [
   {
@@ -271,18 +401,20 @@ export function getDocsNavGroups() {
         { label: "Introduction", href: "/docs" },
         { label: "Installation", href: "/docs#installation" },
         { label: "Theming", href: "/docs#theming" },
+        { label: "Motion blocks", href: "/docs#motion" },
         { label: "CLI", href: "/docs#cli" },
         { label: "RTL and Arabic", href: "/docs#rtl" },
         { label: "Registry", href: "/docs#registry" }
       ]
     },
-    {
-      title: "Components",
-      links: componentCatalog.map((item) => ({
+    ...getGroupedComponents().map(({ group, items }) => ({
+      title: group,
+      links: items.map((item) => ({
         label: item.name,
-        href: `/components/${item.slug}`
+        href: `/components/${item.slug}`,
+        isNew: isNewComponent(item.slug)
       }))
-    }
+    }))
   ]
 }
 
@@ -294,13 +426,14 @@ export function getBlocksNavGroups() {
         { label: "Introduction", href: "/blocks" }
       ]
     },
-    {
-      title: "Layout Blocks",
-      links: blockCatalog.map((item) => ({
+    ...getGroupedBlocks().map(({ group, items }) => ({
+      title: group,
+      links: items.map((item) => ({
         label: item.name,
-        href: `/blocks/${item.slug}`
+        href: `/blocks/${item.slug}`,
+        isNew: isNewBlock(item.slug)
       }))
-    }
+    }))
   ]
 }
 

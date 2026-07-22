@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation"
 
 import { ComponentWorkbench } from "@/components/library/component-workbench"
+import { CodeViewerGuide } from "@/components/library/code-viewer-guide"
+import { AIComposerGuide } from "@/components/library/ai-composer-guide"
 import { SectionShell } from "@/components/site/section-shell"
 import { componentCatalog, getComponent, getDocsNavGroups } from "@/lib/catalog"
 
@@ -20,6 +22,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
       onThisPage={[
         { label: "Preview", href: "#preview" },
         { label: "Installation", href: "#installation" },
+        ...(item.slug === "code-viewer" ? [{ label: "Theming", href: "#theming" }] : []),
+        ...(item.slug === "ai-composer" ? [{ label: "API", href: "#api" }] : []),
         { label: "Usage", href: "#usage" }
       ]}
     >
@@ -29,6 +33,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         <p className="mt-4 text-muted-foreground">{item.description}</p>
 
         <div id="preview" className="scroll-mt-24"><ComponentWorkbench slug={item.slug} /></div>
+        {item.slug === "code-viewer" && <CodeViewerGuide />}
+        {item.slug === "ai-composer" && <AIComposerGuide />}
         <section id="usage" className="mt-12 scroll-mt-24 border-t border-border pt-10">
           <h2 className="text-2xl font-semibold">Usage</h2>
           <p className="mt-3 leading-7 text-muted-foreground">

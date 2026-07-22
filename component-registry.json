@@ -274,9 +274,9 @@
       "name": "SessionBlock",
       "path": "components/blocks/session-block.tsx",
       "kind": "block",
-      "summary": "User session display with sign out action.",
-      "usedIn": ["Navigation"],
-      "props": ["name", "email", "avatar", "status", "plan"],
+      "summary": "Account session surface with identity, security, location, activity, and session actions.",
+      "usedIn": ["Account settings", "Navigation"],
+      "props": ["name", "email", "avatar", "status", "plan", "location", "lastActive", "onSignOut", "onSettings"],
       "createdAt": "2026-07-21",
       "notes": "Install with qentrah/DUI/blocks-session."
     },
@@ -294,11 +294,161 @@
       "name": "ColorFilterBlock",
       "path": "components/blocks/color-filter.tsx",
       "kind": "block",
-      "summary": "Theme color picker with component preview.",
+      "summary": "Interactive two-column accent picker with live component preview.",
       "usedIn": ["Theme builder"],
       "props": ["title", "description", "colors", "selectedColor", "onColorSelect"],
       "createdAt": "2026-07-21",
       "notes": "Install with qentrah/DUI/blocks-color-filter."
+    },
+    {
+      "name": "CtaSection",
+      "path": "components/blocks/cta-section.tsx",
+      "kind": "block",
+      "summary": "Focused call-to-action section with two action paths.",
+      "usedIn": ["Landing pages"],
+      "props": ["eyebrow", "title", "description", "primaryLabel", "secondaryLabel"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-cta-section."
+    },
+    {
+      "name": "Cursor",
+      "path": "components/ui/cursor.tsx",
+      "kind": "primitive",
+      "summary": "Custom pointer cursor with accessible device and motion fallbacks.",
+      "usedIn": ["Cursor Hero", "component documentation"],
+      "props": ["label", "variant", "size", "enabled"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/cursor. Hidden on coarse pointers."
+    },
+    {
+      "name": "CSSMotion",
+      "path": "components/ui/css-motion.tsx",
+      "kind": "primitive",
+      "summary": "Dependency-free CSS entrance animation with reduced-motion support.",
+      "usedIn": ["CSS Cursor Hero", "component documentation"],
+      "props": ["delay", "duration", "className"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/css-motion."
+    },
+    {
+      "name": "GsapMotion",
+      "path": "components/ui/gsap-motion.tsx",
+      "kind": "primitive",
+      "summary": "Scoped GSAP stagger wrapper for React content.",
+      "usedIn": ["GSAP Reveal", "component documentation"],
+      "props": ["itemSelector", "stagger", "duration", "className"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/gsap-motion; installs gsap and @gsap/react."
+    },
+    {
+      "name": "MotionReveal",
+      "path": "components/ui/motion-reveal.tsx",
+      "kind": "primitive",
+      "summary": "Motion for React viewport reveal with reduced-motion support.",
+      "usedIn": ["Motion Frame", "component documentation"],
+      "props": ["offset", "duration", "once", "className"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/motion-reveal; installs motion."
+    },
+    {
+      "name": "SignInFormCSS",
+      "path": "components/blocks/sign-in-css.tsx",
+      "kind": "block",
+      "summary": "CSSMotion plugin variant for the Sign In Form block.",
+      "usedIn": ["Sign In documentation variants"],
+      "props": ["SignInFormProps"],
+      "createdAt": "2026-07-22",
+      "notes": "Installs blocks-sign-in and css-motion."
+    },
+    {
+      "name": "SignInFormGSAP",
+      "path": "components/blocks/sign-in-gsap.tsx",
+      "kind": "block",
+      "summary": "GsapMotion plugin variant for the Sign In Form block.",
+      "usedIn": ["Sign In documentation variants"],
+      "props": ["SignInFormProps"],
+      "createdAt": "2026-07-22",
+      "notes": "Installs blocks-sign-in and gsap-motion."
+    },
+    {
+      "name": "FeatureGrid",
+      "path": "components/blocks/feature-grid.tsx",
+      "kind": "block",
+      "summary": "Responsive feature section composed with theme tokens.",
+      "usedIn": ["Landing pages"],
+      "props": ["title", "description", "features"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-feature-grid."
+    },
+    {
+      "name": "TestimonialSection",
+      "path": "components/blocks/testimonial-section.tsx",
+      "kind": "block",
+      "summary": "Customer quote, identity, and outcome section.",
+      "usedIn": ["Landing pages"],
+      "props": ["quote", "name", "role", "avatar", "outcome"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-testimonial-section."
+    },
+    {
+      "name": "LogoCloud",
+      "path": "components/blocks/logo-cloud.tsx",
+      "kind": "block",
+      "summary": "Quiet customer and partner logo strip.",
+      "usedIn": ["Landing pages"],
+      "props": ["title", "companies"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-logo-cloud."
+    },
+    {
+      "name": "FaqSection",
+      "path": "components/blocks/faq-section.tsx",
+      "kind": "block",
+      "summary": "Accessible FAQ disclosure list using native details elements.",
+      "usedIn": ["Landing pages", "Support pages"],
+      "props": ["title", "description", "items"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-faq-section."
+    },
+    {
+      "name": "GalleryMosaic",
+      "path": "components/blocks/gallery-mosaic.tsx",
+      "kind": "block",
+      "summary": "Responsive editorial gallery with contextual Cursor behavior.",
+      "usedIn": ["Portfolio pages", "Landing pages"],
+      "props": ["title", "images"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-gallery-mosaic."
+    },
+    {
+      "name": "PhotoStory",
+      "path": "components/blocks/photo-story.tsx",
+      "kind": "block",
+      "summary": "Responsive photo-led editorial story section.",
+      "usedIn": ["Editorial pages", "Landing pages"],
+      "props": ["title", "description", "image"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-photo-story."
+    },
+    {
+      "name": "TestimonialGrid",
+      "path": "components/blocks/testimonial-grid.tsx",
+      "kind": "block",
+      "summary": "Responsive customer testimonial grid.",
+      "usedIn": ["Landing pages", "Social proof"],
+      "props": ["title", "testimonials"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-testimonial-grid."
+    },
+    {
+      "name": "LocalLogoWall",
+      "path": "components/blocks/local-logo-wall.tsx",
+      "kind": "block",
+      "summary": "Responsive regional partner and customer brand wall.",
+      "usedIn": ["Landing pages", "Social proof"],
+      "props": ["title", "brands"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/blocks-local-logo-wall."
     },
     {
       "name": "VideoPlayer",
@@ -334,19 +484,19 @@
       "name": "CodeViewer",
       "path": "components/ui/code-viewer.tsx",
       "kind": "primitive",
-      "summary": "Code display component with syntax highlighting and line numbers.",
-      "usedIn": ["Documentation", "Code playgrounds"],
-      "props": ["code", "language", "showLineNumbers", "showCopyButton", "highlightLines"],
+      "summary": "Multi-language code, terminal, and prompt viewer with token highlighting and customizable syntax themes.",
+      "usedIn": ["Documentation", "Code playgrounds", "Command examples", "Skill prompts"],
+      "props": ["code", "language", "mode", "variant", "theme", "customTheme", "title", "description", "editable", "showLineNumbers", "showCopyButton", "highlightLines", "onChange", "onRun"],
       "createdAt": "2026-07-21",
-      "notes": "Install with qentrah/DUI/code-viewer."
+      "notes": "Install with qentrah/DUI/code-viewer. Full theming and CSS token guidance lives on the CodeViewer component page."
     },
     {
       "name": "Resizable",
       "path": "components/ui/resizable.tsx",
       "kind": "primitive",
-      "summary": "Resizable panel container with horizontal and vertical layouts.",
-      "usedIn": ["Layout panels", "Sidebar layouts"],
-      "props": ["direction", "disabled"],
+      "summary": "Accessible draggable panels with horizontal, vertical, nested, and framed layouts.",
+      "usedIn": ["Layout panels", "Sidebar layouts", "Split workspaces"],
+      "props": ["direction", "variant", "disabled", "onResizeEnd"],
       "createdAt": "2026-07-21",
       "notes": "Install with qentrah/DUI/resizable."
     },
@@ -354,11 +504,31 @@
       "name": "Composer",
       "path": "components/ui/composer.tsx",
       "kind": "primitive",
-      "summary": "AI chat composer input with auto-expand and action buttons.",
-      "usedIn": ["Chat interfaces", "AI assistants"],
-      "props": ["value", "onChange", "onSubmit", "placeholder", "showCharCount", "maxLength"],
+      "summary": "Controlled AI chat composer with auto-expand, actions, character limits, and size variants.",
+      "usedIn": ["Chat interfaces", "AI assistants", "Landing showcase"],
+      "props": ["value", "onChange", "onSubmit", "placeholder", "size", "showActions", "showCharCount", "maxLength", "header", "footer"],
       "createdAt": "2026-07-21",
       "notes": "Install with qentrah/DUI/composer."
+    },
+    {
+      "name": "AIComposer",
+      "path": "components/ui/ai-composer.tsx",
+      "kind": "primitive",
+      "summary": "Production AI composer adapted from QentrahAi with attachments, modes, plugins, badges, and send states.",
+      "usedIn": ["AI chat", "Agent landing pages", "Task threads"],
+      "props": ["value", "onChange", "onSend", "onStop", "sending", "mode", "onModeChange", "layout", "badges", "plugins", "selectedPluginIds", "onPluginToggle", "onVoiceClick", "maxAttachments"],
+      "createdAt": "2026-07-22",
+      "notes": "Install with qentrah/DUI/ai-composer. Backend, plugin, and voice behavior is supplied through callbacks."
+    },
+    {
+      "name": "LandingShowcase",
+      "path": "components/library/landing-showcase.tsx",
+      "kind": "domain-shared",
+      "summary": "Interactive public chat product surface with responsive preview sizes and model selection.",
+      "usedIn": ["Landing page"],
+      "props": [],
+      "createdAt": "2026-07-22",
+      "notes": "Composes the public Composer API into a realistic landing-page demonstration."
     },
     {
       "name": "SearchInput",
@@ -379,6 +549,13 @@
       "props": ["items", "activeItem", "onItemClick", "variant"],
       "createdAt": "2026-07-21",
       "notes": "Install with qentrah/DUI/menu."
-    }
+    },
+    {"name":"Dropdown","path":"components/ui/dropdown.tsx","kind":"primitive","summary":"Accessible single-selection dropdown with descriptions.","usedIn":["Forms","Model selection"],"props":["options","value","defaultValue","onValueChange","label"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/dropdown."},
+    {"name":"Sidebar","path":"components/ui/sidebar.tsx","kind":"primitive","summary":"Collapsible application sidebar with mobile drawer support.","usedIn":["Application navigation"],"props":["items","activeId","open","onOpenChange","collapsible"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/sidebar. Exports Sidebar and MobileSidebar."},
+    {"name":"MobileNav","path":"components/ui/mobile-nav.tsx","kind":"primitive","summary":"Safe-area-aware mobile bottom navigation.","usedIn":["Mobile application navigation"],"props":["items","activeId","onItemSelect"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/mobile-nav."},
+    {"name":"Modal","path":"components/ui/modal.tsx","kind":"primitive","summary":"Controlled modal dialog with overlay and keyboard dismissal.","usedIn":["Dialogs","Confirmations"],"props":["open","onOpenChange","title","description","footer","size"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/modal."},
+    {"name":"Popover","path":"components/ui/popover.tsx","kind":"primitive","summary":"Anchored contextual content with controlled state.","usedIn":["Contextual help","Compact actions"],"props":["trigger","open","onOpenChange","align"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/popover."},
+    {"name":"Chart","path":"components/ui/chart.tsx","kind":"primitive","summary":"Dependency-free accessible bar and line charts.","usedIn":["Dashboards","Reports"],"props":["data","type","height","showLabels","ariaLabel"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/chart."},
+    {"name":"Table","path":"components/ui/table.tsx","kind":"primitive","summary":"Responsive semantic table primitives.","usedIn":["Data tables","Reports"],"props":["className"],"createdAt":"2026-07-22","notes":"Install with qentrah/DUI/table. Exports table composition primitives."}
   ]
 }

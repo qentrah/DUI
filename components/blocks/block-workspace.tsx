@@ -16,8 +16,16 @@ interface BlockWorkspaceProps {
     name: string
     description: string
     components: readonly string[]
+    variants?: readonly {
+      id: string
+      label: string
+      registrySlug: string
+      source: string
+      components: readonly string[]
+    }[]
   }
   code: string
+  variantCodes?: Record<string, string>
 }
 
 type PackageManager = "npm" | "bun" | "pnpm" | "yarn"
@@ -29,19 +37,26 @@ const managers: { key: PackageManager; label: string }[] = [
   { key: "yarn", label: "yarn" },
 ]
 
-export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
+export function BlockWorkspace({ block, code, variantCodes }: BlockWorkspaceProps) {
   const [showCode, setShowCode] = React.useState(false)
   const [copied, setCopied] = React.useState(false)
   const [activeManager, setActiveManager] = React.useState<PackageManager>("npm")
+  const [activeVariantId, setActiveVariantId] = React.useState(block.variants?.[0]?.id ?? "normal")
+  const [copiedAgent, setCopiedAgent] = React.useState(false)
 
   // Track copied status for command lines
   const [copiedCommand, setCopiedCommand] = React.useState<string | null>(null)
 
-  const lineCount = code.split("\n").length
-  const byteCount = new TextEncoder().encode(code).length
+  const activeVariant = block.variants?.find((variant) => variant.id === activeVariantId)
+  const activeCode = variantCodes?.[activeVariantId] ?? code
+  const activeComponents = activeVariant?.components ?? block.components
+  const activeRegistrySlug = activeVariant?.registrySlug ?? `blocks-${block.slug}`
+  const lineCount = activeCode.split("\n").length
+  const byteCount = new TextEncoder().encode(activeCode).length
+  const agentPrompt = `Add the ${block.name} (${activeVariant?.label ?? "default"}) from the DUI registry. Run \`${getInstallCommand("", true)}\`, inspect the installed source, preserve its accessibility and responsive behavior, and adapt its copy and callbacks to this product.`
 
   async function copyCode() {
-    await navigator.clipboard.writeText(code)
+    await navigator.clipboard.writeText(activeCode)
     setCopied(true)
     window.setTimeout(() => setCopied(false), 1600)
   }
@@ -52,8 +67,14 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
     window.setTimeout(() => setCopiedCommand(null), 1400)
   }
 
+  async function copyForAgent() {
+    await navigator.clipboard.writeText(agentPrompt)
+    setCopiedAgent(true)
+    window.setTimeout(() => setCopiedAgent(false), 1600)
+  }
+
   function getInstallCommand(pkg: string, isBlock: boolean = false) {
-    const slugName = isBlock ? `blocks-${block.slug}` : pkg
+    const slugName = isBlock ? activeRegistrySlug : pkg
     const registryPath = `qentrah/DUI/${slugName}`
 
     switch (activeManager) {
@@ -72,11 +93,33 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
   return (
     <div className="space-y-12">
       {/* Workspace Wrapper */}
-      <div className="rounded-xl border border-border bg-card shadow-md overflow-hidden mt-6">
+      <div className="mt-8 overflow-hidden border-y border-border">
+        <div className="flex min-h-14 items-center justify-between gap-3 border-b border-border py-2">
+          {block.variants && block.variants.length > 1 ? (
+            <div className="flex min-w-0 gap-1 overflow-x-auto" role="tablist" aria-label={`${block.name} variants`}>
+              {block.variants.map((variant) => (
+              <button
+                key={variant.id}
+                type="button"
+                role="tab"
+                aria-selected={activeVariantId === variant.id}
+                onClick={() => { setActiveVariantId(variant.id); setShowCode(false) }}
+                className={cn("whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors", activeVariantId === variant.id && "bg-accent text-foreground")}
+              >
+                {variant.label}
+              </button>
+              ))}
+            </div>
+          ) : <span className="text-xs font-medium text-muted-foreground">Default block</span>}
+          <Button variant="ghost" size="sm" onPress={copyForAgent} className="shrink-0 gap-1.5 text-xs">
+            {copiedAgent ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
+            {copiedAgent ? "Copied for agent" : "Copy for agent"}
+          </Button>
+        </div>
         {/* Workspace Header toolbar */}
-        <div className="flex items-center justify-between gap-4 border-b border-border bg-surface-secondary px-4 py-3">
+        <div className="flex items-center justify-between gap-4 border-b border-border px-1 py-3">
           {/* Switch preview vs code */}
-          <div className="flex items-center gap-2.5 bg-background border border-border px-3 py-1 rounded-xl">
+          <div className="flex items-center gap-2.5">
             <span
               className={cn(
                 "text-xs font-semibold transition-colors select-none",
@@ -114,17 +157,15 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
         {/* Workspace Display Area */}
         <div className="relative min-h-[350px] bg-background">
           {!showCode ? (
-            <div className="flex items-center justify-center p-6 sm:p-10 min-h-[400px]">
-              <div className="w-full max-w-xl bg-card border border-border rounded-xl p-5 sm:p-8 shadow-md">
-                <BlockPreview slug={block.slug} />
-              </div>
+            <div className="flex min-h-[480px] w-full items-center justify-center px-4 py-10 sm:px-8 sm:py-14">
+              <div className="flex w-full justify-center"><BlockPreview key={activeVariantId} slug={block.slug} variant={activeVariantId} /></div>
             </div>
           ) : (
             <div className="overflow-auto max-h-[500px] bg-[#0d1117] relative select-text">
               <div className="absolute top-2 right-4 text-[10px] text-zinc-500 font-mono pointer-events-none select-none">
                 {lineCount} lines · {byteCount} Bytes
               </div>
-              <Highlight theme={themes.vsDark} code={code} language="tsx">
+              <Highlight theme={themes.vsDark} code={activeCode} language="tsx">
                 {({ tokens, getLineProps, getTokenProps }) => (
                   <pre className="min-w-max bg-[#0d1117] py-5 font-mono text-[12.5px] leading-5">
                     <code>
@@ -160,41 +201,23 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
           Toggle your preferred package manager and run the CLI command to add this block and its dependency components.
         </p>
 
-        {/* Tab triggers */}
-        <div className="mt-6 flex border-b border-border gap-1">
-          {managers.map((mgr) => (
-            <button
-              key={mgr.key}
-              onClick={() => setActiveManager(mgr.key)}
-              className={cn(
-                "px-3 py-1.5 text-sm font-medium border-b-2 transition-all relative top-px",
-                activeManager === mgr.key
-                  ? "border-primary text-foreground font-semibold"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {mgr.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Command Display */}
-        <div className="mt-4 bg-card border border-border rounded-xl p-5 shadow-md">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-bold text-foreground">CLI Install Command</h3>
-            <span className="text-[10px] text-muted-foreground font-semibold bg-surface-secondary px-2 py-0.5 rounded border border-border">
-              Auto-installs dependencies
-            </span>
+        <div className="mt-6 overflow-hidden rounded-lg border border-[#30363d] bg-[#0d1117]">
+          <div className="flex flex-wrap items-center gap-3 border-b border-[#30363d] bg-[#161b22] px-3 py-2">
+            <div className="flex items-center gap-1.5" aria-hidden="true"><span className="size-2.5 rounded-full bg-[#ff5f56]" /><span className="size-2.5 rounded-full bg-[#ffbd2e]" /><span className="size-2.5 rounded-full bg-[#27c93f]" /></div>
+            <span className="text-xs font-medium text-[#8b949e]">DUI CLI · auto-installs dependencies</span>
+            <div className="ms-auto flex gap-1">
+              {managers.map((manager) => <button key={manager.key} type="button" onClick={() => setActiveManager(manager.key)} className={cn("rounded px-2 py-1 text-xs font-medium text-[#8b949e] hover:text-[#f0f6fc]", activeManager === manager.key && "bg-[#30363d] text-[#f0f6fc]")}>{manager.label}</button>)}
+            </div>
           </div>
-
-          <div className="flex items-center gap-2 bg-surface-secondary pl-3 pr-1 py-1 rounded-xl border border-border">
-            <code className="text-xs text-muted-foreground font-mono flex-1 overflow-x-auto whitespace-nowrap px-3 py-1.5">
+          <div className="flex items-center gap-2 px-3 py-4">
+            <span className="select-none font-mono text-sm text-[#3fb950]">$</span>
+            <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-sm text-[#e6edf3]">
               {getInstallCommand("", true)}
             </code>
             <Button
               size="sm"
               onPress={() => copyToClipboard(getInstallCommand("", true), "block")}
-              className="h-8 shrink-0 hover:bg-foreground/10 text-muted-foreground gap-1"
+              className="h-8 shrink-0 gap-1 text-[#8b949e] hover:bg-[#21262d] hover:text-[#f0f6fc]"
               variant="ghost"
             >
               {copiedCommand === "block" ? <Check className="size-3.5 text-success" /> : <Clipboard className="size-3.5" />}
@@ -212,7 +235,7 @@ export function BlockWorkspace({ block, code }: BlockWorkspaceProps) {
         </p>
 
         <div className="mt-6 grid gap-3">
-          {block.components.map((compSlug) => {
+          {activeComponents.map((compSlug) => {
             const componentInfo = getComponent(compSlug)
             const compName = componentInfo?.name || compSlug
             const compDesc = componentInfo?.description || `Installable ${compSlug} UI primitive component.`

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-sign-in-gsap",
+  "title": "Sign In Form — GSAP Motion",
+  "description": "Sign-in form enhanced by the GsapMotion plugin.",
+  "registryDependencies": [
+    "qentrah/DUI/blocks-sign-in",
+    "qentrah/DUI/gsap-motion"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/sign-in-gsap.tsx",
+      "content": "\"use client\"\n\nimport { SignInForm, type SignInFormProps } from \"./sign-in\"\nimport { GsapMotion } from \"@/components/ui/gsap-motion\"\n\nfunction SignInFormGSAP(props: SignInFormProps) {\n  return <GsapMotion className=\"w-full max-w-sm\"><div data-motion-item><SignInForm {...props} /></div></GsapMotion>\n}\n\nexport { SignInFormGSAP }\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/sign-in-gsap.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

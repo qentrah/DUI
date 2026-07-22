@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-sign-in-css",
+  "title": "Sign In Form — CSS Motion",
+  "description": "Sign-in form enhanced by the dependency-free CSSMotion plugin.",
+  "registryDependencies": [
+    "qentrah/DUI/blocks-sign-in",
+    "qentrah/DUI/css-motion"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/sign-in-css.tsx",
+      "content": "\"use client\"\n\nimport { SignInForm, type SignInFormProps } from \"./sign-in\"\nimport { CSSMotion } from \"@/components/ui/css-motion\"\n\nfunction SignInFormCSS(props: SignInFormProps) {\n  return <CSSMotion duration={650} className=\"w-full max-w-sm\"><SignInForm {...props} /></CSSMotion>\n}\n\nexport { SignInFormCSS }\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/sign-in-css.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

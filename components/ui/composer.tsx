@@ -101,7 +101,6 @@ function Composer({
   className,
   textAreaRef,
 }: ComposerProps) {
-  const [isFocused, setIsFocused] = React.useState(false)
   const internalRef = React.useRef<HTMLTextAreaElement>(null)
   const ref = textAreaRef || internalRef
 
@@ -133,7 +132,7 @@ function Composer({
   }, [value, autoExpand, ref])
 
   return (
-    <div className={cn(composerVariants({ variant, size, className }))}>
+    <div className={cn(composerVariants({ variant, size, className }), "focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/20")}>
       {header && (
         <div className="pb-2 border-b border-border mb-2">
           {header}
@@ -146,8 +145,6 @@ function Composer({
           value={value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           disabled={disabled}
           className={cn(
@@ -157,7 +154,8 @@ function Composer({
           rows={1}
         />
 
-        <button
+        {showActions && <button
+          type="button"
           onClick={() => onSubmit?.(value)}
           disabled={disabled || !value.trim()}
           className={cn(
@@ -170,7 +168,7 @@ function Composer({
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9-7-9-7-9 7 9 7zm0 0v-8" />
           </svg>
-        </button>
+        </button>}
       </div>
 
       {showCharCount && (

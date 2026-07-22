@@ -1,10 +1,11 @@
 import Link from "next/link"
 
 import { SectionShell } from "@/components/site/section-shell"
-import { componentCatalog, getDocsNavGroups } from "@/lib/catalog"
+import { getDocsNavGroups, getGroupedComponents, isNewComponent } from "@/lib/catalog"
 
 export default function ComponentsPage() {
-  const newItems = componentCatalog.slice(-8)
+  const groups = getGroupedComponents()
+  const newItems = groups.flatMap((group) => group.items).filter((item) => isNewComponent(item.slug))
 
   return (
     <SectionShell
@@ -34,13 +35,7 @@ export default function ComponentsPage() {
 
         <section id="all-components" className="mt-12 scroll-mt-24">
           <h2 className="text-xl font-semibold">All Components</h2>
-          <div className="mt-5 grid grid-cols-2 gap-x-10 gap-y-4 sm:grid-cols-3">
-            {componentCatalog.map((item) => (
-              <Link key={item.slug} href={`/components/${item.slug}`} className="text-zinc-300 transition hover:text-white">
-                {item.name}
-              </Link>
-            ))}
-          </div>
+          <div className="mt-6 space-y-10">{groups.map(({ group, items }) => <section key={group}><h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group}</h3><div className="mt-4 grid grid-cols-2 gap-x-10 gap-y-4 sm:grid-cols-3">{items.map((item) => <Link key={item.slug} href={`/components/${item.slug}`} className="flex items-center gap-2 text-zinc-300 transition hover:text-white">{item.name}{isNewComponent(item.slug) && <span className="size-1.5 rounded-full bg-blue-500" aria-label="New component" />}</Link>)}</div></section>)}</div>
         </section>
       </div>
     </SectionShell>

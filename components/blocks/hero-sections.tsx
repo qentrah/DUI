@@ -1,12 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { ArrowRight, Github } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { useTheme } from "@/components/ui/theme-provider"
 import { cn } from "@/lib/utils"
 
 export interface HeroSectionProps {
@@ -39,7 +38,7 @@ export function HeroSection({
   return (
     <section
       className={cn(
-        "relative w-full overflow-hidden rounded-2xl border border-border bg-card p-8 md:p-12",
+        "relative w-full overflow-hidden px-6 py-14 md:px-12 md:py-20",
         centered && "text-center",
         className
       )}
@@ -96,7 +95,7 @@ export function HeroSectionSimple({
   className,
 }: HeroSectionSimpleProps) {
   return (
-    <section className={cn("w-full rounded-2xl border border-border bg-card p-10", className)}>
+    <section className={cn("w-full px-6 py-14 md:px-10", className)}>
       <div className="mx-auto max-w-2xl">
         <h2 className="text-2xl font-bold tracking-tight text-foreground">{title}</h2>
         <p className="mt-2 text-muted-foreground">{description}</p>
@@ -122,7 +121,7 @@ export function HeroSectionCentered({
   className,
 }: HeroSectionCenteredProps) {
   return (
-    <section className={cn("flex w-full flex-col items-center gap-6 rounded-2xl border border-border bg-card p-12 text-center", className)}>
+    <section className={cn("flex w-full flex-col items-center gap-6 px-6 py-16 text-center md:px-12", className)}>
       <Badge variant="outline">New release</Badge>
       <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">{title}</h1>
       <p className="max-w-xl text-muted-foreground">{description}</p>

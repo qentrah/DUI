@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-testimonial-section",
+  "title": "Testimonial Section",
+  "description": "Customer quote and identity section.",
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/avatar",
+    "qentrah/DUI/badge"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/testimonial-section.tsx",
+      "content": "import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface TestimonialSectionProps {\n  quote?: string\n  name?: string\n  role?: string\n  avatar?: string\n  outcome?: string\n  className?: string\n}\n\nfunction TestimonialSection({ quote = \"DUI gave our team a shared language. We stopped rebuilding the same decisions and started spending that time on the product.\", name = \"Maya Hassan\", role = \"Product design lead\", avatar, outcome = \"Shipped 3× faster\", className }: TestimonialSectionProps) {\n  return (\n    <section className={cn(\"w-full px-6 py-16 md:px-12\", className)}>\n      <figure className=\"mx-auto max-w-3xl text-center\">\n        <Badge variant=\"success\">{outcome}</Badge>\n        <blockquote className=\"mt-6 text-2xl font-medium leading-snug tracking-[-0.025em] sm:text-3xl\">“{quote}”</blockquote>\n        <figcaption className=\"mt-8 flex items-center justify-center gap-3 text-start\">\n          <Avatar size=\"lg\">{avatar && <AvatarImage src={avatar} alt={name} />}<AvatarFallback>{name.slice(0, 2)}</AvatarFallback></Avatar>\n          <span><span className=\"block text-sm font-semibold\">{name}</span><span className=\"block text-sm text-muted-foreground\">{role}</span></span>\n        </figcaption>\n      </figure>\n    </section>\n  )\n}\n\nexport { TestimonialSection }\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/testimonial-section.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

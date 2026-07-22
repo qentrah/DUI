@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blocks-logo-cloud",
+  "title": "Logo Cloud",
+  "description": "Customer and partner logo strip.",
+  "registryDependencies": [
+    "qentrah/DUI/utils",
+    "qentrah/DUI/separator"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/logo-cloud.tsx",
+      "content": "import { Separator } from \"@/components/ui/separator\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface LogoCloudProps { title?: string; companies?: string[]; className?: string }\n\nfunction LogoCloud({ title = \"Trusted by teams building the next interface\", companies = [\"Qentrah\", \"Northstar\", \"Canvas\", \"Forma\", \"Relay\"], className }: LogoCloudProps) {\n  return (\n    <section className={cn(\"w-full px-6 py-12 md:px-10\", className)}>\n      <p className=\"text-center text-sm text-muted-foreground\">{title}</p>\n      <Separator className=\"my-7\" />\n      <ul className=\"grid grid-cols-2 items-center gap-x-8 gap-y-6 text-center sm:grid-cols-5\" aria-label=\"Customer logos\">\n        {companies.map((company) => <li key={company} className=\"text-sm font-semibold tracking-wide text-muted-foreground\">{company}</li>)}\n      </ul>\n    </section>\n  )\n}\n\nexport { LogoCloud }\n",
+      "type": "registry:block",
+      "target": "@ui/blocks/logo-cloud.tsx"
+    }
+  ],
+  "type": "registry:block"
+}

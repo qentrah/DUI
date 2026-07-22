@@ -4,10 +4,9 @@ import * as React from "react"
 import { Github, Mail } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { CardDescription, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 export interface SignInFormProps {
@@ -37,13 +36,13 @@ export function SignInForm({
   }
 
   return (
-    <div className={cn("flex w-full max-w-sm flex-col gap-6", className)}>
-      <Card>
-        <CardHeader>
+    <form className={cn("w-full max-w-sm", className)} onSubmit={(event) => { event.preventDefault(); void handleSignIn("email") }}>
+      <div className="space-y-6">
+        <div className="space-y-1.5">
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+        </div>
+        <div className="space-y-4">
           {showNameField && (
             <Input label="Name" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
           )}
@@ -55,11 +54,11 @@ export function SignInForm({
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input type="password" label="Password" placeholder="••••••••" />
-        </CardContent>
-        <CardFooter className="flex-col gap-4">
+        </div>
+        <div className="flex flex-col gap-4">
           <Button
             size="lg"
-            onPress={() => handleSignIn("email")}
+            type="submit"
             isPending={isLoading === "email"}
             className="w-full"
           >
@@ -76,27 +75,27 @@ export function SignInForm({
               <div className="grid w-full grid-cols-2 gap-3">
                 {providers.includes("google") && (
                   <Button
-                    variant="tertiary"
+                    variant="outline"
                     onPress={() => handleSignIn("google")}
                     isPending={isLoading === "google"}
                     className="gap-2"
                   >
-                    <svg
+                    <svg aria-hidden="true"
                       className="size-4"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
                     >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M12 8v8M8 12h8" />
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M8 12h8" />
                     </svg>
                     Google
                   </Button>
                 )}
                 {providers.includes("github") && (
                   <Button
-                    variant="tertiary"
+                    variant="outline"
                     onPress={() => handleSignIn("github")}
                     isPending={isLoading === "github"}
                     className="gap-2"
@@ -108,8 +107,8 @@ export function SignInForm({
               </div>
             </>
           )}
-        </CardFooter>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </form>
   )
 }

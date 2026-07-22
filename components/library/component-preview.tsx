@@ -1,13 +1,28 @@
 "use client"
 
+import * as React from "react"
+import { BarChart3, Bell, Home, Settings, User } from "lucide-react"
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AIComposer, type AIComposerMode } from "@/components/ui/ai-composer"
+import { Chart } from "@/components/ui/chart"
+import { Cursor } from "@/components/ui/cursor"
+import { CSSMotion } from "@/components/ui/css-motion"
+import { GsapMotion } from "@/components/ui/gsap-motion"
+import { MotionReveal } from "@/components/ui/motion-reveal"
+import { Dropdown } from "@/components/ui/dropdown"
+import { Modal } from "@/components/ui/modal"
+import { MobileNav } from "@/components/ui/mobile-nav"
+import { Popover } from "@/components/ui/popover"
+import { Sidebar } from "@/components/ui/sidebar"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ColorDot } from "@/components/ui/color-dot"
 import { ColorSwatch } from "@/components/ui/color-swatch"
 import { CodeViewer } from "@/components/ui/code-viewer"
-import { Composer } from "@/components/ui/composer"
+import { Composer, ComposerAction, ComposerFooter } from "@/components/ui/composer"
 import { DepartmentDot } from "@/components/ui/department-dot"
 import { EmptyState } from "@/components/ui/empty-state"
 import { FilterChipBar } from "@/components/ui/filter-chip"
@@ -28,7 +43,7 @@ import {
 import { ListRow } from "@/components/ui/list-row"
 import { Menu, SidebarMenu } from "@/components/ui/menu"
 import { Progress } from "@/components/ui/progress"
-import { Resizable, ResizablePanel } from "@/components/ui/resizable"
+import { Resizable, ResizableHandle, ResizablePanel } from "@/components/ui/resizable"
 import { SearchInput } from "@/components/ui/search-input"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -45,6 +60,14 @@ import { cn } from "@/lib/utils"
 
 export function ComponentPreview({ slug, variant = "default" }: { slug: ComponentSlug; variant?: string }) {
   const { isArabic } = useLocale()
+  const [composerValue, setComposerValue] = React.useState("")
+  const [promptResult, setPromptResult] = React.useState("")
+  const [aiComposerValue, setAIComposerValue] = React.useState("")
+  const [aiComposerMode, setAIComposerMode] = React.useState<AIComposerMode>("ask")
+  const [selectedPluginIds, setSelectedPluginIds] = React.useState<string[]>([])
+  const [modalOpen, setModalOpen] = React.useState(false)
+  const [sidebarOpen, setSidebarOpen] = React.useState(variant !== "collapsed")
+  const [navigationId, setNavigationId] = React.useState("home")
 
   if (slug === "button") {
     return (
@@ -370,35 +393,55 @@ export function ComponentPreview({ slug, variant = "default" }: { slug: Componen
   }
 
   if (slug === "code-viewer") {
+    const isCommand = variant === "command"
+    const isPrompt = variant === "prompt"
+    const samples: Record<string, { code: string; language: string; title: string }> = {
+      typescript: { code: `interface User {\n  id: number\n  name: string\n}\n\nexport function greet(user: User) {\n  return \`Hello, \${user.name}!\`\n}`, language: "typescript", title: "user.ts" },
+      python: { code: `from dataclasses import dataclass\n\n@dataclass\nclass User:\n    name: str\n    active: bool = True\n\ndef greet(user: User) -> str:\n    return f"Hello, {user.name}!"`, language: "python", title: "user.py" },
+      css: { code: `:root {\n  --accent: oklch(0.72 0.17 305);\n}\n\n.button:hover {\n  color: var(--accent);\n  transform: translateY(-1px);\n}`, language: "css", title: "theme.css" },
+      json: { code: `{\n  "name": "code-viewer",\n  "theme": "system",\n  "languages": ["tsx", "python", "css"],\n  "enabled": true\n}`, language: "json", title: "registry.json" },
+    }
+    const sample = samples[variant] ?? samples.typescript
     return (
-      <CodeViewer
-        code={`function greet(name) {
-  console.log("Hello, " + name + "!")
-}
-
-greet("World") // Output: Hello, World!`}
-        language="javascript"
-        variant={variant === "minimal" ? "minimal" : "default"}
-        showLineNumbers={variant !== "minimal"}
+      <div className="w-full max-w-2xl space-y-3">
+        <CodeViewer
+        code={isPrompt ? "Review this component for accessibility problems and suggest a focused fix." : isCommand ? "npx shadcn@latest add qentrah/DUI/code-viewer" : sample.code}
+        language={isCommand ? "bash" : sample.language}
+        mode={isPrompt ? "prompt" : isCommand ? "command" : "code"}
+        variant={isPrompt ? "illustrative" : isCommand ? "terminal" : "github"}
+        theme={(["forest", "amber", "ocean", "rose", "dracula", "night-owl"].includes(variant) ? variant : "system") as "system" | "forest" | "amber" | "ocean" | "rose" | "dracula" | "night-owl"}
+        title={isPrompt ? "Skill prompt" : isCommand ? "Install component" : sample.title}
+        description={isPrompt ? "Paste a problem and run the skill" : undefined}
+        editable={isPrompt || isCommand}
+        showLineNumbers={!isPrompt && !isCommand}
         highlightLines={[2]}
+        onRun={isPrompt ? (prompt) => setPromptResult(`Ready to solve: ${prompt}`) : isCommand ? () => setPromptResult("Command is ready to run in your project.") : undefined}
       />
+      {promptResult && (isPrompt || isCommand) && <p className="rounded-lg border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground" aria-live="polite">{promptResult}</p>}
+      </div>
     )
   }
 
   if (slug === "resizable") {
+    const isVertical = variant === "vertical"
+    const isNested = variant === "nested"
     return (
-      <div className="w-full max-w-md">
-        <Resizable className="h-64 border border-border rounded-lg">
-          <ResizablePanel defaultSize={120} className="bg-muted/30">
+      <div className="w-full max-w-2xl">
+        <Resizable direction={isVertical ? "vertical" : "horizontal"} variant="framed" className="h-72">
+          <ResizablePanel defaultSize={isVertical ? 92 : 168} minSize={72} className="bg-muted/30">
             <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-              Sidebar
+              {isVertical ? "Top panel" : "Left panel"}
             </div>
           </ResizablePanel>
-          <div className="w-px bg-border" />
+          <ResizableHandle />
           <ResizablePanel className="bg-background">
-            <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-              Main content
-            </div>
+            {isNested ? (
+              <Resizable direction="vertical" className="h-full">
+                <ResizablePanel minSize={64}><div className="grid h-full place-items-center text-sm text-muted-foreground">Grid workspace</div></ResizablePanel>
+                <ResizableHandle />
+                <ResizablePanel defaultSize={86} minSize={56} className="bg-muted/20"><div className="grid h-full place-items-center text-sm text-muted-foreground">Bottom panel</div></ResizablePanel>
+              </Resizable>
+            ) : <div className="flex h-full items-center justify-center text-sm text-muted-foreground">{isVertical ? "Bottom panel" : "Main content"}</div>}
           </ResizablePanel>
         </Resizable>
       </div>
@@ -408,12 +451,63 @@ greet("World") // Output: Hello, World!`}
   if (slug === "composer") {
     return (
       <Composer
-        value=""
-        onChange={() => {}}
+        value={composerValue}
+        onChange={setComposerValue}
+        onSubmit={() => setComposerValue("")}
         placeholder="Type a message..."
+        showCharCount={variant === "counter"}
+        maxLength={240}
+        size={variant === "compact" ? "sm" : "full"}
+        footer={variant === "actions" ? <ComposerFooter><ComposerAction label="Attach" /><ComposerAction label="Search web" /></ComposerFooter> : undefined}
       />
     )
   }
+
+  if (slug === "ai-composer") {
+    const plugins = [
+      { id: "sheets", label: "Google Sheets", description: "Quarterly planning" },
+      { id: "github", label: "GitHub", description: "qentrah/DUI" },
+    ]
+    return (
+      <AIComposer
+        value={aiComposerValue}
+        onChange={setAIComposerValue}
+        onSend={async () => undefined}
+        sending={variant === "sending"}
+        onStop={() => undefined}
+        mode={aiComposerMode}
+        onModeChange={setAIComposerMode}
+        layout={variant === "landing" ? "landing" : "thread"}
+        badges={[{ id: "website", label: "Website", tone: "info" }]}
+        plugins={plugins}
+        selectedPluginIds={selectedPluginIds}
+        onPluginToggle={(plugin) => setSelectedPluginIds((current) => current.includes(plugin.id) ? current.filter((id) => id !== plugin.id) : [...current, plugin.id])}
+        onVoiceClick={() => undefined}
+      />
+    )
+  }
+
+  if (slug === "dropdown") return <Dropdown label="Model" defaultValue="reasoning" options={[{ value: "reasoning", label: "DUI Reasoning", description: "Best for complex tasks" }, { value: "fast", label: "DUI Fast", description: "Lower latency" }, { value: "vision", label: "DUI Vision", description: "Understands images" }]} />
+
+  if (slug === "sidebar") return <div className="h-80 overflow-hidden rounded-xl border border-border"><Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} activeId={navigationId} onItemSelect={(item) => setNavigationId(item.id)} items={[{ id: "home", label: "Overview", icon: <Home className="size-4" /> }, { id: "analytics", label: "Analytics", icon: <BarChart3 className="size-4" />, badge: 4 }, { id: "settings", label: "Settings", icon: <Settings className="size-4" /> }]} /></div>
+
+  if (slug === "mobile-nav") return <div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-border bg-muted/20 pt-28"><MobileNav activeId={navigationId} onItemSelect={(item) => setNavigationId(item.id)} items={[{ id: "home", label: "Home", icon: <Home className="size-4" /> }, { id: "activity", label: "Activity", icon: <BarChart3 className="size-4" /> }, { id: "alerts", label: "Alerts", icon: <Bell className="size-4" />, badge: 3 }, { id: "profile", label: "Profile", icon: <User className="size-4" /> }]} /></div>
+
+  if (slug === "modal") return <><Button onPress={() => setModalOpen(true)}>Open modal</Button><Modal open={modalOpen} onOpenChange={setModalOpen} title="Publish component" description="This makes the component available in the registry." footer={<><Button variant="outline" onPress={() => setModalOpen(false)}>Cancel</Button><Button onPress={() => setModalOpen(false)}>Publish</Button></>}><p className="text-sm text-muted-foreground">Review the generated source and registry metadata before publishing.</p></Modal></>
+
+  if (slug === "popover") return <Popover trigger={<Button variant="outline">Open details</Button>} align="start"><h3 className="font-semibold">Component details</h3><p className="mt-2 text-sm text-muted-foreground">Composable, accessible, and ready for the DUI registry.</p></Popover>
+
+  if (slug === "chart") return <Chart type={variant === "line" ? "line" : "bar"} data={[{ label: "Mon", value: 32 }, { label: "Tue", value: 58 }, { label: "Wed", value: 44 }, { label: "Thu", value: 76 }, { label: "Fri", value: 64 }]} />
+
+  if (slug === "table") return <Table><TableHeader><TableRow><TableHead>Component</TableHead><TableHead>Status</TableHead><TableHead className="text-end">Installs</TableHead></TableRow></TableHeader><TableBody>{[["AIComposer", "New", "1,284"], ["CodeViewer", "Stable", "3,108"], ["Resizable", "Stable", "2,460"]].map((row) => <TableRow key={row[0]}><TableCell className="font-medium">{row[0]}</TableCell><TableCell>{row[1]}</TableCell><TableCell className="text-end tabular-nums">{row[2]}</TableCell></TableRow>)}</TableBody></Table>
+
+  if (slug === "cursor") return <div className="relative grid h-40 w-full place-items-center rounded-xl border border-dashed border-border text-sm text-muted-foreground"><Cursor variant={variant === "label" ? "label" : variant === "dot" ? "dot" : "ring"} label="Explore" /><span>Move your pointer across this preview</span></div>
+
+  if (slug === "css-motion") return <CSSMotion className="rounded-xl border border-border p-6 text-center font-medium">Native CSS reveal</CSSMotion>
+
+  if (slug === "gsap-motion") return <GsapMotion className="grid gap-2">{["Design", "Compose", "Ship"].map((label) => <div key={label} data-motion-item className="rounded-lg border border-border p-3 text-sm">{label}</div>)}</GsapMotion>
+
+  if (slug === "motion-reveal") return <MotionReveal className="rounded-xl border border-border p-6 text-center font-medium">Motion viewport reveal</MotionReveal>
 
   if (slug === "search-input") {
     return (

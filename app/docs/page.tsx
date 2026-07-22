@@ -14,6 +14,7 @@ export default function DocsPage() {
         { label: "Installation", href: "#installation" },
         { label: "Project setup", href: "#setup" },
         { label: "Theming", href: "#theming" },
+        { label: "Motion blocks", href: "#motion" },
         { label: "RTL and Arabic", href: "#rtl" },
         { label: "Registry", href: "#registry" }
       ]}
@@ -61,6 +62,19 @@ export default function DocsPage() {
         <p className="mt-3 leading-7 text-zinc-400">
           DUI uses logical CSS properties such as <code className="rounded bg-zinc-900 px-1.5 py-0.5 text-sm">margin-inline-start</code> through Tailwind’s <code className="rounded bg-zinc-900 px-1.5 py-0.5 text-sm">ms-*</code> and <code className="rounded bg-zinc-900 px-1.5 py-0.5 text-sm">ps-*</code> utilities. Set <code className="rounded bg-zinc-900 px-1.5 py-0.5 text-sm">dir=&quot;rtl&quot;</code> on the document for Arabic interfaces.
         </p>
+      </section>
+
+      <section id="motion" className="mt-14 scroll-mt-24">
+        <h2 className="text-2xl font-semibold tracking-tight">Motion blocks</h2>
+        <p className="mt-3 max-w-2xl leading-7 text-zinc-400">
+          Animation is offered as a plugin variant on an existing block. On the Sign In block page, documentation tabs switch between Normal, CSS animation, and GSAP animation. Those tabs are not installed in your application; the selected CLI command installs only the block and its chosen animation plugin.
+        </p>
+        <div className="mt-5 space-y-3">
+          <CopyCommand command="npx shadcn@latest add qentrah/DUI/blocks-sign-in" />
+          <CopyCommand command="npx shadcn@latest add qentrah/DUI/blocks-sign-in-css" />
+          <CopyCommand command="npx shadcn@latest add qentrah/DUI/blocks-sign-in-gsap" />
+        </div>
+        <p className="mt-4 text-sm leading-6 text-zinc-500">Cursor interactions are hidden on coarse pointers, and animation blocks respect the user’s reduced-motion preference.</p>
       </section>
 
       <section id="registry" className="mt-14 scroll-mt-24">

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "css-motion",
+  "title": "CSSMotion",
+  "description": "Dependency-free CSS entrance animation with reduced-motion support.",
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/css-motion.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport interface CSSMotionProps extends React.HTMLAttributes<HTMLDivElement> {\n  delay?: number\n  duration?: number\n}\n\nfunction CSSMotion({ children, delay = 0, duration = 600, className, style, ...props }: CSSMotionProps) {\n  return (\n    <div\n      className={cn(\"motion-reduce:!animate-none\", className)}\n      style={{ animation: `dui-css-reveal ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms both`, ...style }}\n      {...props}\n    >\n      <style>{`@keyframes dui-css-reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }`}</style>\n      {children}\n    </div>\n  )\n}\n\nCSSMotion.displayName = \"CSSMotion\"\n\nexport { CSSMotion }\n",
+      "type": "registry:ui",
+      "target": "@ui/css-motion.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

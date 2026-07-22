@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown",
+  "title": "Dropdown",
+  "description": "Accessible single-selection dropdown with descriptions.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "qentrah/DUI/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/dropdown.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Check, ChevronDown } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\n\nexport interface DropdownOption { value: string; label: string; description?: string; disabled?: boolean }\nexport interface DropdownProps {\n  options: readonly DropdownOption[]\n  value?: string\n  defaultValue?: string\n  onValueChange?: (value: string) => void\n  placeholder?: string\n  label?: string\n  disabled?: boolean\n  className?: string\n}\n\nfunction Dropdown({ options, value, defaultValue, onValueChange, placeholder = \"Select an option\", label, disabled, className }: DropdownProps) {\n  const [open, setOpen] = React.useState(false)\n  const [internalValue, setInternalValue] = React.useState(defaultValue)\n  const selectedValue = value ?? internalValue\n  const selected = options.find((option) => option.value === selectedValue)\n\n  return <div className={cn(\"relative w-full max-w-xs\", className)}>\n    {label && <span className=\"mb-1.5 block text-xs font-medium\">{label}</span>}\n    {open && <button type=\"button\" className=\"fixed inset-0 z-20 cursor-default\" aria-label=\"Close dropdown\" onClick={() => setOpen(false)} />}\n    <button type=\"button\" disabled={disabled} onClick={() => setOpen((current) => !current)} onKeyDown={(event) => { if (event.key === \"Escape\") setOpen(false) }} className=\"relative z-30 flex h-10 w-full items-center justify-between rounded-lg border border-border bg-background px-3 text-sm outline-none transition hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50\" aria-haspopup=\"listbox\" aria-expanded={open}>\n      <span className={selected ? \"text-foreground\" : \"text-muted-foreground\"}>{selected?.label ?? placeholder}</span><ChevronDown className={cn(\"size-4 transition\", open && \"rotate-180\")} />\n    </button>\n    {open && <div role=\"listbox\" className=\"absolute inset-x-0 top-full z-30 mt-1.5 rounded-xl border border-border bg-popover p-1.5 shadow-2xl\">{options.map((option) => <button type=\"button\" role=\"option\" aria-selected={option.value === selectedValue} key={option.value} disabled={option.disabled} onClick={() => { setInternalValue(option.value); onValueChange?.(option.value); setOpen(false) }} className=\"flex w-full items-start gap-2 rounded-lg px-2.5 py-2 text-start hover:bg-accent disabled:opacity-40\"><span className=\"min-w-0 flex-1\"><strong className=\"block text-sm font-medium\">{option.label}</strong>{option.description && <span className=\"mt-0.5 block text-xs text-muted-foreground\">{option.description}</span>}</span>{option.value === selectedValue && <Check className=\"mt-0.5 size-4\" />}</button>)}</div>}\n  </div>\n}\n\nexport { Dropdown }\n",
+      "type": "registry:ui",
+      "target": "@ui/dropdown.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}
