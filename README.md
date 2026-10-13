@@ -212,3 +212,7 @@ For security issues, follow the private reporting process in [`SECURITY.md`](./S
 ## License
 
 DUI is available under the [MIT License](./LICENSE).
+
+## Project links
+
+[Source](https://github.com/qentrah/DUI) · [Issues](https://github.com/qentrah/DUI/issues) · [Public project directory](https://github.com/qentrah/.github/blob/main/profile/PROJECTS.md)
